@@ -20,6 +20,7 @@ let appState = {
 
 // Initialize Application
 document.addEventListener("DOMContentLoaded", () => {
+  normalizeLearningDatabase();
   loadProgress();
   setupEventListeners();
   renderLevelsList();
@@ -154,6 +155,8 @@ function setupEventListeners() {
   document.getElementById("btn-lvl-up-next").addEventListener("click", () => {
     dismissLevelUpAndAdvance();
   });
+
+  setupGamificationActions();
 }
 
 // Router switcher for three Main Navigation Hubs (Garden, Dictionary, Wordbank)
@@ -208,15 +211,83 @@ function loadProgress() {
   if (savedPoints !== null) appState.points = parseInt(savedPoints);
   
   const savedCompleted = localStorage.getItem("suzi_tr_completed");
-  if (savedCompleted !== null) appState.completedLessons = JSON.parse(savedCompleted);
+  if (savedCompleted !== null) appState.completedLessons = safeParseArray(savedCompleted);
 
   const savedWordBank = localStorage.getItem("suzi_tr_wordbank");
-  if (savedWordBank !== null) appState.wordBank = JSON.parse(savedWordBank);
+  if (savedWordBank !== null) appState.wordBank = safeParseArray(savedWordBank);
 
   document.getElementById("daisy-points").textContent = appState.points;
   
   // Calculate daily streak
   updateDailyStreak();
+}
+
+function safeParseArray(value) {
+  try {
+    const parsed = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (error) {
+    console.warn("Saved progress could not be read; starting with a clean list.", error);
+    return [];
+  }
+}
+
+function normalizeLearningDatabase() {
+  if (typeof learningDatabase === "undefined" || learningDatabase.__normalized) return;
+
+  const arabicCognates = {
+    merhaba: { root: "مرحبا", ar: "مرحباً", sentence: "Merhaba, Suzi; bugün Türkçe dersine sakin ve düzenli başlıyoruz.", sentence_ar: "مرحباً يا سوزي؛ نبدأ اليوم درس التركية بهدوء وانتظام.", sentence_en: "Hello, Suzi; today we begin the Turkish lesson calmly and methodically." },
+    kitap: { root: "كتاب", ar: "كتاب", sentence: "Bu kitap, Türkçe cümle kurmayı adım adım öğretiyor.", sentence_ar: "هذا الكتاب يعلّم بناء الجملة التركية خطوةً خطوة.", sentence_en: "This book teaches Turkish sentence building step by step." },
+    aile: { root: "عائلة", ar: "عائلة", sentence: "Ailemle her akşam kısa Türkçe cümleler tekrar ediyorum.", sentence_ar: "أراجع جملاً تركية قصيرة مع عائلتي كل مساء.", sentence_en: "I review short Turkish sentences with my family every evening." },
+    kalem: { root: "قلم", ar: "قلم", sentence: "Kalem ile yeni kelimeleri defterime yazıyorum.", sentence_ar: "أكتب الكلمات الجديدة بالقلم في دفتري.", sentence_en: "I write new words in my notebook with a pen." },
+    ders: { root: "درس", ar: "درس", sentence: "Ders başlamadan önce hedefimi belirliyorum.", sentence_ar: "أحدد هدفي قبل أن يبدأ الدرس.", sentence_en: "I set my goal before the lesson begins." },
+    saat: { root: "ساعة", ar: "ساعة", sentence: "Saat dokuzda on dakikalık telaffuz çalışması yapıyorum.", sentence_ar: "في الساعة التاسعة أتدرّب على النطق عشر دقائق.", sentence_en: "At nine o’clock I practice pronunciation for ten minutes." },
+    sabah: { root: "صباح", ar: "صباح", sentence: "Sabah öğrenilen kelimeler gün içinde daha kolay hatırlanır.", sentence_ar: "الكلمات التي تُتعلّم صباحاً يسهل تذكّرها خلال اليوم.", sentence_en: "Words learned in the morning are easier to remember during the day." },
+    cevap: { root: "جواب", ar: "جواب / إجابة", sentence: "Doğru cevabı seçmeden önce cümlenin anlamını düşün.", sentence_ar: "فكّري في معنى الجملة قبل اختيار الجواب الصحيح.", sentence_en: "Think about the sentence meaning before choosing the correct answer." },
+    soru: { root: "سؤال", ar: "سؤال", sentence: "Her soru, Türkçeyi daha net anlamak için bir fırsattır.", sentence_ar: "كل سؤال فرصة لفهم التركية بوضوح أكبر.", sentence_en: "Every question is an opportunity to understand Turkish more clearly." },
+    renk: { root: "رنگ/رنك", ar: "لون", sentence: "Renk adlarını öğrenirken gerçek nesnelerle örnek kuruyoruz.", sentence_ar: "عند تعلم أسماء الألوان نكوّن أمثلة بأشياء حقيقية.", sentence_en: "While learning color names, we make examples with real objects." }
+  };
+
+  const polishWord = (wordObj) => {
+    const key = (wordObj.word || "").toLocaleLowerCase("tr-TR");
+    const cognate = arabicCognates[key];
+    if (cognate) {
+      wordObj.isCognate = true;
+      wordObj.arabicRoot = cognate.root;
+      wordObj.translation_ar = cognate.ar;
+      wordObj.sentence = cognate.sentence;
+      wordObj.sentence_ar = cognate.sentence_ar;
+      wordObj.sentence_en = cognate.sentence_en;
+      wordObj.academicNote = `Arapça ile ortak kök/benzerlik: ${cognate.root}. Türkçede telaffuz ve cümle içindeki görev değişebilir.`;
+    } else if (!wordObj.sentence || /hakkında kısa ve yararlı bir açıklama yaptı|alıştırması yaptı|gerçek bir bağlam içinde açıkladı/.test(wordObj.sentence)) {
+      wordObj.sentence = buildMeaningfulSentence(wordObj);
+      wordObj.sentence_ar = buildMeaningfulArabicSentence(wordObj);
+      wordObj.sentence_en = `We use “${wordObj.word}” in a clear, realistic Turkish sentence.`;
+    }
+  };
+
+  learningDatabase.levels.forEach((level) => {
+    level.description = `${level.description} Her ders; hedef, anlam, telaffuz, Arapça köprü ve kısa sınav sırasıyla ilerler.`;
+    level.lessons.forEach((lesson) => {
+      lesson.intro = `${lesson.intro} Önce anlamı kavra, sonra telaffuzu dinle, ardından örnek cümleyi okuyup mini sınavla pekiştir.`;
+      (lesson.vocabulary || []).forEach(polishWord);
+    });
+  });
+  (learningDatabase.vocabularyBank || []).forEach(polishWord);
+
+  learningDatabase.yusufFeedback.welcome = "Hoş geldin Suzi! Bu akademik Türkçe yolculuğunda hedefimiz net: anlamı doğru kurmak, telaffuzu bilinçli geliştirmek ve her kelimeyi gerçek bir bağlamda kullanmak. Arapça ile ortak kelimelerde sana özel köprüler göstereceğim. 🌼";
+  learningDatabase.__normalized = true;
+}
+
+function buildMeaningfulSentence(wordObj) {
+  if (wordObj.wordType === "v") return `Bugün “${wordObj.word}” fiilini kısa ve doğru bir cümlede kullanıyoruz.`;
+  if (wordObj.wordType === "a") return `Bu örnekte “${wordObj.word}” kelimesi bir ismi açıklıyor.`;
+  return `“${wordObj.word}” kelimesini günlük ve anlaşılır bir bağlamda öğreniyoruz.`;
+}
+
+function buildMeaningfulArabicSentence(wordObj) {
+  if (wordObj.wordType === "v") return `نستخدم فعل «${wordObj.translation_ar}» في جملة تركية قصيرة وصحيحة.`;
+  return `نتعلم كلمة «${wordObj.translation_ar}» ضمن سياق يومي واضح.`;
 }
 
 function updateDailyStreak() {
@@ -551,6 +622,7 @@ function showLessonWordDetails(vocab, idx, cardElement) {
       <span class="tr-sent" style="cursor: pointer;" id="sentence-play-trigger">${vocab.sentence}</span>
       <span class="ar-sent">${vocab.sentence_ar}</span>
       <span class="en-sent">${vocab.sentence_en}</span>
+      ${vocab.academicNote ? `<span class="academic-note">🎓 ${vocab.academicNote}</span>` : ""}
     </div>
     
     <div class="word-card-detail-actions">
@@ -1045,6 +1117,52 @@ function dismissLevelUpAndAdvance() {
   }
 }
 
+function setupGamificationActions() {
+  const actionMap = [
+    {
+      id: "btn-daily-missions",
+      message: () => `Bugünkü akademik görev: 5 kelime dinle, 3 örnek cümle oku ve 1 mini sınav çöz. Seri: ${appState.streak} gün.`,
+      action: () => { switchHubFromAction("wordbank"); renderWordbankDashboard(); }
+    },
+    {
+      id: "btn-suzi-league",
+      message: () => `Suzi Ligi: ${appState.points} Daisy puanı ile kişisel gelişim sıralamanda ilerliyorsun. Hedef: anlam doğruluğu, hız değil.`,
+      action: () => triggerCelebration()
+    },
+    {
+      id: "btn-quick-practice",
+      message: () => "Hızlı pratik başladı: sözlükte öğrenilmemiş kelimeleri açtım. Bir kelime seç, dinle ve örnek cümlesini oku.",
+      action: () => {
+        switchHubFromAction("dictionary");
+        const unlearned = document.getElementById("dict-only-unlearned");
+        if (unlearned) unlearned.checked = true;
+        renderDictionaryTable();
+      }
+    }
+  ];
+
+  actionMap.forEach(({ id, message, action }) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    btn.addEventListener("click", () => {
+      const text = message();
+      triggerYusufMessage(text);
+      speakText(text);
+      action();
+    });
+  });
+}
+
+function switchHubFromAction(hubName) {
+  const buttonByHub = {
+    garden: "nav-btn-garden",
+    dictionary: "nav-btn-dictionary",
+    wordbank: "nav-btn-bank"
+  };
+  const navButton = document.getElementById(buttonByHub[hubName]);
+  if (navButton) navButton.click();
+}
+
 // VIEW 2: Searchable Dictionary Engine (Handles 5,050 vocabulary entries instantly)
 function populateDictionaryThemes() {
   const themeFilter = document.getElementById("dict-theme-filter");
@@ -1139,8 +1257,8 @@ function renderDictionaryTable() {
     tbody.appendChild(tr);
   });
 
-  // Add event listeners inside table for speaker buttons
-  tbody.addEventListener("click", (e) => {
+  // Add a single delegated handler; replacing onclick prevents stacked listeners after filtering.
+  tbody.onclick = (e) => {
     const btn = e.target.closest(".dict-row-speaker-btn");
     if (btn) {
       speakText(btn.getAttribute("data-word"));
@@ -1150,7 +1268,7 @@ function renderDictionaryTable() {
     if (sentSpan) {
       speakText(sentSpan.getAttribute("data-sent"));
     }
-  });
+  };
 }
 
 // VIEW 3: Word Bank Render Dashboard

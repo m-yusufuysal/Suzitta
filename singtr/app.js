@@ -1245,20 +1245,34 @@ function findBestTurkishVoice() {
   
   if (trVoices.length === 0) return null;
   
-  // Premium voice priority list (best quality first)
-  const premiumNames = ["yelda", "cem", "google türkçe", "google turkish", "microsoft tolga", "microsoft emel"];
-  
-  for (const pName of premiumNames) {
-    const match = trVoices.find(v => v.name.toLowerCase().includes(pName));
-    if (match) return match;
-  }
-  
-  // Prefer non-local (network) voices as they are higher quality
-  const networkVoice = trVoices.find(v => !v.localService);
-  if (networkVoice) return networkVoice;
-  
-  // Fallback to any Turkish voice
-  return trVoices[0];
+  const normalize = (value) => value.toLocaleLowerCase("tr-TR");
+
+  // Premium/neural voice priority list (best quality first). Availability depends on browser/OS.
+  const premiumNames = [
+    "microsoft emel online",
+    "microsoft ahmet online",
+    "microsoft tolga online",
+    "google türkçe",
+    "google turkish",
+    "yelda",
+    "cem",
+    "microsoft emel",
+    "microsoft ahmet",
+    "microsoft tolga"
+  ];
+
+  const scoredVoices = trVoices
+    .map((voice) => {
+      const normalizedName = normalize(voice.name);
+      const priorityIndex = premiumNames.findIndex((name) => normalizedName.includes(name));
+      const neuralScore = /(online|natural|neural|premium)/i.test(voice.name) ? 30 : 0;
+      const remoteScore = voice.localService ? 0 : 20;
+      const priorityScore = priorityIndex >= 0 ? 100 - priorityIndex : 0;
+      return { voice, score: priorityScore + neuralScore + remoteScore };
+    })
+    .sort((a, b) => b.score - a.score);
+
+  return scoredVoices[0].voice;
 }
 
 // Cache premium voice as soon as voices are loaded
@@ -1286,6 +1300,8 @@ function speakText(text) {
 
   const rateSelector = document.getElementById("voice-speed");
   utterance.rate = rateSelector ? parseFloat(rateSelector.value) : 0.85;
+  utterance.pitch = 1.02;
+  utterance.volume = 1;
 
   // Use cached premium voice or find best available
   const bestVoice = cachedPremiumVoice || findBestTurkishVoice();

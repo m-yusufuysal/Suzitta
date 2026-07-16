@@ -35,13 +35,17 @@ def save_cache():
         print(f"Error saving cache: {e}")
 
 def fetch_openai_sentences_batch(batch_words):
-    api_key = "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"
+    api_key = os.environ.get("OPENAI_API_KEY", "").strip()
+    if not api_key:
+        print("OPENAI_API_KEY is not set. Using local academic sentence templates.")
+        return None
     
     prompt = (
         "You are an expert Turkish linguist and native language instructor. "
         "For each of the following Turkish words, write a highly natural, realistic, grammatically correct, "
-        "and academically sensible Turkish example sentence. Ensure the sentence is appropriate for the word's meaning "
-        "and makes perfect logical sense (do not create nonsensical sentences like putting abstract concepts in a picture or physical place). "
+        "and academically sensible Turkish example sentence. Ensure the sentence is appropriate for the word's meaning, CEFR level, and part of speech. "
+        "Never use picture/display templates for abstract nouns (e.g. politics, justice, science), time words, or processes. "
+        "Prefer daily-life contexts for A1/A2, social/professional contexts for B1/B2, and academic contexts for C1. "
         "Also write the corresponding Arabic translation and English translation for that sentence. "
         "Respond ONLY with a JSON array containing objects with keys: 'word', 'sentence', 'sentence_ar', 'sentence_en'. "
         "Do not include any Markdown blocks, backticks, or extra text. Output raw JSON only.\n\n"
@@ -899,52 +903,52 @@ def get_number_sentence(num, ar, en, zh):
 
 def get_adjective_sentence(adj, ar, en, zh):
   return (
-    f"Bugün çok {adj} bir gün geçirdik.",
-    f"لقد قضينا يوماً {ar}اً جداً اليوم.",
-    f"We had a very {en} day today.",
-    f"我们今天度过了非常{zh.split(' ')[0]}的一天。"
+    f"Bu metinde {adj} bir örnek üzerinde çalıştık.",
+    f"عملنا في هذا النص على مثال {ar}.",
+    f"In this text, we worked on a {en} example.",
+    f"我们在这篇课文中学习了一个{zh.split(' ')[0]}的例子。"
   )
 
 noun_sentences_tr = [
-  "Bu {} hakkında yeni bilgiler öğrendim.",
-  "Hayatımızda {} önemli bir yere sahiptir.",
-  "Onunla {} hakkında konuşmak çok keyifliydi."
+  "Derste {} kavramını örneklerle inceledik.",
+  "Bu metinde {} konusu açık ve anlaşılır biçimde anlatılıyor.",
+  "Öğretmen, {} hakkında kısa ve yararlı bir açıklama yaptı."
 ]
 noun_sentences_ar = [
-  "لقد تعلمت معلومات جديدة حول هذا ال{}.",
-  "ال{} له مكانة مهمة في حياتنا.",
-  "كان الحديث معه حول ال{} ممتعاً للغاية."
+  "درسنا مفهوم {} بالأمثلة في الدرس.",
+  "يشرح هذا النص موضوع {} بطريقة واضحة ومفهومة.",
+  "قدّم المعلم شرحاً قصيراً ومفيداً عن {}."
 ]
 noun_sentences_en = [
-  "I learned new information about this {}.",
-  "{} has an important place in our lives.",
-  "Talking with them about {} was very pleasant."
+  "In class, we examined the concept of {} with examples.",
+  "This text explains the topic of {} clearly and understandably.",
+  "The teacher gave a short and useful explanation about {}."
 ]
 noun_sentences_zh = [
-  "我学习了关于这个{}的新知识。",
-  "{}在我们的生活中占有重要地位。",
-  "跟他聊关于{}的话题非常愉快。"
+  "我们在课上用例子学习了{}这个概念。",
+  "这篇课文清楚易懂地解释了{}这个主题。",
+  "老师对{}做了简短而有用的说明。"
 ]
 
 verb_sentences_tr = [
-  "{} onun için her zaman bir önceliktir.",
-  "Birlikte {} bize iyi bir deneyim kazandırdı.",
-  "Yeni bir dil öğrenirken {} becerisini geliştirmek önemlidir."
+  "Öğrenciler bugün sınıfta {} alıştırması yaptı.",
+  "Bu görevi tamamlamak için önce plan yapmak gerekir.",
+  "Öğretmen, {} fiilini gerçek bir bağlam içinde açıkladı."
 ]
 verb_sentences_ar = [
-  "ال{} هو دائماً أولوية بالنسبة له.",
-  "ال{} معاً منحنا تجربة جيدة.",
-  "عند تعلم لغة جديدة، من المهم تطوير مهارة ال{}."
+  "تدرّب الطلاب اليوم في الصف على {}.",
+  "لإكمال هذه المهمة، يجب إعداد خطة أولاً.",
+  "شرح المعلم فعل {} ضمن سياق حقيقي."
 ]
 verb_sentences_en = [
-  "{} is always a priority for them.",
-  "{} together gave us a good experience.",
-  "When learning a new language, developing the skill of {} is important."
+  "The students practiced {} in class today.",
+  "To complete this task, it is necessary to make a plan first.",
+  "The teacher explained the verb {} in a real context."
 ]
 verb_sentences_zh = [
-  "{}对他来说永远是首要任务。",
-  "一起{}给我们带来了很好的体验。",
-  "学习新语言时，提高{}的能力非常重要。"
+  "学生们今天在课堂上练习了{}。",
+  "要完成这项任务，首先需要制定计划。",
+  "老师在真实语境中解释了{}这个动词。"
 ]
 
 all_level_groups = [
@@ -995,6 +999,25 @@ for level_num, category, roots in all_level_groups:
       s_ar = noun_sentences_ar[si].format(ar_root)
       s_en = noun_sentences_en[si].format(en_root)
       s_zh = noun_sentences_zh[si].format(zh_root)
+
+    expanded_vocab.append({
+      "word": tr_root,
+      "pronunciation": tr_root,
+      "translation_ar": ar_root,
+      "translation_en": en_root,
+      "translation_zh": zh_root,
+      "isCognate": is_cog,
+      "arabicRoot": cog_root,
+      "sentence": s_tr,
+      "sentence_ar": s_ar,
+      "sentence_en": s_en,
+      "sentence_zh": s_zh,
+      "level": level_num,
+      "category": category,
+      "wordType": word_type
+    })
+
+unique_vocab = list({item["word"]: item for item in expanded_vocab}.values())
 
 # ═══════════════════════════════════════════════════════════════
 # GRAMMAR ENGINE FUNCTIONS
@@ -1322,241 +1345,7 @@ for lm in levels_meta:
     "description": lm["description"],
     "color": lm["color"],
     "lessons": lessons_list
-  }),
-            "hint": "Oku + y (buffer) + acak + ım = Okuyacağım."
-          }
-        ]
-      },
-      {
-        "id": "l3_3",
-        "title": "3. Doğa, Zaman Birimleri ve Duygular",
-        "arabicTitle": "الطبيعة والوقت والمشاعر",
-        "englishTitle": "Nature, Time & Feelings",
-        "summary": "Nehirler, göller, mevsimler ve insan duyguları.",
-        "intro": "Nehir (نهر), Saat (ساعة), Dakika (دقيقة) gibi kelimeler Arapça kökenlidir. Duygular: Meşgul (مشغول), Rahat (مرتاح). Bunları öğrenmek Suzi'nin günlük konuşma akıcılığını artıracaktır.",
-        "vocabulary": lesson_vocab_map["l3_3"],
-        "quiz": [
-          {
-            "question": "Which word translates to 'River' (نهر / 河)?",
-            "options": ["Deniz", "Dağ", "Nehir", "Orman"],
-            "answer": "Nehir",
-            "hint": "It is an Arabic cognate (نهر)."
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": 4,
-    "title": "Level B2: Akıcı İfade",
-    "subtitle": "Toplum, Medya, Yeterlilik Fiili ve Şart Kipi",
-    "arabicTitle": "المستوى B2: التعبير بطلاقة والتركيبات اللغوية",
-    "description": "Devlet ve toplum yönetimi, medya, iş dünyası, ekonomi kavramları, yeterlilik fiili (-ebil) ve şart kipi (-se).",
-    "color": "#B7950B",
-    "lessons": [
-      {
-        "id": "l4_1",
-        "title": "1. Toplum Yönetimi ve Yeterlilik Fiili (-ebil)",
-        "arabicTitle": "المجتمع والسياسة وفعل الاستطاعة",
-        "englishTitle": "Society & Ability Suffix",
-        "summary": "Devlet, kanunlar ve eylemleri yapabilme yeteneği.",
-        "intro": "Hükümet (حكومة), Kanun (قانون), Adalet (عدالة), Hürriyet (حرية) gibi kelimeler Arapça kökenlidir. Yeterlilik fiili '-ebil/-abil' (أستطيع / 能/会) bir şeyi yapabilme gücünü belirtir.",
-        "grammar": {
-          "title": "Yeterlilik Fiili (-ebil / -abil)",
-          "arExplanation": "فعل الاستطاعة: جذر الفعل + ebil/abil + الزمن + الملحق الشخصي.",
-          "enExplanation": "Ability: verb stem + ebil/abil + tense + personal suffix.",
-          "zhExplanation": "能够/会：词干 + ebil/abil + 时态 + 人称。例如：Yapabilirim (我能做)。",
-          "examples": [
-            { "root": "Yap-", "suffix": "-abil-ir-im", "result": "Yapabilirim", "meaning": "I can do (أستطيع أن أفعل / 我能做)" },
-            { "root": "Gel-", "suffix": "-ebil-ir-im", "result": "Gelebilirim", "meaning": "I can come (أستطيع المجيء / 我能来)" }
-          ]
-        },
-        "vocabulary": lesson_vocab_map["l4_1"],
-        "quiz": [
-          {
-            "question": "Translate: 'I can read' (okumak):",
-            "options": ["Okuyabilirim", "Okudum", "Okumalıyım", "Okusam"],
-            "answer": "Okuyabilirim",
-            "hint": "Oku + y (buffer) + abil + ir + im = Okuyabilirim."
-          }
-        ]
-      },
-      {
-        "id": "l4_2",
-        "title": "2. Medya, Teknoloji ve Dolaylı Anlatım",
-        "arabicTitle": "الإعلام والتكنولوجيا ونقل الكلام",
-        "englishTitle": "Media, Tech & Indirect Speech",
-        "summary": "Haberler, veri sistemleri ve başkasının sözünü aktarma.",
-        "intro": "Haber (خبر), Mesaj (رسالة), Ticaret (تجارة) Arapça kökenli kelimelerdir. Dolaylı anlatım (Reported Speech), başkasının söylediğini aktarmak için kullanılır: 'Geleceğini söyledi' (قال إنه سيأتي / 他说他将来).",
-        "vocabulary": lesson_vocab_map["l4_2"],
-        "quiz": [
-          {
-            "question": "What is the meaning of 'Geleceğini söyledi'?",
-            "options": ["He said he will come", "He is coming", "I want him to come", "He came"],
-            "answer": "He said he will come",
-            "hint": "It reports someone else's future action."
-          }
-        ]
-      },
-      {
-        "id": "l4_3",
-        "title": "3. Ekonomi, İş Dünyası ve Şart Kipi (-se)",
-        "arabicTitle": "الاقتصاد والأعمال والشرط",
-        "englishTitle": "Business, Economy & Conditionals",
-        "summary": "Şirketler, bütçe, yatırım ve şartlı durumlar.",
-        "intro": "Şirket (شركة), Maaş (معاش), Bütçe gibi iş dünyası terimleri. Şart kipi '-se/-sa' (لو / 如果) koşul cümleleri kurmaya yarar.",
-        "grammar": {
-          "title": "Şart Kipi (-se / -sa)",
-          "arExplanation": "صيغة الشرط: جذر الفعل + se/sa + الملحق الشخصي.",
-          "enExplanation": "Conditional: verb stem + se/sa + personal suffix.",
-          "zhExplanation": "条件句：词干 + se/sa + 人称。例如：Gelsem (如果我来)。",
-          "examples": [
-            { "root": "Gel-", "suffix": "-se-m", "result": "Gelsem", "meaning": "If I come (لو جئتُ / 如果我来)" },
-            { "root": "Çalış-", "suffix": "-sa-n", "result": "Çalışsan", "meaning": "If you work (لو عملتَ / 如果你工作)" }
-          ]
-        },
-        "vocabulary": lesson_vocab_map["l4_3"],
-        "quiz": [
-          {
-            "question": "Translate: 'If I do' (yapmak):",
-            "options": ["Yapsam", "Yaptım", "Yapıyorum", "Yapabilirim"],
-            "answer": "Yapsam",
-            "hint": "Yap + sa + m = Yapsam."
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": 5,
-    "title": "Level C1: Akademik Akıcılık",
-    "subtitle": "Kültür, Felsefe, Edilgen Çatı ve İleri Düzey Kavramlar",
-    "arabicTitle": "المستوى C1: الاحتراف اللغوي والأكاديمي والتعابير الثقافية",
-    "description": "Osmanlı tarihi terimleri, Demokrasi ve cumhuriyet, ahlak ve vicdan felsefesi, bilimsel ve istatistiksel çalışmalar, edilgen çatı (-ıl) ve kültürel ortak deyimler.",
-    "color": "#9A7D0A",
-    "lessons": [
-      {
-        "id": "l5_1",
-        "title": "1. Devlet Düzeni, Bilim ve Edilgen Çatı (-ıl)",
-        "arabicTitle": "أنظمة الدولة والعلوم والمبني للمجهول",
-        "englishTitle": "State, Science & Passive Voice",
-        "summary": "Tarih, cumhuriyet, araştırma terimleri ve edilgen fiiller.",
-        "intro": "Medeniyet (حضارة), Cumhuriyet (جمهورية), Analiz (تحليل) gibi kelimeler akademik Türkçe'nin temelidir. Edilgen çatı (Passive Voice) eylemi yapanın belirsiz olduğu durumlarda kullanılır: 'Yazıldı' (كُتِبَ / 被写了).",
-        "grammar": {
-          "title": "Edilgen Çatı (-ıl / -il / -ul / -ül)",
-          "arExplanation": "المبني للمجهول: جذر الفعل + ıl/il/ul/ül + ملحق الزمن.",
-          "enExplanation": "Passive voice: verb stem + ıl/il/ul/ül + tense suffix.",
-          "zhExplanation": "被动语态：词干 + ıl/il/ul/ül + 时态。例如：Yazıldı (被写了)。",
-          "examples": [
-            { "root": "Yaz-", "suffix": "-ıl-dı", "result": "Yazıldı", "meaning": "It was written (كُتِبَ / 被写了)" },
-            { "root": "Yap-", "suffix": "-ıl-dı", "result": "Yapıldı", "meaning": "It was done (فُعِلَ / 被做了)" }
-          ]
-        },
-        "vocabulary": lesson_vocab_map["l5_1"],
-        "quiz": [
-          {
-            "question": "What is the passive form of 'yapmak' in past tense ('It was done')?",
-            "options": ["Yaptı", "Yapıldı", "Yapıyor", "Yapacak"],
-            "answer": "Yapıldı",
-            "hint": "Yap + ıl + dı = Yapıldı."
-          }
-        ]
-      },
-      {
-        "id": "l5_2",
-        "title": "2. Kültürel Deyimler ve Felsefe",
-        "arabicTitle": "التعابير الثقافية المشتركة والفلسفة",
-        "englishTitle": "Shared Idioms & Philosophy",
-        "summary": "Ahlak, vicdan, merhamet ve ortak deyimlerin derinliği.",
-        "intro": "Vicdan (وجدان), Merhamet (رحمة), Hikmet (حكمة) felsefi kelimelerdir. Türkçe ve Arapça'da aynı bağlamda kullanılan ortak deyimler mevcuttur: 'Eline sağlık' (سلمت يداك), 'Başüstüne' (على راسي).",
-        "idioms": [
-          {
-            "tr": "Eline sağlık",
-            "ar": "سلمت يداك",
-            "literalAr": "الصحة ليدك",
-            "en": "Bless your hands (thanking for food/work)",
-            "zh": "辛苦了 / 谢谢你的手艺 (xīnkǔ le / xièxie nǐ de shǒuyì)",
-            "meaning": "Yemek yapan veya güzel bir iş ortaya koyan birine teşekkür etmek için kullanılır."
-          },
-          {
-            "tr": "Başüstüne",
-            "ar": "على راسي",
-            "literalAr": "على رأسي",
-            "en": "At your command / with pleasure",
-            "zh": "遵命 / 没问题 (zūnmìng / méi wèntí)",
-            "meaning": "Verilen bir görevi saygıyla kabul ettiğini belirten kibar bir sözdür."
-          },
-          {
-            "tr": "Maşallah",
-            "ar": "ما شاء الله",
-            "literalAr": "ما شاء الله",
-            "en": "God has willed it (expression of admiration)",
-            "zh": "太棒了 (tài bàng le)",
-            "meaning": "Beğeni, takdir ve nazardan koruma amacıyla söylenir."
-          },
-          {
-            "tr": "İnşallah",
-            "ar": "إن شاء الله",
-            "literalAr": "إن شاء الله",
-            "en": "God willing / hopefully",
-            "zh": "但愿如此 (dàn yuàn rúcǐ)",
-            "meaning": "Gelecekte olmasını istediğimiz işler için dilek belirtir."
-          }
-        ],
-        "vocabulary": lesson_vocab_map["l5_2"],
-        "quiz": [
-          {
-            "question": "Which idiom corresponds to 'سلمت يداك' in Turkish?",
-            "options": ["Eline sağlık", "Başüstüne", "Maşallah", "İnşallah"],
-            "answer": "Eline sağlık",
-            "hint": "Literally: Health to your hands."
-          }
-        ]
-      },
-      {
-        "id": "l5_3",
-        "title": "3. Büyük Final Sınavı (Fluency Exam)",
-        "arabicTitle": "الامتحان النهائي الكبير للمستوى C1",
-        "englishTitle": "Ultimate Master Fluency Exam",
-        "summary": "A1'den C1'e kadar tüm gramer ve kelime haznesini ölçen büyük sınav.",
-        "intro": "Tebrikler Suzi! Türkçe öğrenme bahçeni tamamen suladın ve geliştirdin. Bu sınav, A1'den C1'e kadar öğrendiğin tüm kuralları ve kelimeleri içerir. Başarılar dileriz! 🌸",
-        "vocabulary": lesson_vocab_map["l5_3"],
-        "quiz": [
-          {
-            "question": "Which suffix converts a verb into passive voice in Turkish?",
-            "options": ["-iyor", "-di", "-il", "-ecek"],
-            "answer": "-il",
-            "hint": "E.g., yazmak -> yazılmak, yapmak -> yapılmak."
-          },
-          {
-            "question": "In Turkish grammar, does personal pronoun 'O' change based on gender?",
-            "options": ["Yes, for female it is different", "No, it is the same for all", "Only in formal settings", "Yes, like Arabic"],
-            "answer": "No, it is the same for all",
-            "hint": "Just like Chinese spoken 'tā', 'O' has no gender."
-          },
-          {
-            "question": "Which vocabulary word represents 'Justice' (عدالة / 正义)?",
-            "options": ["Adalet", "Hürriyet", "Devlet", "Kanun"],
-            "answer": "Adalet",
-            "hint": "It is an Arabic cognate (عدالة)."
-          },
-          {
-            "question": "What suffix expresses ability (can/to be able to) in Turkish?",
-            "options": ["-meli", "-se", "-ebil / -abil", "-yor"],
-            "answer": "-ebil / -abil",
-            "hint": "E.g., yapabilirim, gelebilirim."
-          },
-          {
-            "question": "Complete the conditional clause: 'Eğer çalışırsan...'",
-            "options": ["başarırsın", "başardı", "başarmak", "başarıyorsun"],
-            "answer": "başarırsın",
-            "hint": "If you work, you will succeed (conditional matching)."
-          }
-        ]
-      }
-    ]
-  }
-]
+  })
 
 yusuf_feedback = {
   "welcome": "Hoş geldin Suzi! 🌼 欢迎你！Seninle Türkçe çalışmak çok keyifli olacak. Çince ve Arapça bildiğin için şimdiden çok şanslısın! Tüm kilitleri sırayla açarak B2/C1 düzeyine çıkacağız! 🚀",

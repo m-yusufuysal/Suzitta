@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Suzi'nin Papatya Bahçesi - Learn Turkish</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Welcome Entrance Modal -->
+  <div class="welcome-modal-backdrop" id="welcome-modal">
+    <div class="welcome-card">
+      <div class="welcome-flower-box">
+        <svg class="welcome-flower" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="16" fill="#F2BB05"/>
+          <path d="M50 5 C44 26, 56 26, 50 5 Z" fill="#FFF" stroke="#E6E6E6"/>
+          <path d="M50 95 C44 74, 56 74, 50 95 Z" fill="#FFF" stroke="#E6E6E6"/>
+          <path d="M5 50 C26 44, 26 56, 5 50 Z" fill="#FFF" stroke="#E6E6E6"/>
+          <path d="M95 50 C74 44, 74 56, 95 50 Z" fill="#FFF" stroke="#E6E6E6"/>
+          <path d="M18 18 C33 33, 38 28, 18 18 Z" fill="#FFF" stroke="#E6E6E6"/>
+          <path d="M82 82 C67 67, 62 72, 82 82 Z" fill="#FFF" stroke="#E6E6E6"/>
+          <path d="M18 82 C33 67, 38 72, 18 82 Z" fill="#FFF" stroke="#E6E6E6"/>
+          <path d="M82 18 C67 33, 62 28, 82 18 Z" fill="#FFF" stroke="#E6E6E6"/>
+        </svg>
+      </div>
+      <h2>Hoş Geldin Suzi! 🌼✈️</h2>
+      <p class="welcome-subtitle-ar">أهلاً بكِ في بستان اللغة التركية!</p>
+      <p class="welcome-subtitle-zh">欢迎来到土耳其语学习花园！</p>
+      
+      <div class="welcome-intro-text">
+        <p>Suzi, Türkiye yolculuğuna ve Türkçe öğrenmeye hazır mısın? 🇹🇷</p>
+      </div>
+
+      <div class="welcome-features">
+        <div class="feature-item">
+          <span>📚</span>
+          <div>
+            <strong>1330+ Gerçek Kelime</strong>
+            <p>Sadece gerçek Türkçe kelimeler ve CEFR kuralları</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span>🧩</span>
+          <div>
+            <strong>Sözcük ve Ek Yapbozları</strong>
+            <p>Dilbilgisini eğlenerek ve dokunarak öğren</p>
+          </div>
+        </div>
+      </div>
+      
+      <button class="welcome-start-btn" id="btn-welcome-start">Türkiye Yolculuğunu Başlat! 🚀</button>
+    </div>
+  </div>
+
+  <!-- Floating Background Decorations (subtle, non-distracting) -->
+  <div class="bg-decorations" id="bg-daisies">
+    <svg class="floating-daisy fd-1" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="15" fill="#F2BB05"/>
+      <path d="M50 15 C45 30, 55 30, 50 15 Z" fill="#FFF" stroke="#333"/>
+      <path d="M50 85 C45 70, 55 70, 50 85 Z" fill="#FFF" stroke="#333"/>
+      <path d="M15 50 C30 45, 30 55, 15 50 Z" fill="#FFF" stroke="#333"/>
+      <path d="M85 50 C70 45, 70 55, 85 50 Z" fill="#FFF" stroke="#333"/>
+    </svg>
+    <svg class="floating-daisy fd-2" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="15" fill="#F2BB05"/>
+      <path d="M50 15 C45 30, 55 30, 50 15 Z" fill="#FFF" stroke="#333"/>
+      <path d="M50 85 C45 70, 55 70, 50 85 Z" fill="#FFF" stroke="#333"/>
+      <path d="M15 50 C30 45, 30 55, 15 50 Z" fill="#FFF" stroke="#333"/>
+      <path d="M85 50 C70 45, 70 55, 85 50 Z" fill="#FFF" stroke="#333"/>
+    </svg>
+    <svg class="floating-daisy fd-3" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="15" fill="#F2BB05"/>
+      <path d="M50 15 C45 30, 55 30, 50 15 Z" fill="#FFF" stroke="#333"/>
+      <path d="M50 85 C45 70, 55 70, 50 85 Z" fill="#FFF" stroke="#333"/>
+      <path d="M15 50 C30 45, 30 55, 15 50 Z" fill="#FFF" stroke="#333"/>
+      <path d="M85 50 C70 45, 70 55, 85 50 Z" fill="#FFF" stroke="#333"/>
+    </svg>
+    <svg class="floating-daisy fd-4" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="15" fill="#F2BB05"/>
+      <path d="M50 15 C45 30, 55 30, 50 15 Z" fill="#FFF" stroke="#333"/>
+      <path d="M50 85 C45 70, 55 70, 50 85 Z" fill="#FFF" stroke="#333"/>
+      <path d="M15 50 C30 45, 30 55, 15 50 Z" fill="#FFF" stroke="#333"/>
+      <path d="M85 50 C70 45, 70 55, 85 50 Z" fill="#FFF" stroke="#333"/>
+    </svg>
+    <svg class="floating-daisy fd-5" viewBox="0 0 100 100">
+      <circle cx="50" cy="50" r="15" fill="#F2BB05"/>
+      <path d="M50 15 C45 30, 55 30, 50 15 Z" fill="#FFF" stroke="#333"/>
+      <path d="M50 85 C45 70, 55 70, 50 85 Z" fill="#FFF" stroke="#333"/>
+      <path d="M15 50 C30 45, 30 55, 15 50 Z" fill="#FFF" stroke="#333"/>
+      <path d="M85 50 C70 45, 70 55, 85 50 Z" fill="#FFF" stroke="#333"/>
+    </svg>
+  </div>
+
+  <!-- Confetti/Fireworks Screen Overlay -->
+  <div class="fireworks-overlay" id="fireworks-overlay"></div>
+
+  <!-- Level Up Modal (Systematic level transition) -->
+  <div class="level-up-modal-backdrop" id="level-up-modal" style="display: none;">
+    <div class="level-up-card">
+      <div class="level-up-sparkles">✨🌸✨</div>
+      <div class="level-up-flower-box">
+        <svg class="level-up-flower" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="15" fill="#F2BB05"/>
+          <path d="M50 5 C45 25, 55 25, 50 5 Z" fill="#FFF" stroke="#DDD"/>
+          <path d="M50 95 C45 75, 55 75, 50 95 Z" fill="#FFF" stroke="#DDD"/>
+          <path d="M5 50 C25 45, 25 55, 5 50 Z" fill="#FFF" stroke="#DDD"/>
+          <path d="M95 50 C75 45, 75 55, 95 50 Z" fill="#FFF" stroke="#DDD"/>
+          <path d="M18 18 C33 33, 38 28, 18 18 Z" fill="#FFF" stroke="#DDD"/>
+          <path d="M82 82 C67 67, 62 72, 82 82 Z" fill="#FFF" stroke="#DDD"/>
+          <path d="M18 82 C33 67, 38 72, 18 82 Z" fill="#FFF" stroke="#DDD"/>
+          <path d="M82 18 C67 33, 62 28, 82 18 Z" fill="#FFF" stroke="#DDD"/>
+        </svg>
+      </div>
+      <h2 id="lvl-up-title">Seviye Atladın! 🎉</h2>
+      <p id="lvl-up-desc">Tebrikler Suzi! Seviyedeki tüm dersleri bitirip Yusuf'tan yıldızlı aferin aldın!</p>
+      
+      <div class="level-up-stats">
+        <div class="stat-bubble">
+          <span class="val" id="lvl-up-stat-words">0</span>
+          <span class="lbl">Kelimeler</span>
+        </div>
+        <div class="stat-bubble">
+          <span class="val" id="lvl-up-stat-points">0</span>
+          <span class="lbl">Daisy Puanı</span>
+        </div>
+      </div>
+      
+      <button class="level-up-next-btn" id="btn-lvl-up-next">Bir Sonraki Seviyeye Başla! ➡️</button>
+    </div>
+  </div>
+
+  <!-- App Wrapper Container -->
+  <div id="app-container">
+    
+    <!-- Sidebar Navigation -->
+    <aside>
+      <div class="logo-section">
+        <svg class="logo-daisy" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="16" fill="#F2BB05"/>
+          <path d="M50 5 C44 26, 56 26, 50 5 Z" fill="#FFF" stroke="#F0F0F0"/>
+          <path d="M50 95 C44 74, 56 74, 50 95 Z" fill="#FFF" stroke="#F0F0F0"/>
+          <path d="M5 50 C26 44, 26 56, 5 50 Z" fill="#FFF" stroke="#F0F0F0"/>
+          <path d="M95 50 C74 44, 74 56, 95 50 Z" fill="#FFF" stroke="#F0F0F0"/>
+          <path d="M18 18 C33 33, 38 28, 18 18 Z" fill="#FFF" stroke="#F0F0F0"/>
+          <path d="M82 82 C67 67, 62 72, 82 82 Z" fill="#FFF" stroke="#F0F0F0"/>
+          <path d="M18 82 C33 67, 38 72, 18 82 Z" fill="#FFF" stroke="#F0F0F0"/>
+          <path d="M82 18 C67 33, 62 28, 82 18 Z" fill="#FFF" stroke="#F0F0F0"/>
+        </svg>
+        <div>
+          <h1>Suzi'nin Bahçesi</h1>
+          <span>بستان سوزي للغة التركية</span>
+        </div>
+      </div>
+
+      <!-- Main Navigation Buttons -->
+      <div class="sidebar-nav-container">
+        <button class="sidebar-nav-btn active" id="nav-btn-garden">🌱 Bahçem (Garden)</button>
+        <button class="sidebar-nav-btn" id="nav-btn-dictionary">🔍 Sözlük (Dictionary)</button>
+        <button class="sidebar-nav-btn" id="nav-btn-bank">🌸 Kelime Bankam</button>
+      </div>
+
+      <!-- List of levels in active garden view -->
+      <div id="sidebar-level-section">
+        <h4 style="font-size: 11px; text-transform: uppercase; color: var(--color-text-muted); margin: 15px 0 10px 10px; letter-spacing: 0.5px;">Seviyeler (Levels)</h4>
+        <nav class="levels-menu" id="levels-list">
+          <!-- Rendered dynamically -->
+        </nav>
+      </div>
+
+      <!-- Gamification Modules (Duolingo Style) -->
+      <div id="sidebar-gamification-section" style="margin-top: 20px;">
+        <h4 style="font-size: 11px; text-transform: uppercase; color: var(--color-text-muted); margin: 0 0 10px 10px; letter-spacing: 0.5px;">Macera (Adventure)</h4>
+        
+        <div class="sidebar-nav-container" style="gap: 4px;">
+          <button class="sidebar-nav-btn" style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 16px;">🎯</span>
+            <span style="font-weight: 600;">Günlük Görevler</span>
+          </button>
+          
+          <button class="sidebar-nav-btn" style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 16px;">🏆</span>
+            <span style="font-weight: 600;">Suzi Ligi (1. Sıra)</span>
+          </button>
+          
+          <button class="sidebar-nav-btn" style="display: flex; align-items: center; gap: 8px;">
+            <span style="font-size: 16px;">⚡</span>
+            <span style="font-weight: 600;">Hızlı Pratik Modu</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Sidebar footer / Stats summary -->
+      <div class="sidebar-footer">
+        <div class="stats-card">
+          <div class="stat-row">
+            <span class="stat-icon">🌼</span>
+            <div class="stat-label">
+              <span>Daisy Points</span>
+              <span class="stat-value" id="daisy-points">0</span>
+            </div>
+          </div>
+          <div class="stat-row">
+            <span class="stat-icon">🔥</span>
+            <div class="stat-label">
+              <span>Günlük Seri</span>
+              <span class="stat-value" id="streak-days">1 Gün</span>
+            </div>
+          </div>
+          <div class="stat-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+            <div style="display: flex; justify-content: space-between; width: 100%; font-size: 11px; font-weight: 600; color: var(--color-text-muted);">
+              <span>Öğrenme İlerlemesi</span>
+              <span id="progress-percent">0%</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-bar" id="overall-progress-bar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main>
+      
+      <!-- Top header panel -->
+      <header>
+        <div class="header-title-container">
+          <h2 id="page-main-title">Hoş Geldin, Suzi! 🌼</h2>
+          <p id="page-subtitle">Sıfırdan B2/C1 Seviyesine Türkçe Öğrenme Bahçesi</p>
+        </div>
+        <div class="controls-panel">
+          <div class="tts-speed-selector">
+            <span>🗣️ Ses Hızı:</span>
+            <select id="voice-speed">
+              <option value="0.7">Yavaş (Slow)</option>
+              <option value="0.85" selected>Normal</option>
+              <option value="1.0">Hızlı (Fast)</option>
+            </select>
+          </div>
+          <button class="audio-test-btn" id="btn-audio-test" title="Sesi Test Et">🔊</button>
+          <button class="mute-toggle-btn" id="btn-mute-toggle" title="Sesi Kapat/Aç">🔊</button>
+        </div>
+      </header>
+
+      <!-- VIEW 1: Garden Path (Default) -->
+      <div class="main-view-panel" id="view-garden">
+        
+        <!-- Level Overview Section -->
+        <section id="level-overview-section">
+          <div style="background-color: var(--color-accent-light); padding: 24px; border-radius: var(--border-radius-lg); border: 1px solid rgba(79,119,45,0.1); margin-bottom: 30px;">
+            <h3 id="current-level-title" style="font-size: 22px; color: var(--color-primary); margin-bottom: 6px;">Level A1: Başlangıç</h3>
+            <p id="current-level-ar-title" style="font-family: 'Noto Sans Arabic', sans-serif; font-size: 14px; color: var(--color-secondary); direction: rtl; margin-bottom: 12px;">المستوى A1</p>
+            <p id="current-level-desc" style="font-size: 14px; color: var(--color-text-muted); line-height: 1.5;">Learn basic sounds, common Arabic-Turkish words, and rules.</p>
+          </div>
+          
+          <div class="lessons-grid" id="lessons-list">
+            <!-- Rendered dynamically -->
+          </div>
+        </section>
+
+        <!-- Active Lesson Workspace Section -->
+        <section id="active-lesson-section" style="display: none;">
+          <div class="workspace-nav-bar">
+            <button class="back-to-garden" id="btn-back-to-garden">
+              <span>⬅️</span> Bahçeye Dön (Back)
+            </button>
+            <div class="workspace-title-box">
+              <h3 id="ws-lesson-title">Ders Başlığı</h3>
+              <p id="ws-lesson-ar-title">العنوان</p>
+            </div>
+            <div class="workspace-tabs">
+              <button class="ws-tab-btn active" data-tab="intro">Giriş (Intro)</button>
+              <button class="ws-tab-btn" data-tab="words" id="tab-btn-words">Papatya Kartları (Cards)</button>
+              <button class="ws-tab-btn" data-tab="grammar" id="tab-btn-grammar">Kural & Pratik (Grammar)</button>
+              <button class="ws-tab-btn" data-tab="quiz" id="tab-btn-quiz">Sınav (Quiz)</button>
+            </div>
+          </div>
+
+          <!-- TAB 1: Introduction -->
+          <div class="tab-content-panel active" id="tab-intro">
+            <div class="intro-container">
+              <div class="intro-text-side">
+                <h4 id="intro-lesson-eng-title">Lesson Overview</h4>
+                <p id="intro-lesson-text">Lesson descriptions and learning path details...</p>
+                <div class="intro-action-box">
+                  <button class="action-cta-btn" id="btn-start-petals">Kelimeleri Öğren 🌼</button>
+                </div>
+              </div>
+              <div class="daisy-grow-visualizer">
+                <svg class="stem-svg" viewBox="0 0 200 200" id="svg-growth-plant">
+                  <path d="M 30 180 Q 100 170 170 180" stroke="#7A5C3D" stroke-width="8" fill="none" stroke-linecap="round"/>
+                  <path id="plant-stem" d="M 100 180 Q 100 180 100 180" stroke="#4E8752" stroke-width="6" fill="none" stroke-linecap="round"/>
+                  <path id="plant-leaf-l" d="M 100 140 Q 70 130 60 145 Q 85 155 100 145" fill="#90A955" stroke="#4E8752" stroke-width="2" style="display: none;"/>
+                  <path id="plant-leaf-r" d="M 100 110 Q 130 100 140 115 Q 115 125 100 115" fill="#90A955" stroke="#4E8752" stroke-width="2" style="display: none;"/>
+                  <g id="plant-flower" style="display: none;">
+                    <circle cx="100" cy="70" r="16" fill="#F2BB05"/>
+                    <circle cx="100" cy="46" r="10" fill="#FFF" stroke="#EAEAEA"/>
+                    <circle cx="100" cy="94" r="10" fill="#FFF" stroke="#EAEAEA"/>
+                    <circle cx="76" cy="70" r="10" fill="#FFF" stroke="#EAEAEA"/>
+                    <circle cx="124" cy="70" r="10" fill="#FFF" stroke="#EAEAEA"/>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 2: Vocabulary Card Deck (Cleaned/Simpler than circular board) -->
+          <div class="tab-content-panel" id="tab-words">
+            <div class="daisy-picker-card">
+              <div class="deck-controls-container">
+                <h5>Papatya Kartları (Daisy Petal Cards)</h5>
+                <p style="font-size: 12px; color: var(--color-text-muted);">Swipe or click cards to read, hear, and master vocabulary.</p>
+                <div class="card-progress-bar-box">
+                  <div class="card-progress-track">
+                    <div class="card-progress-bar" id="vocab-card-progress"></div>
+                  </div>
+                  <span id="vocab-card-progress-text" style="font-size: 11px; font-weight: 600; color: var(--color-primary);">0 / 0</span>
+                </div>
+                
+                <!-- Compact petal stack/list -->
+                <div class="vocab-cards-deck-stack" id="vocab-cards-deck">
+                  <!-- Generated by JS -->
+                </div>
+              </div>
+
+              <!-- High density detail container -->
+              <div class="daisy-petal-viewer-side" id="word-detail-container">
+                <div class="petal-viewer-empty-msg" id="word-empty-view">
+                  <span class="flower-icon">🌼</span>
+                  <h5>Kelime Detayı</h5>
+                  <p>Click a vocabulary card from the deck to inspect definitions and sentences.</p>
+                </div>
+                <div class="word-card-detail" id="word-card-detail" style="display: none;">
+                  <!-- Dynamically filled -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: Grammar & Suffix snapper -->
+          <div class="tab-content-panel" id="tab-grammar">
+            <div class="suffix-board-card" id="suffix-game-container" style="display: none;">
+              <div class="suffix-game-header">
+                <h4>Ekleri Birleştirme Oyunu (Suffix Snapper) 🧩</h4>
+                <p>Construct correct Turkish word structures by appending suffixes! Check how translation shifts.</p>
+              </div>
+              <div class="suffix-work-area">
+                <div class="puzzle-live-translation" id="suffix-live-translation">Target word: -</div>
+                <div class="suffix-slot-container" id="suffix-slot-container"></div>
+                <div class="puzzle-pieces-pool" id="suffix-pieces-pool"></div>
+              </div>
+            </div>
+            <div class="text-explanation-card" id="grammar-text-explanation"></div>
+          </div>
+
+          <!-- TAB 4: Quiz -->
+          <div class="tab-content-panel" id="tab-quiz">
+            <div id="quiz-workspace"></div>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- VIEW 2: Searchable Dictionary (🔍 Sözlük) -->
+      <div class="main-view-panel" id="view-dictionary" style="display: none;">
+        <div class="search-dictionary-card">
+          <div class="dict-search-header">
+            <h3>Türkçe - Arapça - İngilizce - Çince Büyük Sözlük</h3>
+            <p>Suzi için özel hazırlanmış 5,000+ kelimelik arama motoru. Örnek cümleler ve ses telaffuzları içerir.</p>
+          </div>
+          
+          <!-- Search tools -->
+          <div class="dict-filter-box">
+            <div class="search-input-wrapper">
+              <input type="text" id="dict-search-input" placeholder="Kelime ara... (Ara, Türkçe, Arapça, İngilizce, Chinese, Pinyin)">
+              <span class="search-icon">🔍</span>
+            </div>
+            
+            <div class="filter-dropdowns">
+              <select id="dict-level-filter">
+                <option value="all">Tüm Seviyeler (All Levels)</option>
+                <option value="1">Level A1</option>
+                <option value="2">Level A2</option>
+                <option value="3">Level B1</option>
+                <option value="4">Level B2</option>
+                <option value="5">Level C1</option>
+              </select>
+              
+              <select id="dict-theme-filter">
+                <option value="all">Tüm Temalar (All Themes)</option>
+                <!-- Filled dynamically -->
+              </select>
+            </div>
+          </div>
+
+          <!-- Boolean toggles -->
+          <div class="dict-checkbox-group">
+            <label class="checkbox-container">
+              <input type="checkbox" id="dict-only-cognates">
+              <span class="checkmark"></span>
+              Sadece Ortak Kelimeler (Arabic Cognates)
+            </label>
+            <label class="checkbox-container">
+              <input type="checkbox" id="dict-only-unlearned">
+              <span class="checkmark"></span>
+              Henüz Öğrenmediklerim (Unlearned)
+            </label>
+          </div>
+
+          <!-- Dictionary results grid -->
+          <div class="dictionary-results-scroll">
+            <table class="dictionary-table">
+              <thead>
+                <tr>
+                  <th width="15%">Türkçe</th>
+                  <th width="10%">Telaffuz</th>
+                  <th width="18%">العربية / Root</th>
+                  <th width="15%">English</th>
+                  <th width="15%">中文 / Pinyin</th>
+                  <th width="27%">Örnek Cümle (Sentence)</th>
+                </tr>
+              </thead>
+              <tbody id="dictionary-table-body">
+                <!-- Word items generated by JS -->
+              </tbody>
+            </table>
+            
+            <div class="dict-no-results" id="dict-no-results-msg" style="display: none;">
+              <span>📭</span> Aradığınız kriterlere uygun kelime bulunamadı.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIEW 3: Word Bank (🌸 Kelime Bankam) -->
+      <div class="main-view-panel" id="view-wordbank" style="display: none;">
+        <div class="wordbank-summary-card">
+          <div class="wb-header">
+            <h3>Öğrendiğin Kelimeler ve Başarıların</h3>
+            <p>Bahçende suladığın ve tamamen açan kelime yapraklarının listesi.</p>
+          </div>
+
+          <div class="wb-stats-grid">
+            <div class="wb-stat-box">
+              <span class="num" id="wb-stat-total-learned">0</span>
+              <span class="lbl">Öğrenilen Toplam Kelime</span>
+            </div>
+            <div class="wb-stat-box">
+              <span class="num" id="wb-stat-total-points">0</span>
+              <span class="lbl">Toplam Puan</span>
+            </div>
+            <div class="wb-stat-box">
+              <span class="num" id="wb-stat-level-unlocked">A1</span>
+              <span class="lbl">Açık Seviye</span>
+            </div>
+          </div>
+
+          <div class="wb-learned-list-container">
+            <h4>Öğrenilen Kelimeler Listesi</h4>
+            <div class="wb-tags-cloud" id="wb-learned-tags-cloud">
+              <!-- Renders tags -->
+            </div>
+            <div class="dict-no-results" id="wb-empty-msg" style="display: none;">
+              <span>🌱</span> Henüz kelime öğrenilmedi. Bahçeden yaprak koparmaya başla!
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Yusuf's Corner Mascot (Bottom Right fixed element) -->
+    <div id="yusufs-corner">
+      <div class="yusuf-bubble" id="yusuf-bubble">
+        <p id="yusuf-text">Hoş geldin Suzi! 🌼 Seninle Türkçe öğrenmek çok keyifli olacak. Arapça bildiğin için şimdiden çok şanslısın!</p>
+      </div>
+      <div class="yusuf-avatar-wrapper" id="yusuf-avatar-wrapper">
+        <span class="yusuf-badge-notification" id="yusuf-notification">1</span>
+        <div class="yusuf-avatar" id="yusuf-avatar-btn">
+          <svg class="avatar-svg" viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="45" fill="#FFE2C9"/>
+            <path d="M15 45 C15 15, 85 15, 85 45 C80 30, 20 30, 15 45" fill="#3D2B1F"/>
+            <path d="M15 45 C5 42, 5 35, 10 32 C12 30, 25 32, 28 35 C20 40, 17 42, 15 45 Z" fill="#3D2B1F"/>
+            <path d="M85 45 C95 42, 95 35, 90 32 C88 30, 75 32, 72 35 C80 40, 83 42, 85 45 Z" fill="#3D2B1F"/>
+            <path d="M30 42 Q37 38 42 42" stroke="#3D2B1F" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M70 42 Q63 38 58 42" stroke="#3D2B1F" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M28 48 Q35 52 40 48" stroke="#3D2B1F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <path d="M72 48 Q65 52 60 48" stroke="#3D2B1F" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+            <circle cx="26" cy="54" r="6" fill="#FFA3A3" opacity="0.6"/>
+            <circle cx="74" cy="54" r="6" fill="#FFA3A3" opacity="0.6"/>
+            <path d="M50 48 L50 56 Q50 60 47 59" stroke="#ECA486" stroke-width="3" fill="none" stroke-linecap="round"/>
+            <path d="M38 60 Q50 72 62 60" stroke="#C23B3B" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+            <circle cx="34" cy="49" r="12" stroke="#F2BB05" stroke-width="3" fill="none"/>
+            <circle cx="66" cy="49" r="12" stroke="#F2BB05" stroke-width="3" fill="none"/>
+            <line x1="46" y1="49" x2="54" y2="49" stroke="#F2BB05" stroke-width="3"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="database.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -2195,3 +2195,97 @@ header {
   line-height: 1.55;
   font-weight: 600;
 }
+
+/* Academic daisy game board enhancements */
+.academic-path-card {
+  margin-top: 18px;
+  padding: 16px;
+  border-radius: var(--border-radius-md);
+  border: 1px solid rgba(230, 184, 0, 0.25);
+  background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255, 244, 190, 0.45));
+  box-shadow: var(--shadow-sm);
+}
+.academic-path-card ul {
+  margin: 10px 0 0 18px;
+  color: var(--color-text-muted);
+  line-height: 1.55;
+}
+.path-pill {
+  display: inline-flex;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+  border-radius: 999px;
+  background: var(--color-accent-light);
+  color: var(--color-primary);
+  font-weight: 800;
+  font-size: 12px;
+}
+.path-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.path-steps span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: white;
+  border: 1px solid var(--color-border);
+  color: var(--color-secondary);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.vocab-cards-deck-stack {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
+  gap: 14px;
+  max-height: 370px;
+  padding: 18px;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at center, #f6b800 0 34px, transparent 35px),
+    radial-gradient(circle at center, rgba(255,255,255,0.88), rgba(255,248,222,0.68));
+  border: 1px dashed rgba(230, 184, 0, 0.35);
+}
+.vocab-cards-deck-stack::before {
+  content: "🌼";
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  font-size: 38px;
+  filter: drop-shadow(0 6px 10px rgba(180, 130, 0, 0.2));
+  pointer-events: none;
+}
+.vocab-card-item {
+  min-height: 76px;
+  border-radius: 60% 60% 58% 58% / 75% 75% 45% 45%;
+  background: linear-gradient(180deg, #fff 0%, #fffef7 58%, #fff4be 100%);
+  box-shadow: 0 10px 22px rgba(180, 160, 120, 0.14);
+  transform: rotate(var(--petal-rotation, 0deg));
+  transform-origin: center bottom;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  border-color: rgba(230, 184, 0, 0.25);
+}
+.vocab-card-item:hover,
+.vocab-card-item.active {
+  transform: rotate(var(--petal-rotation, 0deg)) translateY(-6px) scale(1.04);
+  background: linear-gradient(180deg, #ffffff 0%, #fff8cf 100%);
+}
+.vocab-card-item .petal-word {
+  color: var(--color-primary);
+  font-weight: 900;
+  line-height: 1.15;
+}
+.vocab-card-item small {
+  margin-top: 4px;
+  color: var(--color-text-muted);
+  font-size: 10px;
+  line-height: 1.1;
+}
+.vocab-card-item.learned {
+  background: linear-gradient(180deg, #ffffff 0%, #eaffef 100%);
+}

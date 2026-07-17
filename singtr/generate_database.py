@@ -959,6 +959,39 @@ all_level_groups = [
   (5, "C1 Akıcılık", c1_roots),
 ]
 
+def build_source_theme_map():
+  """Read the source root arrays and remember the human-authored section for each root word."""
+  theme_map = {}
+  current_theme = None
+  in_roots = False
+  array_names = {"a1_raw", "a2_raw", "b1_raw", "b2_raw", "c1_raw", "filler_nouns", "filler_verbs"}
+  try:
+    with open(__file__, "r", encoding="utf-8") as src:
+      for raw_line in src:
+        line = raw_line.strip()
+        if any(line.startswith(f"{name} = [") for name in array_names):
+          in_roots = True
+          current_theme = None
+          continue
+        if in_roots and line.startswith("]"):
+          in_roots = False
+          current_theme = None
+          continue
+        if not in_roots:
+          continue
+        if line.startswith("#"):
+          current_theme = line.lstrip("#").strip()
+          continue
+        if line.startswith('"'):
+          root = line.split(';', 1)[0].strip().strip('",')
+          if root and current_theme:
+            theme_map[root] = current_theme
+  except Exception:
+    return {}
+  return theme_map
+
+source_theme_map = build_source_theme_map()
+
 expanded_vocab = []
 
 for level_num, category, roots in all_level_groups:
@@ -1014,6 +1047,7 @@ for level_num, category, roots in all_level_groups:
       "sentence_zh": s_zh,
       "level": level_num,
       "category": category,
+      "theme": source_theme_map.get(tr_root, category),
       "wordType": word_type
     })
 
@@ -1100,18 +1134,94 @@ def locative(w):
   return w + d_t + a_e
 
 def dative(w):
-  last_char # Re-map vocabulary subsets to lessons for display (split dynamically into 10 chunks per level)
-lesson_vocab_map = {}
-for lvl in range(1, 6):
-  lvl_words = [w for w in unique_vocab if w["level"] == lvl]
-  
-  # Distribute words into 10 chunks round-robin to ensure balance
-  chunks = [[] for _ in range(10)]
-  for idx, w in enumerate(lvl_words):
-    chunks[idx % 10].append(w)
-    
-  for i in range(10):
-    lesson_vocab_map[f"l{lvl}_{i+1}"] = chunks[i]
+  last_char # Re-map vocabulary subsets to lessons by semantic source section.
+# This keeps every lesson title aligned with the words/cards shown in that lesson.
+theme_to_lesson = {
+  # A1
+  "Greetings & Basics": "l1_1", "Pronouns": "l1_1",
+  "Numbers": "l1_2",
+  "Colors": "l1_3", "Basic Adjectives": "l1_3",
+  "Family": "l1_4",
+  "Body": "l1_5",
+  "Basic Objects": "l1_7",
+  "Basic Verbs": "l1_10",
+  # A2
+  "A2 Verbs": "l2_1",
+  "Home & Daily Life": "l2_2",
+  "Weather": "l2_3",
+  "Education": "l2_4",
+  "Professions": "l2_5",
+  "Health": "l2_6",
+  "Nature & Animals": "l2_7",
+  "Feelings & Emotions": "l2_9",
+  "Transport & Places": "l2_10",
+  "Food & Drinks": "l1_8",
+  "Shopping & Commerce": "l1_9",
+  "Clothes": "l1_9",
+  # B1
+  "Media & Technology": "l3_1",
+  "B1 Verbs": "l3_2",
+  "Society & Government": "l3_3",
+  "Business & Economy": "l3_5",
+  "Abstract Concepts": "l3_6",
+  # B2
+  "B2 Verbs": "l4_1",
+  "B2 Adjectives": "l4_2",
+  "Philosophy & Ethics": "l4_3",
+  "Formal & Literary": "l4_4",
+  "Advanced Society & Science": "l4_5",
+  # C1
+  "C1 Verbs": "l5_1",
+  "C1 Adjectives": "l5_2",
+}
+
+fallback_lessons = {1: "l1_10", 2: "l2_10", 3: "l3_6", 4: "l4_5", 5: "l5_4"}
+lesson_vocab_map = {f"l{lvl}_{i}": [] for lvl in range(1, 6) for i in range(1, 11)}
+for w in unique_vocab:
+  lesson_id = theme_to_lesson.get(w.get("theme"), fallback_lessons[w["level"]])
+  lesson_vocab_map[lesson_id].append(w)
+
+
+# Hand-curated supplemental cards for lessons whose topic is narrower than the root pools.
+def supplemental(word, ar, en, level, theme, word_type="n"):
+  return {
+    "word": word, "pronunciation": word, "translation_ar": ar, "translation_en": en, "translation_zh": en,
+    "isCognate": False, "arabicRoot": "",
+    "sentence": f"Bu derste {word} kelimesini doğru bağlamda kullanıyoruz.",
+    "sentence_ar": f"نستخدم كلمة {ar} في سياقها الصحيح في هذا الدرس.",
+    "sentence_en": f"In this lesson, we use {en} in the correct context.",
+    "sentence_zh": f"本课在正确语境中使用 {en}。",
+    "level": level, "category": f"{level}. seviye", "theme": theme, "wordType": word_type
+  }
+
+supplemental_by_lesson = {
+  "l1_6": [("yirmi", "عشرون", "twenty"), ("otuz", "ثلاثون", "thirty"), ("kırk", "أربعون", "forty"), ("elli", "خمسون", "fifty"), ("saat", "ساعة", "hour/clock"), ("gün", "يوم", "day"), ("hafta", "أسبوع", "week"), ("ay", "شهر", "month"), ("yıl", "سنة", "year")],
+  "l2_8": [("kedi", "قط", "cat"), ("köpek", "كلب", "dog"), ("kuş", "طائر", "bird"), ("balık", "سمكة", "fish"), ("at", "حصان", "horse"), ("inek", "بقرة", "cow"), ("aslan", "أسد", "lion"), ("arı", "نحلة", "bee")],
+  "l3_4": [("bilgisayar", "حاسوب", "computer"), ("yazılım", "برمجيات", "software"), ("donanım", "عتاد", "hardware"), ("klavye", "لوحة مفاتيح", "keyboard"), ("ekran", "شاشة", "screen"), ("internet", "إنترنت", "internet"), ("veri", "بيانات", "data"), ("şifre", "كلمة مرور", "password")],
+  "l3_6": [("özgürlük", "حرية", "freedom"), ("adalet", "عدالة", "justice"), ("gerçek", "حقيقة", "truth"), ("güzellik", "جمال", "beauty"), ("fikir", "فكرة", "idea"), ("anlam", "معنى", "meaning"), ("değer", "قيمة", "value"), ("zaman", "زمن", "time")],
+  "l3_7": [("seyahat", "سفر", "travel"), ("bilet", "تذكرة", "ticket"), ("pasaport", "جواز سفر", "passport"), ("valiz", "حقيبة سفر", "suitcase"), ("otel", "فندق", "hotel"), ("harita", "خريطة", "map"), ("rota", "مسار", "route"), ("macera", "مغامرة", "adventure")],
+  "l3_8": [("kültür", "ثقافة", "culture"), ("sanat", "فن", "art"), ("müzik", "موسيقى", "music"), ("tiyatro", "مسرح", "theater"), ("resim", "لوحة", "painting"), ("heykel", "تمثال", "sculpture"), ("müze", "متحف", "museum"), ("gelenek", "تقليد", "tradition")],
+  "l3_9": [("hobi", "هواية", "hobby"), ("oyun", "لعبة", "game"), ("spor", "رياضة", "sport"), ("yüzme", "سباحة", "swimming"), ("okuma", "قراءة", "reading"), ("sinema", "سينما", "cinema"), ("eğlence", "تسلية", "entertainment"), ("dinlenme", "راحة", "rest")],
+  "l3_10": [("banka", "مصرف", "bank"), ("hizmet", "خدمة", "service"), ("kargo", "شحن", "cargo"), ("posta", "بريد", "post"), ("berber", "حلاق", "barber"), ("eczane", "صيدلية", "pharmacy"), ("fatura", "فاتورة", "bill"), ("ödeme", "دفع", "payment")],
+  "l4_5": [("bilim", "علم", "science"), ("araştırma", "بحث", "research"), ("deney", "تجربة", "experiment"), ("laboratuvar", "مختبر", "laboratory"), ("kuram", "نظرية", "theory"), ("kanıt", "دليل", "evidence"), ("analiz", "تحليل", "analysis"), ("sonuç", "نتيجة", "result")],
+  "l4_6": [("yapay zeka", "ذكاء اصطناعي", "artificial intelligence"), ("robot", "روبوت", "robot"), ("uzay", "فضاء", "space"), ("yenilik", "ابتكار", "innovation"), ("gelecek", "مستقبل", "future"), ("enerji", "طاقة", "energy"), ("otomasyon", "أتمتة", "automation"), ("sanal", "افتراضي", "virtual")],
+  "l4_7": [("mahkeme", "محكمة", "court"), ("hakim", "قاض", "judge"), ("savcı", "مدع عام", "prosecutor"), ("avukat", "محام", "lawyer"), ("adalet", "عدالة", "justice"), ("suç", "جريمة", "crime"), ("tanık", "شاهد", "witness"), ("dava", "قضية", "case")],
+  "l4_8": [("iklim", "مناخ", "climate"), ("kirlilik", "تلوث", "pollution"), ("sürdürülebilirlik", "استدامة", "sustainability"), ("geri dönüşüm", "إعادة تدوير", "recycling"), ("emisyon", "انبعاث", "emission"), ("kuraklık", "جفاف", "drought"), ("orman", "غابة", "forest"), ("çevre", "بيئة", "environment")],
+  "l4_9": [("tarih", "تاريخ", "history"), ("miras", "تراث", "heritage"), ("medeniyet", "حضارة", "civilization"), ("imparatorluk", "إمبراطورية", "empire"), ("saray", "قصر", "palace"), ("anıt", "نصب", "monument"), ("belge", "وثيقة", "document"), ("yüzyıl", "قرن", "century")],
+  "l4_10": [("deyim", "تعبير اصطلاحي", "idiom"), ("kalıp", "نمط", "phrase pattern"), ("eline sağlık", "سلمت يداك", "bless your hands"), ("kolay gelsin", "سهل الله عملك", "may your work be easy"), ("gözden geçirmek", "يراجع", "to review"), ("aklına gelmek", "يخطر بباله", "to occur to mind"), ("fark etmek", "يلاحظ", "to notice"), ("karar vermek", "يقرر", "to decide")],
+  "l5_3": [("atasözü", "مثل", "proverb"), ("mecaz", "مجاز", "metaphor"), ("kinaye", "تورية", "allusion"), ("nüans", "فارق دقيق", "nuance"), ("bağlam", "سياق", "context"), ("üslup", "أسلوب", "style"), ("simgesel", "رمزي", "symbolic"), ("kültürel kod", "رمز ثقافي", "cultural code")],
+  "l5_4": [("tez", "أطروحة", "thesis"), ("argüman", "حجة", "argument"), ("alıntı", "اقتباس", "quotation"), ("kaynak", "مصدر", "source"), ("literatür", "أدبيات", "literature"), ("dipnot", "حاشية", "footnote"), ("akademik dil", "لغة أكاديمية", "academic language"), ("sonuç bölümü", "خاتمة", "conclusion section")],
+  "l5_5": [("varoluşçuluk", "وجودية", "existentialism"), ("metafizik", "ما وراء الطبيعة", "metaphysics"), ("epistemoloji", "نظرية المعرفة", "epistemology"), ("ontoloji", "علم الوجود", "ontology"), ("determinizm", "حتمية", "determinism"), ("idealizm", "مثالية", "idealism"), ("ampirizm", "تجريبية", "empiricism"), ("rasyonalizm", "عقلانية", "rationalism")],
+  "l5_6": [("diplomasi", "دبلوماسية", "diplomacy"), ("egemenlik", "سيادة", "sovereignty"), ("ittifak", "تحالف", "alliance"), ("yaptırım", "عقوبة", "sanction"), ("müzakere", "تفاوض", "negotiation"), ("antlaşma", "معاهدة", "treaty"), ("küreselleşme", "عولمة", "globalization"), ("jeopolitik", "جيوسياسة", "geopolitics")],
+  "l5_7": [("edebiyat", "أدب", "literature"), ("şiir", "شعر", "poetry"), ("roman", "رواية", "novel"), ("öykü", "قصة", "story"), ("imge", "صورة شعرية", "image"), ("kafiye", "قافية", "rhyme"), ("anlatıcı", "راوي", "narrator"), ("tema", "موضوع", "theme")],
+  "l5_8": [("eleştiri", "نقد", "criticism"), ("estetik", "جماليات", "aesthetics"), ("kompozisyon", "تكوين", "composition"), ("perspektif", "منظور", "perspective"), ("galeri", "معرض", "gallery"), ("performans", "أداء", "performance"), ("akım", "تيار", "movement"), ("yorum", "تفسير", "interpretation")],
+  "l5_9": [("metodoloji", "منهجية", "methodology"), ("hipotez", "فرضية", "hypothesis"), ("veri analizi", "تحليل بيانات", "data analysis"), ("örneklem", "عينة", "sample"), ("anket", "استبيان", "survey"), ("deney", "تجربة", "experiment"), ("bulgu", "نتيجة", "finding"), ("kaynakça", "مراجع", "bibliography")],
+  "l5_10": [("ince eleyip sık dokumak", "يدقق كثيراً", "to be meticulous"), ("taşları yerine oturtmak", "يوضح الصورة", "to put pieces together"), ("nabza göre şerbet vermek", "يجاري الموقف", "to adapt to the audience"), ("lafı dolandırmak", "يلف ويدور", "to beat around the bush"), ("göz ardı etmek", "يتجاهل", "to ignore"), ("ipin ucunu kaçırmak", "يفقد السيطرة", "to lose control"), ("elini taşın altına koymak", "يتحمل المسؤولية", "to take responsibility"), ("ufuk açmak", "يوسع الأفق", "to broaden horizons")]
+}
+
+for lesson_id, rows in supplemental_by_lesson.items():
+  lvl = int(lesson_id[1])
+  lesson_vocab_map[lesson_id] = [supplemental(*row, lvl, lesson_id) for row in rows]
 
 # Programmatic lesson metadata for the 50 lessons (10 per level)
 level_lessons_meta = {

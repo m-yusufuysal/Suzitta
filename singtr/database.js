@@ -523,18 +523,38 @@ const learningDatabase = {
             "ex": "Çay (Tea - شاي / 茶)"
           },
           {
-            "letter": "Ğ / ğ",
-            "sound": "silent, elongates vowel",
-            "arEq": "حرف صامت",
-            "zhEq": "不发音",
-            "ex": "Dağ (jabal - جبل / 山)"
+            "word": "hoşça kal",
+            "pronunciation": "hoşça kal",
+            "translation_ar": "ابقَ بخير",
+            "translation_en": "stay well / goodbye",
+            "translation_zh": "再见 (zàijiàn)",
+            "isCognate": false,
+            "arabicRoot": "",
+            "sentence": "Hoşça kal arkadaşım, yakında görüşürüz.",
+            "sentence_ar": "ابقَ بخير يا صديقي، نلتقي قريباً.",
+            "sentence_en": "Goodbye my friend, see you soon.",
+            "sentence_zh": "再见我的朋友，回头见。",
+            "level": 1,
+            "category": "A1 Başlangıç",
+            "theme": "Greetings & Basics",
+            "wordType": "p"
           },
           {
-            "letter": "Ş / ş",
-            "sound": "sh as in shoe",
-            "arEq": "ش",
-            "zhEq": "是 (shì)",
-            "ex": "Şeker (Sugar - سكر / 糖)"
+            "word": "rica ederim",
+            "pronunciation": "rica ederim",
+            "translation_ar": "على الرحب والسعة",
+            "translation_en": "you are welcome",
+            "translation_zh": "不客气 (bú kèqì)",
+            "isCognate": false,
+            "arabicRoot": "",
+            "sentence": "Rica ederim, her zaman yardımcı olurum.",
+            "sentence_ar": "على الرحب والسعة، يسعدني تقديم المساعدة دائماً.",
+            "sentence_en": "You are welcome, I am always happy to help.",
+            "sentence_zh": "不客气，我很乐意提供帮助。",
+            "level": 1,
+            "category": "A1 Başlangıç",
+            "theme": "Greetings & Basics",
+            "wordType": "p"
           },
           {
             "letter": "I / ı",
@@ -544,11 +564,21 @@ const learningDatabase = {
             "ex": "Sıcak (Hot - حار / 热)"
           },
           {
-            "letter": "Ö / ö",
-            "sound": "like French eu",
-            "arEq": "لا يوجد",
-            "zhEq": "女 (nǚ) / 约",
-            "ex": "Göz (Eye - عين / 眼睛)"
+            "word": "hafta",
+            "pronunciation": "hafta",
+            "translation_ar": "أسبوع",
+            "translation_en": "week",
+            "translation_zh": "星期 (xīngqī)",
+            "isCognate": false,
+            "arabicRoot": "",
+            "sentence": "Derste hafta kavramını örneklerle inceledik.",
+            "sentence_ar": "درسنا مفهوم أسبوع بالأمثلة في الدرس.",
+            "sentence_en": "In class, we examined the concept of week with examples.",
+            "sentence_zh": "我们在课上用例子学习了星期 (xīngqī)这个概念。",
+            "level": 1,
+            "category": "A1 Başlangıç",
+            "theme": "Greetings & Basics",
+            "wordType": "n"
           },
           {
             "letter": "Ü / ü",
@@ -602,17 +632,17 @@ const learningDatabase = {
             "wordType": "p"
           },
           {
-            "word": "üç",
-            "pronunciation": "üç",
-            "translation_ar": "ثلاثة",
-            "translation_en": "three",
-            "translation_zh": "三 (sān)",
+            "word": "sen",
+            "pronunciation": "sen",
+            "translation_ar": "أنت",
+            "translation_en": "you",
+            "translation_zh": "你 (nǐ)",
             "isCognate": false,
             "arabicRoot": "",
-            "sentence": "Kütüphanede üç yeni kitap buldum.",
-            "sentence_ar": "وجدت ثلاثة كتب جديدة في المكتبة.",
-            "sentence_en": "I found three new books in the library.",
-            "sentence_zh": "我在图书馆里找到了三本新书。",
+            "sentence": "Sen bu akşam bizimle gelecek misin?",
+            "sentence_ar": "هل ستأتي معنا هذا المساء؟",
+            "sentence_en": "Will you come with us this evening?",
+            "sentence_zh": "你今天晚上跟我们一起去吗？",
             "level": 1,
             "category": "A1 Başlangıç",
             "theme": "Numbers",
@@ -893,67 +923,21 @@ const learningDatabase = {
         ],
         "quiz": [
           {
-            "question": "Select the correct plural form of 'Çocuk' (Child):",
-            "options": [
-              "Çocukler",
-              "Çocuklar",
-              "Çocuki",
-              "Çocukdan"
-            ],
-            "answer": "Çocuklar",
-            "hint": "Çocuk ends in back vowel 'u', so it takes '-lar'."
+            "letter": "Ü / ü",
+            "sound": "like French u",
+            "arEq": "لا يوجد",
+            "zhEq": "鱼 (yú)",
+            "ex": "Güzel (Beautiful - جميل / 美丽)"
           }
-        ],
-        "grammar": {
-          "title": "Çoğul Eki ve Ünlü Uyumu",
-          "arExplanation": "قاعدة الجمع: الحروف الثقيلة (A, I, O, U) تاخذ -lar، والخفيفة (E, İ, Ö, Ü) تأخذ -ler.",
-          "enExplanation": "Plural suffix: back vowels take '-lar', front vowels take '-ler'.",
-          "zhExplanation": "复数后缀：后元音加 '-lar'，前元音加 '-ler'。例如：kitaplar, evler。",
-          "examples": [
-            {
-              "root": "Kitap",
-              "suffix": "-lar",
-              "result": "Kitaplar",
-              "meaning": "Books (كتب / 书 [复数])"
-            },
-            {
-              "root": "Ev",
-              "suffix": "-ler",
-              "result": "Evler",
-              "meaning": "Houses (بيوت / 房子 [复数])"
-            },
-            {
-              "root": "Göz",
-              "suffix": "-ler",
-              "result": "Gözler",
-              "meaning": "Eyes (عيون / 眼睛 [复数])"
-            }
-          ]
-        },
-        "suffixBuilder": {
-          "root": [
-            "Kitap",
-            "Ev",
-            "Göz"
-          ],
-          "suffixes": [
-            "-lar",
-            "-ler"
-          ],
-          "correctAnswers": {
-            "Kitap": "Kitaplar",
-            "Ev": "Evler",
-            "Göz": "Gözler"
-          }
-        }
+        ]
       },
       {
-        "id": "l1_3",
-        "title": "3. Renkler ve Uyum",
-        "arabicTitle": "الألوان والتناسق",
-        "englishTitle": "Colors & Harmony",
-        "summary": "Common colors and basic descriptive usage.",
-        "intro": "Bu derste 'Renkler ve Uyum' konusundaki temel kavramları ve cümle yapılarını öğreneceksiniz.",
+        "id": "l1_2",
+        "title": "2. 1-20 Arası Sayılar",
+        "arabicTitle": "الأرقام من 1 إلى 20",
+        "englishTitle": "Numbers 1-20",
+        "summary": "Learning first numbers and basic arithmetic.",
+        "intro": "Bu derste '1-20 Arası Sayılar' konusundaki temel kavramları ve cümle yapılarını öğreneceksiniz.",
         "vocabulary": [
           {
             "word": "kırmızı",
@@ -1160,11 +1144,11 @@ const learningDatabase = {
             "wordType": "a"
           },
           {
-            "word": "küçük",
-            "pronunciation": "küçük",
-            "translation_ar": "صغير",
-            "translation_en": "small",
-            "translation_zh": "小 (xiǎo)",
+            "word": "kırk",
+            "pronunciation": "kırk",
+            "translation_ar": "اربعون",
+            "translation_en": "forty",
+            "translation_zh": "四十 (sìshí)",
             "isCognate": false,
             "arabicRoot": "",
             "sentence": "Bu cümlede 'küçük' sıfatı anlamı açıkça tamamlıyor.",
@@ -1821,11 +1805,11 @@ const learningDatabase = {
             "wordType": "n"
           },
           {
-            "word": "dil",
-            "pronunciation": "dil",
-            "translation_ar": "لسان / لغة",
-            "translation_en": "tongue / language",
-            "translation_zh": "舌头 / 语言 (shétou / yǔyán)",
+            "word": "kötü",
+            "pronunciation": "kötü",
+            "translation_ar": "سيء",
+            "translation_en": "bad",
+            "translation_zh": "坏 (huài)",
             "isCognate": false,
             "arabicRoot": "",
             "sentence": "Bu derste 'dil' kelimesini anlamlı bir bağlam içinde öğreniyoruz.",
@@ -2600,7 +2584,18 @@ const learningDatabase = {
             "category": "A2 Günlük Yaşam",
             "theme": "Food & Drinks",
             "wordType": "n"
-          },
+          }
+        ],
+        "quiz": []
+      },
+      {
+        "id": "l1_7",
+        "title": "7. Evimiz ve Mobilyalar",
+        "arabicTitle": "المنزل والأثاث",
+        "englishTitle": "Home & Furnishing",
+        "summary": "Rooms of the house and common furniture items.",
+        "intro": "Bu derste 'Evimiz ve Mobilyalar' konusundaki temel kavramları ve cümle yapılarını öğreneceksiniz.",
+        "vocabulary": [
           {
             "word": "tuz",
             "pronunciation": "tuz",
@@ -3798,11 +3793,11 @@ const learningDatabase = {
             "wordType": "n"
           },
           {
-            "word": "sıcaklık",
-            "pronunciation": "sıcaklık",
-            "translation_ar": "حرارة",
-            "translation_en": "temperature",
-            "translation_zh": "温度 (wēndù)",
+            "word": "inek",
+            "pronunciation": "inek",
+            "translation_ar": "بقرة",
+            "translation_en": "cow",
+            "translation_zh": "cow",
             "isCognate": false,
             "arabicRoot": "",
             "sentence": "Bu derste 'sıcaklık' kelimesini anlamlı bir bağlam içinde öğreniyoruz.",
@@ -4372,11 +4367,11 @@ const learningDatabase = {
             "wordType": "n"
           },
           {
-            "word": "ağrı",
-            "pronunciation": "ağrı",
-            "translation_ar": "ألم",
-            "translation_en": "pain / ache",
-            "translation_zh": "疼痛 (téngtòng)",
+            "word": "internet",
+            "pronunciation": "internet",
+            "translation_ar": "إنترنت",
+            "translation_en": "internet",
+            "translation_zh": "网络 (wǎngluò)",
             "isCognate": false,
             "arabicRoot": "",
             "sentence": "Bu derste 'ağrı' kelimesini anlamlı bir bağlam içinde öğreniyoruz.",
@@ -4570,11 +4565,11 @@ const learningDatabase = {
             "wordType": "n"
           },
           {
-            "word": "çiçek",
-            "pronunciation": "çiçek",
-            "translation_ar": "زهرة",
-            "translation_en": "flower",
-            "translation_zh": "花 (huā)",
+            "word": "başlamak",
+            "pronunciation": "başlamak",
+            "translation_ar": "بدء",
+            "translation_en": "to start",
+            "translation_zh": "开始",
             "isCognate": false,
             "arabicRoot": "",
             "sentence": "Bu derste 'çiçek' kelimesini anlamlı bir bağlam içinde öğreniyoruz.",
@@ -5873,11 +5868,11 @@ const learningDatabase = {
             "wordType": "v"
           },
           {
-            "word": "ölmek",
-            "pronunciation": "ölmek",
-            "translation_ar": "موت",
-            "translation_en": "to die",
-            "translation_zh": "死亡 (sǐwáng)",
+            "word": "heykel",
+            "pronunciation": "heykel",
+            "translation_ar": "تمثال",
+            "translation_en": "sculpture",
+            "translation_zh": "sculpture",
             "isCognate": false,
             "arabicRoot": "",
             "sentence": "Öğretmen 'ölmek' fiilini günlük bir örnekle açıkladı.",
@@ -6348,11 +6343,11 @@ const learningDatabase = {
             "wordType": "n"
           },
           {
-            "word": "proje",
-            "pronunciation": "proje",
-            "translation_ar": "مشروع",
-            "translation_en": "project",
-            "translation_zh": "项目 (xiàngmù)",
+            "word": "posta",
+            "pronunciation": "posta",
+            "translation_ar": "بريد",
+            "translation_en": "post",
+            "translation_zh": "post",
             "isCognate": false,
             "arabicRoot": "",
             "sentence": "Bu derste 'proje' kelimesini anlamlı bir bağlam içinde öğreniyoruz.",
@@ -6597,7 +6592,12 @@ const learningDatabase = {
             "wordType": "n"
           }
         ],
-        "quiz": []
+        "quiz": [],
+        "grammar": {
+          "title": "Yeterlilik Fiili (-ebil / -abil)",
+          "arExplanation": "فعل الاستطاعة: جذر الفعل + ebil/abil + الزمن + الملحق الشخصي.",
+          "enExplanation": "Ability: verb stem + ebil/abil + tense + personal suffix."
+        }
       },
       {
         "id": "l3_7",
@@ -8844,11 +8844,11 @@ const learningDatabase = {
             "wordType": "v"
           },
           {
-            "word": "öngörmek",
-            "pronunciation": "öngörmek",
-            "translation_ar": "توقع",
-            "translation_en": "to foresee",
-            "translation_zh": "预见 (yùjiàn)",
+            "word": "perspektif",
+            "pronunciation": "perspektif",
+            "translation_ar": "منظور",
+            "translation_en": "perspective",
+            "translation_zh": "perspective",
             "isCognate": false,
             "arabicRoot": "",
             "sentence": "Öğretmen 'öngörmek' fiilini günlük bir örnekle açıkladı.",
@@ -9047,11 +9047,11 @@ const learningDatabase = {
             "wordType": "a"
           },
           {
-            "word": "özgün",
-            "pronunciation": "özgün",
-            "translation_ar": "أصيل",
-            "translation_en": "original",
-            "translation_zh": "独创 (dúchuàng)",
+            "word": "anket",
+            "pronunciation": "anket",
+            "translation_ar": "استبيان",
+            "translation_en": "survey",
+            "translation_zh": "survey",
             "isCognate": false,
             "arabicRoot": "",
             "sentence": "Bu cümlede 'özgün' sıfatı anlamı açıkça tamamlıyor.",

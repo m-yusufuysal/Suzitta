@@ -285,112 +285,112 @@ function normalizeLearningDatabase() {
 function ensureMinimumDictionarySize(minimumSize) {
   if (!Array.isArray(learningDatabase.vocabularyBank)) learningDatabase.vocabularyBank = [];
 
-  const existing = new Set(learningDatabase.vocabularyBank.map(w => (w.word || "").toLocaleLowerCase("tr-TR")));
-  const academicThemes = [
-    { category: "Bahçe ve Doğa", words: ["bahçe", "papatya", "yaprak", "çiçek", "toprak", "tohum", "fidan", "ağaç", "dal", "kök", "çimen", "sulama", "güneş", "gölge", "rüzgâr", "yağmur", "arı", "kelebek", "kuş", "koku", "renk", "mevsim", "ilkbahar", "sonbahar", "doğa", "patika", "çit", "saksı", "sera", "gübre"], ar: "الحديقة والطبيعة", en: "garden and nature" },
-    { category: "Akademik Yol", words: ["hedef", "plan", "adım", "konu", "başlık", "içerik", "örnek", "cümle", "anlam", "telaffuz", "dinleme", "okuma", "yazma", "konuşma", "tekrar", "alıştırma", "sınav", "başarı", "ilerleme", "seviye", "yöntem", "not", "özet", "analiz", "kanıt", "yorum", "araştırma", "kaynak", "kural", "bağlam"], ar: "المسار الأكاديمي", en: "academic path" },
-    { category: "Günlük Yaşam", words: ["ev", "oda", "mutfak", "kapı", "pencere", "masa", "sandalye", "defter", "kalem", "kitap", "çanta", "telefon", "saat", "yemek", "su", "çay", "kahve", "ekmek", "pazar", "otobüs", "durak", "okul", "sınıf", "öğretmen", "öğrenci", "arkadaş", "aile", "şehir", "sokak", "mağaza"], ar: "الحياة اليومية", en: "daily life" },
-    { category: "Duygu ve İletişim", words: ["sevinç", "sabır", "dikkat", "cesaret", "merak", "saygı", "güven", "yardım", "rica", "cevap", "soru", "selam", "teşekkür", "özür", "düşünce", "fikir", "karar", "istek", "ihtiyaç", "duygu", "ses", "söz", "ifade", "hikâye", "sohbet", "haber", "mesaj", "açıklama", "anlaşma", "iletişim"], ar: "المشاعر والتواصل", en: "feelings and communication" }
-  ];
-  const forms = [
-    { suffix: "", ar: "", en: "" },
-    { suffix: "lar", ar: "جمع", en: "plural" },
-    { suffix: "lik", ar: "صفة/مجال", en: "-ness / field" },
-    { suffix: "li", ar: "ذو", en: "with / from" },
-    { suffix: "siz", ar: "بلا", en: "without" },
-    { suffix: "cı", ar: "فاعل", en: "person related to" },
-    { suffix: "de", ar: "في", en: "in / at" },
-    { suffix: "den", ar: "من", en: "from" },
-    { suffix: "im", ar: "ـي", en: "my" },
-    { suffix: "imiz", ar: "ـنا", en: "our" }
-  ];
-
-  const makeForm = (root, form) => {
-    if (!form.suffix) return root;
-    const last = root[root.length - 1];
-    if (form.suffix === "lar") return root + (/[eiöü]/i.test(root) ? "ler" : "lar");
-    if (form.suffix === "lik") return root + (/[eiöü]/i.test(root) ? "lik" : "lık");
-    if (form.suffix === "li") return root + (/[eiöü]/i.test(root) ? "li" : "lı");
-    if (form.suffix === "siz") return root + (/[eiöü]/i.test(root) ? "siz" : "sız");
-    if (form.suffix === "cı") return root + (/[eiöü]/i.test(root) ? "ci" : "cı");
-    if (form.suffix === "de") return root + (/[fstkçşhp]/i.test(last) ? "te" : "de");
-    if (form.suffix === "den") return root + (/[fstkçşhp]/i.test(last) ? "ten" : "den");
-    if (form.suffix === "im") return root + (/[aeıioöuü]/i.test(last) ? "m" : (/[eiöü]/i.test(root) ? "im" : "ım"));
-    if (form.suffix === "imiz") return root + (/[aeıioöuü]/i.test(last) ? "miz" : (/[eiöü]/i.test(root) ? "imiz" : "ımız"));
-    return root + form.suffix;
+  const originalBank = [...learningDatabase.vocabularyBank];
+  const existing = new Set(originalBank.map(w => (w.word || "").toLocaleLowerCase("tr-TR")));
+  const addEntry = (entry) => {
+    if (learningDatabase.vocabularyBank.length >= minimumSize) return;
+    const key = (entry.word || "").toLocaleLowerCase("tr-TR").trim();
+    if (!key || existing.has(key)) return;
+    existing.add(key);
+    learningDatabase.vocabularyBank.push(entry);
   };
 
-  let level = 1;
-  academicThemes.forEach(theme => {
-    theme.words.forEach(root => {
-      forms.forEach(form => {
-        if (learningDatabase.vocabularyBank.length >= minimumSize) return;
-        const word = makeForm(root, form);
-        const key = word.toLocaleLowerCase("tr-TR");
-        if (existing.has(key)) return;
-        existing.add(key);
-        const context = theme.category === "Bahçe ve Doğa" ? "papatya bahçesinde" : "öğrenme bahçesinde";
-        learningDatabase.vocabularyBank.push({
-          word,
-          pronunciation: word,
-          translation_ar: `${root} ${form.ar}`.trim(),
-          translation_en: `${root} ${form.en}`.trim(),
-          translation_zh: theme.en,
-          isCognate: false,
-          arabicRoot: "",
-          sentence: `Suzi, ${context} “${word}” kelimesini doğru bir örnekle tekrar eder.`,
-          sentence_ar: `تراجع سوزي كلمة «${word}» في سياق واضح مرتبط بـ ${theme.ar}.`,
-          sentence_en: `Suzi reviews “${word}” in a clear context connected with ${theme.en}.`,
-          sentence_zh: theme.en,
-          level: Math.min(level, 5),
-          category: theme.category,
-          wordType: "n",
-          academicNote: "Bu kelime, bahçe temalı akademik öğrenme yolunda anlam-bağlam-cümle sırasıyla çalışılır."
-        });
-      });
-      level = level === 5 ? 1 : level + 1;
-    });
-  });
-  const learningActions = [
-    { suffix: " öğrenmek", ar: "تعلم", en: "to learn" },
-    { suffix: " okumak", ar: "قراءة", en: "to read" },
-    { suffix: " yazmak", ar: "كتابة", en: "to write" },
-    { suffix: " dinlemek", ar: "استماع", en: "to listen to" },
-    { suffix: " tekrarı", ar: "مراجعة", en: "review of" },
-    { suffix: " cümlesi", ar: "جملة", en: "sentence of" },
-    { suffix: " kartı", ar: "بطاقة", en: "card of" },
-    { suffix: " oyunu", ar: "لعبة", en: "game of" }
+  const pedagogicPatterns = [
+    {
+      suffix: " kelimesi",
+      ar: "كلمة",
+      en: "the word",
+      note: "Kelimenin yalın biçimini tanıma ve doğru telaffuz etme adımı."
+    },
+    {
+      suffix: " anlamı",
+      ar: "معنى",
+      en: "the meaning of",
+      note: "Anlamı Türkçe bağlamdan çıkarma ve çeviriyle kontrol etme adımı."
+    },
+    {
+      suffix: " örneği",
+      ar: "مثال",
+      en: "an example of",
+      note: "Kelimeyi doğru bir örnek cümlede görme adımı."
+    },
+    {
+      suffix: " cümlesi",
+      ar: "جملة",
+      en: "a sentence with",
+      note: "Kelimeyi kendi cümlesine taşıma adımı."
+    },
+    {
+      suffix: " kartı",
+      ar: "بطاقة",
+      en: "a flashcard for",
+      note: "Papatya yaprağında hızlı tekrar ve hatırlama adımı."
+    }
   ];
-  academicThemes.forEach(theme => {
-    theme.words.forEach(root => {
-      learningActions.forEach(action => {
-        if (learningDatabase.vocabularyBank.length >= minimumSize) return;
-        const word = `${root}${action.suffix}`;
-        const key = word.toLocaleLowerCase("tr-TR");
-        if (existing.has(key)) return;
-        existing.add(key);
-        learningDatabase.vocabularyBank.push({
-          word,
-          pronunciation: word,
-          translation_ar: `${action.ar} ${root}`,
-          translation_en: `${action.en} ${root}`,
-          translation_zh: theme.en,
-          isCognate: false,
-          arabicRoot: "",
-          sentence: `Suzi, papatya bahçesinde “${word}” etkinliğini tamamlayarak konuyu pekiştirir.`,
-          sentence_ar: `تُكمل سوزي نشاط «${word}» في حديقة الأقحوان لتثبيت الموضوع.`,
-          sentence_en: `Suzi completes the “${word}” activity in the daisy garden to reinforce the topic.`,
-          sentence_zh: theme.en,
-          level: Math.min(level, 5),
-          category: theme.category,
-          wordType: action.suffix.trim().endsWith("mek") || action.suffix.trim().endsWith("mak") ? "v" : "n",
-          academicNote: "Oyunlaştırılmış görev, kelimeyi yalnız ezberletmez; dinleme, okuma ve doğru cümleyle kullandırır."
-        });
+
+  originalBank.forEach((base) => {
+    if (learningDatabase.vocabularyBank.length >= minimumSize) return;
+    const root = (base.word || "").trim();
+    if (!root || root.length < 2) return;
+    pedagogicPatterns.forEach((pattern) => {
+      const word = `${root}${pattern.suffix}`;
+      addEntry({
+        word,
+        pronunciation: word,
+        translation_ar: `${pattern.ar} ${base.translation_ar || root}`,
+        translation_en: `${pattern.en} “${base.translation_en || root}”`,
+        translation_zh: base.translation_zh || "学习词条",
+        isCognate: Boolean(base.isCognate),
+        arabicRoot: base.arabicRoot || "",
+        sentence: `Suzi, papatya bahçesinde “${word}” üzerinde çalışır ve ardından kendi doğru cümlesini kurar.`,
+        sentence_ar: `تدرس سوزي «${word}» في حديقة الأقحوان ثم تؤلف جملتها الصحيحة.`,
+        sentence_en: `Suzi studies “${word}” in the daisy garden and then builds her own correct sentence.`,
+        sentence_zh: base.sentence_zh || "苏子在雏菊花园里学习这个词条，然后造一个正确的句子。",
+        level: base.level || 1,
+        category: base.category || "Akademik Kelime Çalışması",
+        wordType: "phrase",
+        academicNote: pattern.note
       });
-      level = level === 5 ? 1 : level + 1;
     });
   });
 
+  const gardenCurriculum = [
+    ["bahçe yolu", "مسار الحديقة", "garden path"],
+    ["papatya yaprağı", "بتلة الأقحوان", "daisy petal"],
+    ["çiçek tarhı", "حوض الزهور", "flower bed"],
+    ["tohum kutusu", "صندوق البذور", "seed box"],
+    ["sulama kabı", "إبريق الري", "watering can"],
+    ["güneş ışığı", "ضوء الشمس", "sunlight"],
+    ["öğrenme patikası", "مسار التعلم", "learning trail"],
+    ["tekrar köşesi", "زاوية المراجعة", "review corner"],
+    ["cümle fidanı", "شتلة الجملة", "sentence sapling"],
+    ["hedef tabelası", "لوحة الهدف", "goal sign"],
+    ["başarı rozeti", "شارة النجاح", "achievement badge"],
+    ["dinleme durağı", "محطة الاستماع", "listening station"],
+    ["okuma bankı", "مقعد القراءة", "reading bench"],
+    ["yazma defteri", "دفتر الكتابة", "writing notebook"],
+    ["sınav kapısı", "بوابة الاختبار", "quiz gate"]
+  ];
+
+  gardenCurriculum.forEach(([word, ar, en], idx) => {
+    addEntry({
+      word,
+      pronunciation: word,
+      translation_ar: ar,
+      translation_en: en,
+      translation_zh: "学习花园",
+      isCognate: false,
+      arabicRoot: "",
+      sentence: `Suzi, ${word} bölümünde bir kelimeyi dinler, okur ve anlamlı bir cümlede kullanır.`,
+      sentence_ar: `في قسم ${ar}، تستمع سوزي إلى كلمة وتقرأها وتستخدمها في جملة ذات معنى.`,
+      sentence_en: `In the ${en} section, Suzi listens to a word, reads it, and uses it in a meaningful sentence.`,
+      sentence_zh: "苏子在学习花园中听、读并使用这个词。",
+      level: (idx % 5) + 1,
+      category: "Papatya Bahçesi Akademik Akış",
+      wordType: "phrase",
+      academicNote: "Bahçe metaforu ile gerçek öğrenme adımını birleştiren anlamlı görev kelimesidir."
+    });
+  });
 }
 
 function enrichLessonsForAcademicPath() {
@@ -594,13 +594,21 @@ function renderAcademicPathCard(lesson) {
   const intro = document.getElementById("intro-lesson-text");
   if (!intro) return;
   const criteria = (lesson.successCriteria || []).map(item => `<li>✅ ${item}</li>`).join("");
+  const words = lesson.vocabulary || [];
+  const learnedCount = words.filter(w => appState.wordBank.includes(w.word.toLowerCase())).length;
+  const isCompleted = appState.completedLessons.includes(lesson.id);
   intro.innerHTML += `
     <div class="academic-path-card">
       <div class="path-pill">🎓 Akademik Yol Haritası</div>
       <strong>${lesson.milestone || "Anlam → Telaffuz → Cümle → Pratik → Sınav"}</strong>
+      <div class="path-status-grid">
+        <span>Başlatıldı: <b>Evet</b></span>
+        <span>Bitirildi: <b>${isCompleted ? "Evet" : "Hayır"}</b></span>
+        <span>Kelime: <b>${learnedCount}/${words.length}</b></span>
+      </div>
       <ul>${criteria}</ul>
       <div class="path-steps">
-        <span>1 Dinle</span><span>2 Yaprak seç</span><span>3 Cümle kur</span><span>4 Öğrendim</span><span>5 Sınav</span>
+        <span class="done">1 Dinle</span><span class="active-step">2 Yaprak seç</span><span>3 Cümle kur</span><span>4 Öğrendim</span><span>5 Sınav</span>
       </div>
     </div>`;
 }

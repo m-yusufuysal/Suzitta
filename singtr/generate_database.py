@@ -146,7 +146,7 @@ a1_raw = [
   "tamam;تمام;okay;好的 (hǎo de);true;تمام;p;",
   "affedersiniz;عفواً;excuse me;对不起 (duìbuqǐ);false;;p;",
   "nasılsınız;كيف حالك;how are you;你好吗 (nǐ hǎo ma);false;;p;",
-  "iyiyim;بخير;I am fine;我很好 (wõ hěn hǎo);false;;p;",
+  "iyiyim;بخير;I am fine;我很好 (wǒ hěn hǎo);false;;p;",
   "hoşça kal;ابقَ بخير;stay well / goodbye;再见 (zàijiàn);false;;p;",
   "rica ederim;على الرحب والسعة;you are welcome;不客气 (bú kèqì);false;;p;",
   "gün;يوم;day;天 / 日 (tiān / rì);false;;n;lik",
@@ -203,7 +203,7 @@ a1_raw = [
   "kardeş;أخ / أخت;sibling;兄弟姐妹 (xiōngdì jiěmèi);false;;n;lik,siz",
   "abla;أخت كبرى;older sister;姐姐 (jiějie);false;;n;lik,siz",
   "ağabey;أخ أكبر;older brother;哥哥 (gēge);false;;n;lik,siz",
-  "çocuk;طفel;child;孩子 (háizi);false;;n;lik,siz",
+  "çocuk;طفل;child;孩子 (háizi);false;;n;lik,siz",
   "bebek;رضيع;baby;婴儿 (yīng'ér);false;;n;lik,siz",
   "dede;جد;grandfather;爷爷 (yéye);false;;n;lik",
   "nine;جدة;grandmother;奶奶 (nǎinai);false;;n;lik",
@@ -277,7 +277,7 @@ a1_raw = [
   "yeni;جديد;new;新 (xīn);false;;a;",
   "eski;قديم;old;旧 (jiù);false;;a;",
   "sıcak;حار;hot;热 (rè);false;;a;",
-  "soğuk;بارd;cold;冷 (lěng);false;;a;",
+  "soğuk;بارد;cold;冷 (lěng);false;;a;",
   "var;يوجد;there is;有 (yǒu);false;;p;",
   "yok;لا يوجد;there is not;没有 (méiyǒu);false;;p;"
 ]
@@ -1134,7 +1134,14 @@ def locative(w):
   return w + d_t + a_e
 
 def dative(w):
-  last_char # Re-map vocabulary subsets to lessons by semantic source section.
+  last_char = w[-1].lower()
+  last_vowel = get_last_vowel(w)
+  base = soften_consonant(apply_vowel_drop(w)) if last_char not in vowels else w
+  buffer = "y" if last_char in vowels else ""
+  a_e = "a" if last_vowel in vowels_back else "e"
+  return base + buffer + a_e
+
+# Re-map vocabulary subsets to lessons by semantic source section.
 # This keeps every lesson title aligned with the words/cards shown in that lesson.
 theme_to_lesson = {
   # A1
@@ -1183,19 +1190,42 @@ for w in unique_vocab:
 
 
 # Hand-curated supplemental cards for lessons whose topic is narrower than the root pools.
+def build_learning_sentence(word, ar, en, word_type):
+  if word_type == "v":
+    return (
+      f"Öğretmen '{word}' fiilini günlük bir örnekle açıkladı.",
+      f"شرح المعلم فعل '{ar}' بمثال يومي.",
+      f"The teacher explained the verb '{en}' with an everyday example.",
+      f"老师用日常例子解释了 '{en}'。"
+    )
+  if word_type == "a":
+    return (
+      f"Bu cümlede '{word}' sıfatı anlamı açıkça tamamlıyor.",
+      f"في هذه الجملة تكمل صفة '{ar}' المعنى بوضوح.",
+      f"In this sentence, the adjective '{en}' clearly completes the meaning.",
+      f"在这个句子中，形容词 '{en}' 清楚地补充了意思。"
+    )
+  return (
+    f"Bu derste '{word}' kelimesini anlamlı bir bağlam içinde öğreniyoruz.",
+    f"نتعلم كلمة '{ar}' في سياق ذي معنى في هذا الدرس.",
+    f"In this lesson, we learn '{en}' in a meaningful context.",
+    f"本课在有意义的语境中学习 '{en}'。"
+  )
+
 def supplemental(word, ar, en, level, theme, word_type="n"):
+  s_tr, s_ar, s_en, s_zh = build_learning_sentence(word, ar, en, word_type)
   return {
     "word": word, "pronunciation": word, "translation_ar": ar, "translation_en": en, "translation_zh": en,
     "isCognate": False, "arabicRoot": "",
-    "sentence": f"Bu derste {word} kelimesini doğru bağlamda kullanıyoruz.",
-    "sentence_ar": f"نستخدم كلمة {ar} في سياقها الصحيح في هذا الدرس.",
-    "sentence_en": f"In this lesson, we use {en} in the correct context.",
-    "sentence_zh": f"本课在正确语境中使用 {en}。",
+    "sentence": s_tr, "sentence_ar": s_ar, "sentence_en": s_en, "sentence_zh": s_zh,
     "level": level, "category": f"{level}. seviye", "theme": theme, "wordType": word_type
   }
 
 supplemental_by_lesson = {
   "l1_6": [("yirmi", "عشرون", "twenty"), ("otuz", "ثلاثون", "thirty"), ("kırk", "أربعون", "forty"), ("elli", "خمسون", "fifty"), ("saat", "ساعة", "hour/clock"), ("gün", "يوم", "day"), ("hafta", "أسبوع", "week"), ("ay", "شهر", "month"), ("yıl", "سنة", "year")],
+  "l1_7": [("ev", "بيت", "house"), ("oda", "غرفة", "room"), ("mutfak", "مطبخ", "kitchen"), ("banyo", "حمام", "bathroom"), ("masa", "طاولة", "table"), ("sandalye", "كرسي", "chair"), ("dolap", "خزانة", "cupboard"), ("yatak", "سرير", "bed"), ("kapı", "باب", "door"), ("pencere", "نافذة", "window")],
+  "l1_10": [("araba", "سيارة", "car"), ("otobüs", "حافلة", "bus"), ("tren", "قطار", "train"), ("uçak", "طائرة", "plane"), ("taksi", "تاكسي", "taxi"), ("bisiklet", "دراجة", "bicycle"), ("yol", "طريق", "road"), ("durak", "موقف", "stop"), ("istasyon", "محطة", "station"), ("okul", "مدرسة", "school")],
+  "l2_2": [("uyanmak", "استيقاظ", "to wake up", "v"), ("kahvaltı yapmak", "تناول الفطور", "to have breakfast", "v"), ("diş fırçalamak", "تنظيف الأسنان", "to brush teeth", "v"), ("giyinmek", "ارتداء الملابس", "to get dressed", "v"), ("çalışmak", "عمل/دراسة", "to work/study", "v"), ("dinlenmek", "استراحة", "to rest", "v"), ("uyumak", "نوم", "to sleep", "v"), ("sabah", "صباح", "morning"), ("akşam", "مساء", "evening")],
   "l2_8": [("kedi", "قط", "cat"), ("köpek", "كلب", "dog"), ("kuş", "طائر", "bird"), ("balık", "سمكة", "fish"), ("at", "حصان", "horse"), ("inek", "بقرة", "cow"), ("aslan", "أسد", "lion"), ("arı", "نحلة", "bee")],
   "l3_4": [("bilgisayar", "حاسوب", "computer"), ("yazılım", "برمجيات", "software"), ("donanım", "عتاد", "hardware"), ("klavye", "لوحة مفاتيح", "keyboard"), ("ekran", "شاشة", "screen"), ("internet", "إنترنت", "internet"), ("veri", "بيانات", "data"), ("şifre", "كلمة مرور", "password")],
   "l3_6": [("özgürlük", "حرية", "freedom"), ("adalet", "عدالة", "justice"), ("gerçek", "حقيقة", "truth"), ("güzellik", "جمال", "beauty"), ("fikir", "فكرة", "idea"), ("anlam", "معنى", "meaning"), ("değer", "قيمة", "value"), ("zaman", "زمن", "time")],
@@ -1219,9 +1249,34 @@ supplemental_by_lesson = {
   "l5_10": [("ince eleyip sık dokumak", "يدقق كثيراً", "to be meticulous"), ("taşları yerine oturtmak", "يوضح الصورة", "to put pieces together"), ("nabza göre şerbet vermek", "يجاري الموقف", "to adapt to the audience"), ("lafı dolandırmak", "يلف ويدور", "to beat around the bush"), ("göz ardı etmek", "يتجاهل", "to ignore"), ("ipin ucunu kaçırmak", "يفقد السيطرة", "to lose control"), ("elini taşın altına koymak", "يتحمل المسؤولية", "to take responsibility"), ("ufuk açmak", "يوسع الأفق", "to broaden horizons")]
 }
 
+existing_words = {w["word"] for w in unique_vocab}
 for lesson_id, rows in supplemental_by_lesson.items():
   lvl = int(lesson_id[1])
-  lesson_vocab_map[lesson_id] = [supplemental(*row, lvl, lesson_id) for row in rows]
+  cards = [supplemental(row[0], row[1], row[2], lvl, lesson_id, row[3] if len(row) > 3 else "n") for row in rows]
+  lesson_vocab_map[lesson_id] = cards
+  for card in cards:
+    if card["word"] not in existing_words:
+      unique_vocab.append(card)
+      existing_words.add(card["word"])
+
+def polish_vocab_sentences(items):
+  """Ensure every card has a grammatical, meaningful learning sentence."""
+  for item in items:
+    # Keep handcrafted conversational phrases and number examples, but replace generic malformed templates.
+    sentence = item.get("sentence", "")
+    generic_markers = ["Bu metinde", "Öğretmen,", "Derste", "Öğrenciler bugün", "Bu görevi tamamlamak"]
+    if any(marker in sentence for marker in generic_markers):
+      s_tr, s_ar, s_en, s_zh = build_learning_sentence(
+        item["word"], item["translation_ar"], item["translation_en"], item.get("wordType", "n")
+      )
+      item["sentence"] = s_tr
+      item["sentence_ar"] = s_ar
+      item["sentence_en"] = s_en
+      item["sentence_zh"] = s_zh
+
+polish_vocab_sentences(unique_vocab)
+for lesson_cards in lesson_vocab_map.values():
+  polish_vocab_sentences(lesson_cards)
 
 # Programmatic lesson metadata for the 50 lessons (10 per level)
 level_lessons_meta = {
@@ -1294,7 +1349,7 @@ grammar_overlays = {
       { "letter": "Ç / ç", "sound": "ch as in chair", "arEq": "تـش", "zhEq": "吃 (chī)", "ex": "Çay (Tea - شاي / 茶)" },
       { "letter": "Ğ / ğ", "sound": "silent, elongates vowel", "arEq": "حرف صامت", "zhEq": "不发音", "ex": "Dağ (jabal - جبل / 山)" },
       { "letter": "Ş / ş", "sound": "sh as in shoe", "arEq": "ش", "zhEq": "是 (shì)", "ex": "Şeker (Sugar - سكر / 糖)" },
-      { "letter": "I / ı", "sound": "uh sound", "arEq": "كسرة مضخمة", "zhEq": "了 (le)", "ex": "Sıcak (Hot - حarr - حار / 热)" },
+      { "letter": "I / ı", "sound": "uh sound", "arEq": "كسرة مضخمة", "zhEq": "了 (le)", "ex": "Sıcak (Hot - حار / 热)" },
       { "letter": "Ö / ö", "sound": "like French eu", "arEq": "لا يوجد", "zhEq": "女 (nǚ) / 约", "ex": "Göz (Eye - عين / 眼睛)" },
       { "letter": "Ü / ü", "sound": "like French u", "arEq": "لا يوجد", "zhEq": "鱼 (yú)", "ex": "Güzel (Beautiful - جميل / 美丽)" }
     ]

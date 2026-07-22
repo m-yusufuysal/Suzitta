@@ -338,7 +338,7 @@ function openLessonWorkspace(lesson) {
   document.getElementById("word-card-detail").style.display = "none";
 }
 
-// Render Daisy Flower Radial Canvas with fixed --x, --y coordinates
+// Render Daisy Flower Radial Canvas using Absolute Calc Positioning
 function renderDaisyFlower(lesson) {
   const canvas = document.getElementById("daisy-flower-canvas");
   canvas.innerHTML = "";
@@ -358,7 +358,8 @@ function renderDaisyFlower(lesson) {
   `;
   canvas.appendChild(core);
 
-  const radius = 150;
+  // Absolute positioning around 440px canvas center (220px, 220px)
+  const radius = 155;
   lesson.vocabulary.forEach((wordObj, idx) => {
     const angle = (idx / total) * (2 * Math.PI) - (Math.PI / 2);
     const x = Math.round(Math.cos(angle) * radius);
@@ -369,10 +370,10 @@ function renderDaisyFlower(lesson) {
     if (appState.bloomedWords.has(wordObj.word)) petal.classList.add("bloomed");
     if (wordObj.is_cognate) petal.classList.add("is-cognate");
 
-    // Pass coordinates to CSS custom variables to prevent translation jumps on click
-    petal.style.setProperty("--x", `${x}px`);
-    petal.style.setProperty("--y", `${y}px`);
-    petal.style.transform = `translate(${x}px, ${y}px)`;
+    // Pure Absolute Position calculation: left and top from canvas center (50% = 220px)
+    // Width is 110px (half 55px), Height is 44px (half 22px)
+    petal.style.left = `calc(50% + ${x}px - 55px)`;
+    petal.style.top = `calc(50% + ${y}px - 22px)`;
     petal.textContent = wordObj.word;
 
     petal.addEventListener("click", (e) => {

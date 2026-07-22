@@ -752,7 +752,7 @@ main {
 .flower-center-core span.icon { font-size: 28px; }
 .flower-center-core span.lbl { font-size: 11px; font-weight: 700; line-height: 1.1; }
 
-/* Organic Teardrop Daisy Petal Component - Fixed Radial Position Rules */
+/* Organic Teardrop Daisy Petal Component - Fixed Absolute Position Rules */
 .daisy-petal-item {
   position: absolute;
   width: 110px;
@@ -766,7 +766,8 @@ main {
   justify-content: center;
   padding: 4px 10px;
   cursor: pointer;
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s, border-color 0.3s, box-shadow 0.3s;
+  transform: scale(1);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s, border-color 0.3s, box-shadow 0.3s;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
   z-index: 2;
   font-size: 13px;
@@ -777,9 +778,8 @@ main {
   user-select: none;
 }
 
-/* Hover, Selected and Bloomed States maintaining --x and --y radial coordinates */
 .daisy-petal-item:hover {
-  transform: translate(var(--x), var(--y)) scale(1.15) !important;
+  transform: scale(1.15);
   border-color: var(--color-primary);
   background: #FFFFFF;
   z-index: 10;
@@ -787,8 +787,8 @@ main {
 
 .daisy-petal-item.selected {
   border-color: var(--color-primary);
-  box-shadow: 0 0 22px rgba(45, 90, 39, 0.45);
-  transform: translate(var(--x), var(--y)) scale(1.22) rotate(-6deg) !important;
+  box-shadow: 0 0 24px rgba(45, 90, 39, 0.45);
+  transform: scale(1.22) rotate(-6deg);
   z-index: 10;
 }
 

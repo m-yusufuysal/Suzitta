@@ -1190,30 +1190,94 @@ for w in unique_vocab:
 
 
 # Hand-curated supplemental cards for lessons whose topic is narrower than the root pools.
-def build_learning_sentence(word, ar, en, word_type):
+def build_learning_sentence(word, ar, en, word_type="n", level=1, theme=""):
+  w = word.strip()
+  a = ar.strip()
+  e = en.strip()
+  
   if word_type == "v":
-    return (
-      f"Öğretmen '{word}' fiilini günlük bir örnekle açıkladı.",
-      f"شرح المعلم فعل '{ar}' بمثال يومي.",
-      f"The teacher explained the verb '{en}' with an everyday example.",
-      f"老师用日常例子解释了 '{en}'。"
-    )
-  if word_type == "a":
-    return (
-      f"Bu cümlede '{word}' sıfatı anlamı açıkça tamamlıyor.",
-      f"في هذه الجملة تكمل صفة '{ar}' المعنى بوضوح.",
-      f"In this sentence, the adjective '{en}' clearly completes the meaning.",
-      f"在这个句子中，形容词 '{en}' 清楚地补充了意思。"
-    )
-  return (
-    f"Bu derste '{word}' kelimesini anlamlı bir bağlam içinde öğreniyoruz.",
-    f"نتعلم كلمة '{ar}' في سياق ذي معنى في هذا الدرس.",
-    f"In this lesson, we learn '{en}' in a meaningful context.",
-    f"本课在有意义的语境中学习 '{en}'。"
-  )
+    if level <= 2:
+      return (
+        f"Her gün arkadaşlarımla {w} için vakit ayırıyorum.",
+        f"أخصص وقتاً كل يوم لـ {a} مع أصدقائي.",
+        f"Every day I set aside time to {e} with my friends.",
+        f"每天我都抽时间和朋友一起{e}。"
+      )
+    elif level <= 4:
+      return (
+        f"Başarılı bir sonuç almak için planımızı dikkatle {w} kararı aldık.",
+        f"قررنا أن نـ {a} خطتنا بعناية للحصول على نتيجة ناجحة.",
+        f"We decided to {e} our plan carefully to achieve a successful outcome.",
+        f"我们决定仔细{e}我们的计划，以获得成功的成果。"
+      )
+    else:
+      return (
+        f"Araştırmacı, makalesinde temel varsayımları {w} yolunu seçmiştir.",
+        f"اختارت الباحثة طريق {a} افتراضاتها الأساسية في مقالها الأكاديمي.",
+        f"The researcher chose to {e} the fundamental assumptions in her academic article.",
+        f"研究人员在她的学术文章中选择{e}基本假设。"
+      )
+  elif word_type == "a":
+    if level <= 2:
+      return (
+        f"O, oldukça {w} bir insandır ve herkes tarafından sevilir.",
+        f"إن شخصيتها/شخصيته {a} جداً ويحبه الجميع.",
+        f"He/She is a very {e} person and is loved by everyone.",
+        f"他/她是一个非常{e}的人，深受大家的喜爱。"
+      )
+    elif level <= 4:
+      return (
+        f"Sorunu çözmek için daha {w} ve etkili adımlar atmamız şarttır.",
+        f"من الضروري اتخاذ خطوات أكثر {a} وفعالية لمواجهة هذه المشكلة.",
+        f"It is essential to take more {e} and effective steps regarding this issue.",
+        f"对于这个问题，我们需要采取更{e}且有效的措施。"
+      )
+    else:
+      return (
+        f"Çağdaş düşüncede {w} yaklaşımlar, bilimsel tarafsızlığı güçlendirmektedir.",
+        f"في الفكر المعاصر، تعزز المناهج الـ {a} الحياد العلمي.",
+        f"In contemporary thought, {e} approaches strengthen scientific objectivity.",
+        f"在现代思想中，{e}的方法增强了科学的中立性。"
+      )
+  else:
+    if "Food" in theme or "İçecek" in theme or "Yiyecek" in theme:
+      return (
+        f"Masadaki taze {w}, kahvaltıya harika bir lezzet kattı.",
+        f"أضاف الـ {a} الطازج على الطاولة نكهة رائعة إلى الفطور.",
+        f"The fresh {e} on the table added a wonderful flavor to breakfast.",
+        f"桌上的新鲜{e}为早餐增添了极佳的风味。"
+      )
+    elif "Health" in theme or "Sağlık" in theme:
+      return (
+        f"Sağlığımızı korumak için {w} konusuna özen göstermeliyiz.",
+        f"يجب أن نهتم بموضوع الـ {a} للحفاظ على صحتنا.",
+        f"To protect our health, we must pay attention to {e}.",
+        f"为了保持健康，我们必须注意{e}。"
+      )
+    elif "Society" in theme or "Hukuk" in theme or "Government" in theme:
+      return (
+        f"Adil bir toplumun temeli, {w} ilkelerine bağlı kalmaktan geçer.",
+        f"إن أساس المجتمع العادل يقوم على الالتزام بمبادئ الـ {a}.",
+        f"The foundation of a fair society relies on remaining bound to the principles of {e}.",
+        f"一个公正社会的基础在于坚持{e}的原则。"
+      )
+    elif level >= 4:
+      return (
+        f"Toplumsal ve akademik gelişmede {w} kavramı kritik bir rol oynamaktadır.",
+        f"يلعب مفهوم الـ {a} دوراً حاسماً في التطور المجتمعي والأكاديمي.",
+        f"The concept of {e} plays a critical role in societal and academic development.",
+        f"在社会与学术发展中，{e}的概念发挥着关键作用。"
+      )
+    else:
+      return (
+        f"Günlük hayatımızda {w} kullanımını sık sık görürüz.",
+        f"نرى استخدام الـ {a} كثيراً في حياتنا اليومية.",
+        f"We frequently see the use of {e} in our daily lives.",
+        f"在我们的日常生活中，我们经常看到{e}的使用。"
+      )
 
 def supplemental(word, ar, en, level, theme, word_type="n"):
-  s_tr, s_ar, s_en, s_zh = build_learning_sentence(word, ar, en, word_type)
+  s_tr, s_ar, s_en, s_zh = build_learning_sentence(word, ar, en, word_type, level, theme)
   return {
     "word": word, "pronunciation": word, "translation_ar": ar, "translation_en": en, "translation_zh": en,
     "isCognate": False, "arabicRoot": "",
@@ -1267,7 +1331,7 @@ def polish_vocab_sentences(items):
     generic_markers = ["Bu metinde", "Öğretmen,", "Derste", "Öğrenciler bugün", "Bu görevi tamamlamak"]
     if any(marker in sentence for marker in generic_markers):
       s_tr, s_ar, s_en, s_zh = build_learning_sentence(
-        item["word"], item["translation_ar"], item["translation_en"], item.get("wordType", "n")
+        item["word"], item["translation_ar"], item["translation_en"], item.get("wordType", "n"), item.get("level", 1), item.get("theme", "")
       )
       item["sentence"] = s_tr
       item["sentence_ar"] = s_ar
@@ -1277,6 +1341,7 @@ def polish_vocab_sentences(items):
 polish_vocab_sentences(unique_vocab)
 for lesson_cards in lesson_vocab_map.values():
   polish_vocab_sentences(lesson_cards)
+
 
 # Programmatic lesson metadata for the 50 lessons (10 per level)
 level_lessons_meta = {

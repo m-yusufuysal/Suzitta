@@ -151,12 +151,73 @@ function setupEventListeners() {
     }
   });
 
+  // Mobile Drawer Toggle Button
+  const drawerBtn = document.getElementById("btn-toggle-drawer");
+  const drawerBackdrop = document.getElementById("drawer-backdrop");
+  const sidebar = document.querySelector("aside");
+  
+  if (drawerBtn && sidebar && drawerBackdrop) {
+    const toggleDrawer = () => {
+      sidebar.classList.toggle("drawer-open");
+      drawerBackdrop.classList.toggle("active");
+    };
+    drawerBtn.addEventListener("click", toggleDrawer);
+    drawerBackdrop.addEventListener("click", toggleDrawer);
+  }
+
+  // Mobile Bottom Navigation Bar Buttons
+  const mobNavGarden = document.getElementById("mob-nav-garden");
+  const mobNavDict = document.getElementById("mob-nav-dictionary");
+  const mobNavBank = document.getElementById("mob-nav-bank");
+  const mobNavPractice = document.getElementById("mob-nav-practice");
+
+  if (mobNavGarden) {
+    mobNavGarden.addEventListener("click", () => {
+      switchHubFromAction("garden");
+      updateMobileBottomNav("mob-nav-garden");
+    });
+  }
+  if (mobNavDict) {
+    mobNavDict.addEventListener("click", () => {
+      switchHubFromAction("dictionary");
+      updateMobileBottomNav("mob-nav-dictionary");
+    });
+  }
+  if (mobNavBank) {
+    mobNavBank.addEventListener("click", () => {
+      switchHubFromAction("wordbank");
+      updateMobileBottomNav("mob-nav-bank");
+    });
+  }
+  if (mobNavPractice) {
+    mobNavPractice.addEventListener("click", () => {
+      openQuickPracticeModal();
+      updateMobileBottomNav("mob-nav-practice");
+    });
+  }
+
+  // Modal Close Buttons
+  document.getElementById("btn-close-missions")?.addEventListener("click", () => {
+    document.getElementById("daily-missions-modal").style.display = "none";
+  });
+  document.getElementById("btn-close-league")?.addEventListener("click", () => {
+    document.getElementById("suzi-league-modal").style.display = "none";
+  });
+  document.getElementById("btn-close-practice")?.addEventListener("click", () => {
+    document.getElementById("quick-practice-modal").style.display = "none";
+  });
+
   // Level Up Modal Next Button
   document.getElementById("btn-lvl-up-next").addEventListener("click", () => {
     dismissLevelUpAndAdvance();
   });
 
   setupGamificationActions();
+}
+
+function updateMobileBottomNav(activeId) {
+  const items = document.querySelectorAll(".mobile-nav-item");
+  items.forEach(item => item.classList.toggle("active", item.id === activeId));
 }
 
 // Router switcher for three Main Navigation Hubs (Garden, Dictionary, Wordbank)
@@ -1272,40 +1333,240 @@ function dismissLevelUpAndAdvance() {
 }
 
 function setupGamificationActions() {
-  const actionMap = [
+  document.getElementById("btn-daily-missions")?.addEventListener("click", () => {
+    openDailyMissionsModal();
+  });
+  document.getElementById("btn-suzi-league")?.addEventListener("click", () => {
+    openSuziLeagueModal();
+  });
+  document.getElementById("btn-quick-practice")?.addEventListener("click", () => {
+    openQuickPracticeModal();
+  });
+}
+
+// GAMIFICATION 1: Daily Missions System
+function openDailyMissionsModal() {
+  const modal = document.getElementById("daily-missions-modal");
+  if (!modal) return;
+  
+  renderDailyMissions();
+  modal.style.display = "flex";
+  
+  const msg = `🎯 Bugünkü Akademik Görevler açık! Görevleri tamamlayıp Daisy Puanı (XP) topla!`;
+  triggerYusufMessage(msg);
+  speakText(msg);
+}
+
+function renderDailyMissions() {
+  const container = document.getElementById("missions-list");
+  if (!container) return;
+
+  const learnedCount = appState.wordBank.length;
+  const completedLessons = appState.completedLessons.length;
+  const claimedMissions = JSON.parse(localStorage.getItem("suzi_tr_claimed_missions") || "[]");
+
+  const missions = [
     {
-      id: "btn-daily-missions",
-      message: () => `Bugünkü akademik görev: 5 kelime dinle, 3 örnek cümle oku ve 1 mini sınav çöz. Seri: ${appState.streak} gün.`,
-      action: () => { switchHubFromAction("wordbank"); renderWordbankDashboard(); }
+      id: "m1",
+      title: "🌱 5 Kelime Öğren",
+      desc: "Bahçeden veya sözlükten 5 yeni kelime çalış.",
+      progress: Math.min(learnedCount, 5),
+      target: 5,
+      reward: 20
     },
     {
-      id: "btn-suzi-league",
-      message: () => `Suzi Ligi: ${appState.points} Daisy puanı ile kişisel gelişim sıralamanda ilerliyorsun. Hedef: anlam doğruluğu, hız değil.`,
-      action: () => triggerCelebration()
+      id: "m2",
+      title: "🌸 1 Ders Tamamla",
+      desc: "Seviyendeki en az 1 dersi başarıyla bitir.",
+      progress: Math.min(completedLessons, 1),
+      target: 1,
+      reward: 30
     },
     {
-      id: "btn-quick-practice",
-      message: () => "Hızlı pratik başladı: sözlükte öğrenilmemiş kelimeleri açtım. Bir kelime seç, dinle ve örnek cümlesini oku.",
-      action: () => {
-        switchHubFromAction("dictionary");
-        const unlearned = document.getElementById("dict-only-unlearned");
-        if (unlearned) unlearned.checked = true;
-        renderDictionaryTable();
-      }
+      id: "m3",
+      title: "⚡ Hızlı Pratik Yap",
+      desc: "Flaşkart modunda 3 kelimeyi tekrar et.",
+      progress: Math.min(learnedCount, 3),
+      target: 3,
+      reward: 25
     }
   ];
 
-  actionMap.forEach(({ id, message, action }) => {
-    const btn = document.getElementById(id);
-    if (!btn) return;
-    btn.addEventListener("click", () => {
-      const text = message();
-      triggerYusufMessage(text);
-      speakText(text);
-      action();
-    });
+  container.innerHTML = "";
+  missions.forEach(m => {
+    const isReady = m.progress >= m.target;
+    const isClaimed = claimedMissions.includes(m.id);
+
+    const div = document.createElement("div");
+    div.className = "mission-item";
+    div.innerHTML = `
+      <div class="mission-info">
+        <h4>${m.title}</h4>
+        <p>${m.desc} (${m.progress}/${m.target})</p>
+      </div>
+      <button class="mission-claim-btn ${isClaimed ? 'claimed' : ''}" ${(!isReady || isClaimed) ? 'disabled' : ''}>
+        ${isClaimed ? '✅ Alındı' : isReady ? `Ödülü Al (+${m.reward} XP)` : 'Devam Ediyor'}
+      </button>
+    `;
+
+    if (isReady && !isClaimed) {
+      div.querySelector("button").addEventListener("click", () => {
+        claimedMissions.push(m.id);
+        localStorage.setItem("suzi_tr_claimed_missions", JSON.stringify(claimedMissions));
+        awardPoints(m.reward);
+        triggerCelebration();
+        triggerYusufMessage(`Tebrikler Suzi! ${m.title} görevini tamamlayıp +${m.reward} Puan kazandın! 🎉`);
+        renderDailyMissions();
+      });
+    }
+
+    container.appendChild(div);
   });
 }
+
+// GAMIFICATION 2: Suzi League Leaderboard Simulator
+function openSuziLeagueModal() {
+  const modal = document.getElementById("suzi-league-modal");
+  if (!modal) return;
+
+  renderLeaderboard();
+  modal.style.display = "flex";
+
+  const msg = `🏆 Suzi Akademik Ligi! Şu an ${appState.points} Daisy Puanı ile ligde üst sıralardasın!`;
+  triggerYusufMessage(msg);
+  speakText(msg);
+}
+
+function renderLeaderboard() {
+  const container = document.getElementById("league-leaderboard");
+  if (!container) return;
+
+  // Base list of friendly mock learners sorted by XP
+  const learners = [
+    { name: "Yusuf (Öğretmen)", points: Math.max(appState.points + 150, 450), badge: "👑" },
+    { name: "Suzi (Sen) 🌼", points: appState.points, badge: "⭐", isUser: true },
+    { name: "Layla", points: Math.max(appState.points - 30, 180), badge: "🌸" },
+    { name: "Ahmed", points: Math.max(appState.points - 70, 120), badge: "🌱" },
+    { name: "Chen", points: Math.max(appState.points - 110, 90), badge: "🌿" }
+  ];
+
+  // Sort descending by points
+  learners.sort((a, b) => b.points - a.points);
+
+  container.innerHTML = "";
+  learners.forEach((user, index) => {
+    const rank = index + 1;
+    const row = document.createElement("div");
+    row.className = `leaderboard-row ${user.isUser ? 'user-row' : ''}`;
+    row.innerHTML = `
+      <span class="rank-num">${rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`}</span>
+      <span class="user-name">${user.badge} ${user.name}</span>
+      <span class="user-xp">${user.points} XP</span>
+    `;
+    container.appendChild(row);
+  });
+}
+
+// GAMIFICATION 3: Quick Practice Spaced Repetition Flashcards
+let flashcardDeck = [];
+let currentFlashcardIndex = 0;
+
+function openQuickPracticeModal() {
+  const modal = document.getElementById("quick-practice-modal");
+  if (!modal) return;
+
+  // Gather cards from vocabularyBank
+  const bank = learningDatabase.vocabularyBank || [];
+  if (bank.length === 0) return;
+
+  // Pick 10 random cards
+  flashcardDeck = [...bank].sort(() => 0.5 - Math.random()).slice(0, 10);
+  currentFlashcardIndex = 0;
+
+  renderFlashcardPractice();
+  modal.style.display = "flex";
+
+  const msg = `⚡ Hızlı Pratik Modu! Flaşkartı çevirerek kendini test et!`;
+  triggerYusufMessage(msg);
+  speakText(msg);
+}
+
+function renderFlashcardPractice() {
+  const container = document.getElementById("flashcard-practice-container");
+  if (!container) return;
+
+  if (currentFlashcardIndex >= flashcardDeck.length) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 20px;">
+        <span style="font-size: 48px;">🎉</span>
+        <h4 style="color: var(--color-primary); margin: 10px 0;">Harika İlerleme Suzi!</h4>
+        <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 16px;">
+          10 kartlık hızlı pratik turunu tamamladın! +15 Daisy Puanı kazandın.
+        </p>
+        <button class="action-cta-btn" onclick="openQuickPracticeModal()">Tekrar Pratik Yap 🔄</button>
+      </div>
+    `;
+    awardPoints(15);
+    triggerCelebration();
+    return;
+  }
+
+  const card = flashcardDeck[currentFlashcardIndex];
+  container.innerHTML = `
+    <div class="flashcard-box" id="active-flashcard">
+      <div class="flashcard-inner">
+        <div class="flashcard-front">
+          <span style="font-size: 12px; color: var(--color-text-muted); text-transform: uppercase; margin-bottom: 8px;">Türkçe Kelime</span>
+          <h2 style="font-size: 26px; color: var(--color-primary); margin-bottom: 6px;">${card.word}</h2>
+          <span style="font-size: 12px; color: var(--color-secondary);">[${card.pronunciation}]</span>
+          <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 16px;">🔄 Çevirmek için dokun</p>
+        </div>
+        <div class="flashcard-back">
+          <span style="font-size: 12px; color: var(--color-primary); font-weight: 700; margin-bottom: 4px;">Anlamı & Cümle</span>
+          <h3 style="font-size: 18px; color: var(--color-primary); margin-bottom: 4px;">${card.translation_ar}</h3>
+          <p style="font-size: 13px; color: var(--color-secondary); margin-bottom: 10px;">${card.translation_en}</p>
+          <div style="background: var(--bg-card); padding: 8px; border-radius: 8px; border: 1px solid var(--color-border); width: 100%;">
+            <p style="font-size: 12px; font-weight: 600; color: var(--color-text);">${card.sentence}</p>
+            <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 2px;">${card.sentence_ar}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="flashcard-actions">
+      <button class="fc-btn fc-btn-again" id="btn-fc-again">❌ Tekrar Et</button>
+      <button class="fc-btn fc-btn-know" id="btn-fc-know">✅ Biliyorum (+5 XP)</button>
+    </div>
+  `;
+
+  // Audio speech on render
+  speakText(card.word);
+
+  const fcBox = document.getElementById("active-flashcard");
+  fcBox.addEventListener("click", () => {
+    fcBox.classList.toggle("flipped");
+    if (fcBox.classList.contains("flipped")) {
+      speakText(card.sentence);
+    }
+  });
+
+  document.getElementById("btn-fc-again").addEventListener("click", () => {
+    currentFlashcardIndex++;
+    renderFlashcardPractice();
+  });
+
+  document.getElementById("btn-fc-know").addEventListener("click", () => {
+    const wordKey = card.word.toLowerCase();
+    if (!appState.wordBank.includes(wordKey)) {
+      appState.wordBank.push(wordKey);
+    }
+    awardPoints(5);
+    playSynthTone(783.99, "sine", 0.2); // G5
+    currentFlashcardIndex++;
+    renderFlashcardPractice();
+  });
+}
+
 
 function switchHubFromAction(hubName) {
   const buttonByHub = {

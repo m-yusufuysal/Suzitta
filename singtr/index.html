@@ -225,6 +225,7 @@
       
       <!-- Top header panel -->
       <header>
+        <button class="mobile-drawer-toggle" id="btn-toggle-drawer" title="Menüyü Aç/Kapat">☰</button>
         <div class="header-title-container">
           <h2 id="page-main-title">Hoş Geldin, Suzi! 🌼</h2>
           <p id="page-subtitle">Sıfırdan B2/C1 Seviyesine Türkçe Öğrenme Bahçesi</p>
@@ -499,6 +500,77 @@
       </div>
     </div>
 
+  </div>
+
+  <!-- Mobile Drawer Backdrop Overlay -->
+  <div class="sidebar-drawer-backdrop" id="drawer-backdrop"></div>
+
+  <!-- Mobile Bottom Navigation Bar (Smartphones) -->
+  <nav class="mobile-bottom-bar">
+    <button class="mobile-nav-item active" id="mob-nav-garden">
+      <span class="icon">🌱</span>
+      <span class="lbl">Bahçem</span>
+    </button>
+    <button class="mobile-nav-item" id="mob-nav-dictionary">
+      <span class="icon">🔍</span>
+      <span class="lbl">Sözlük</span>
+    </button>
+    <button class="mobile-nav-item" id="mob-nav-bank">
+      <span class="icon">🌸</span>
+      <span class="lbl">Kelime Bankam</span>
+    </button>
+    <button class="mobile-nav-item" id="mob-nav-practice">
+      <span class="icon">⚡</span>
+      <span class="lbl">Pratik</span>
+    </button>
+  </nav>
+
+  <!-- GAMIFICATION MODAL 1: Daily Academic Missions -->
+  <div class="game-modal-backdrop" id="daily-missions-modal" style="display: none;">
+    <div class="game-modal-card">
+      <div class="game-modal-header">
+        <h3>🎯 Günlük Akademik Görevler</h3>
+        <button class="game-modal-close" id="btn-close-missions">✖</button>
+      </div>
+      <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 16px;">
+        Her gün Türkçe pratik yaparak Papatya Puanı (XP) ve seviye kazan!
+      </p>
+      <div class="missions-list" id="missions-list">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- GAMIFICATION MODAL 2: Suzi League Leaderboard -->
+  <div class="game-modal-backdrop" id="suzi-league-modal" style="display: none;">
+    <div class="game-modal-card">
+      <div class="game-modal-header">
+        <h3>🏆 Suzi Akademik Ligi</h3>
+        <button class="game-modal-close" id="btn-close-league">✖</button>
+      </div>
+      <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 16px;">
+        Türkçe öğrenen öğrencilerle tatlı rekabet! İlk 3'e gir, Altın Papatya Rozeti kazan.
+      </p>
+      <div class="league-leaderboard" id="league-leaderboard">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- GAMIFICATION MODAL 3: Quick Practice / Spaced Repetition Flashcards -->
+  <div class="game-modal-backdrop" id="quick-practice-modal" style="display: none;">
+    <div class="game-modal-card practice-card-modal">
+      <div class="game-modal-header">
+        <h3>⚡ Hızlı Pratik & Aralıklı Tekrar</h3>
+        <button class="game-modal-close" id="btn-close-practice">✖</button>
+      </div>
+      <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 12px;">
+        Kartı çevirerek kendini test et! Hatırladıklarını onaylayıp hafızanı güçlendir.
+      </p>
+      <div id="flashcard-practice-container">
+        <!-- Rendered dynamically -->
+      </div>
+    </div>
   </div>
 
   <script src="database.js"></script>

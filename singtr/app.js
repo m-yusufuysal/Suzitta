@@ -1,1935 +1,547 @@
-// Suzi'nin Papatya Bahçesi - Core Application Logic (Gold Edition)
+// ═══════════════════════════════════════════════════════════════
+// Suzi'nin Papatya Bahçesi - Core Application Logic
+// Trilingual (TR / EN / AR), Arabic Cognates, and Daisy Petals Gamification
+// ═══════════════════════════════════════════════════════════════
 
-let appState = {
-  points: 0,
-  completedLessons: [], // list of lesson ids completed (e.g. ["l1_1"])
-  wordBank: [], // list of Turkish words marked as learned
-  activeLevelId: 1,
+// Global App State
+const appState = {
+  currentLang: localStorage.getItem("suzitta_lang") || "tr",
+  activeView: "garden",
+  currentLevelId: 1,
   activeLesson: null,
-  activeTab: "intro",
-  activeHub: "garden", // "garden", "dictionary", "wordbank"
-  pluckedPetals: [], // Index of vocab card selected in active lesson
-  quizIndex: 0,
-  quizQuestions: [], // dynamically generated quiz questions
-  quizAnswers: [],
-  suffixCurrentWordIndex: 0,
-  suffixAssembled: [],
+  selectedWord: null,
+  bloomedWords: new Set(JSON.parse(localStorage.getItem("suzitta_bloomed_words") || "[]")),
   isMuted: false,
-  streak: 1
+  voiceSpeed: 0.85
+};
+
+// Interface Internationalization Dictionary (TR / EN / AR)
+const i18n = {
+  tr: {
+    brandTitle: "Suzi'nin Bahçesi",
+    brandSub: "بستان سوزي للغة التركية",
+    navGarden: "Papatya Bahçem",
+    navCognates: "Ortak Kelimeler",
+    navDictionary: "Sözlük",
+    navBank: "Kelime Bankam",
+    levelsHeader: "SEVİYELER (LEVELS)",
+    statPetalsLbl: "Açan Yapraklar",
+    statProgressLbl: "Genel İlerleme",
+    langLbl: "Dil / Language:",
+    backGarden: "Bahçeye Dön",
+    daisyTitle: "🌸 Papatya Çiçeği & Yapraklar",
+    daisyHint: "Her kelime bir yapraktır. Yaprağa dokun, öğren ve çiçeğini açtır!",
+    inspectorEmptyTitle: "Bir Yaprak Seçin",
+    inspectorEmptyDesc: "Papatyadan bir yaprağa dokunarak kelimenin anlamını, örnek cümlesini ve Arapça kökenini inceleyin.",
+    bloomBtnAction: "Yaprağı Açtır 🌼 (+5 XP)",
+    bloomedStateBtn: "Yaprak Çiçek Açtı 🌸",
+    cognateTitle: "💡 Arapça - Türkçe Ortak Kelimeler (الكلمات المشتركة)",
+    cognateDesc: "Suzi'nin ana dili Arapça olduğu için Türkçe öğrenmek çok kolay! Türkçe'de Arapça ile ortak yüzlerce köklü kelime bulunur.",
+    dictTitle: "📚 Büyük Türkçe - İngilizce - Arapça Sözlük",
+    dictSubtitle: "2,500'den fazla doğrulanmış kelime, örnek cümle ve telaffuz rehberi.",
+    dictSearchPlaceholder: "Kelime ara... (Türkçe, English, العربية)",
+    wbTitle: "🗂️ Öğrendiğin Yapraklar & Kelimeler",
+    wbSubtitle: "Papatya bahçende suladığın ve tamamen açan kelimeleriniz.",
+    wbEmptyText: "Henüz kelime öğrenilmedi. Papatya yapraklarına dokunarak öğrenmeye başla!",
+    yusufWelcome: "Hoş geldin Suzi! 🌼 Papatyadan bir yaprak seçerek öğrenmeye başlayalım!"
+  },
+  en: {
+    brandTitle: "Suzi's Garden",
+    brandSub: "Suzi's Turkish Learning Garden",
+    navGarden: "Daisy Garden",
+    navCognates: "Arabic Cognates",
+    navDictionary: "Dictionary",
+    navBank: "Word Bank",
+    levelsHeader: "LEVELS",
+    statPetalsLbl: "Bloomed Petals",
+    statProgressLbl: "Overall Progress",
+    langLbl: "Language:",
+    backGarden: "Back to Garden",
+    daisyTitle: "🌸 Daisy Flower & Petals",
+    daisyHint: "Every word is a petal. Touch a petal to learn and bloom your flower!",
+    inspectorEmptyTitle: "Select a Petal",
+    inspectorEmptyDesc: "Touch a petal on the daisy to inspect meanings, sentences, and Arabic root notes.",
+    bloomBtnAction: "Bloom This Petal 🌼",
+    bloomedStateBtn: "Petal Bloomed 🌸",
+    cognateTitle: "💡 Arabic - Turkish Shared Cognates",
+    cognateDesc: "Since Suzi's native language is Arabic, learning Turkish is natural! Turkish shares hundreds of rooted words with Arabic.",
+    dictTitle: "📚 Turkish - English - Arabic Dictionary",
+    dictSubtitle: "Over 2,500 verified words with example sentences and pronunciation guides.",
+    dictSearchPlaceholder: "Search word... (Turkish, English, Arabic)",
+    wbTitle: "🗂️ Mastered Words & Petals",
+    wbSubtitle: "Words and petals you have bloomed in your garden.",
+    wbEmptyText: "No petals bloomed yet. Touch daisy petals to start learning!",
+    yusufWelcome: "Welcome Suzi! 🌼 Let's pick a petal from the daisy to start learning!"
+  },
+  ar: {
+    brandTitle: "بستان سوزي",
+    brandSub: "بستان سوزي لتعلم اللغة التركية",
+    navGarden: "بستان الأقحوان",
+    navCognates: "الكلمات المشتركة",
+    navDictionary: "المعجم",
+    navBank: "بنك الكلمات",
+    levelsHeader: "المستويات",
+    statPetalsLbl: "البتلات المتفتحة",
+    statProgressLbl: "التقدم العام",
+    langLbl: "اللغة:",
+    backGarden: "العودة إلى البستان",
+    daisyTitle: "🌸 زهرة الأقحوان والبتلات",
+    daisyHint: "كل كلمة هي بتلة. إلمس البتلة لتعلمها وجعل زهرتك تتفتح!",
+    inspectorEmptyTitle: "اختر بتلة",
+    inspectorEmptyDesc: "إلمس بتلة في الأقحوان لاستعراض المعنى والجملة وأصل الكلمة في العربية.",
+    bloomBtnAction: "افتح البتلة 🌼",
+    bloomedStateBtn: "تفتحت البتلة 🌸",
+    cognateTitle: "💡 الكلمات المشتركة بين العربية والتركية",
+    cognateDesc: "بما أن لغة سوزي الأم هي العربية، فتعلم التركية سهل للغاية! هناك مئات الكلمات المشتركة مع العربية.",
+    dictTitle: "📚 المعجم الكبير: تركي - إنجليزي - عربي",
+    dictSubtitle: "أكثر من 2500 كلمة موثقة مع جمل توضيحية ونطق صوتي.",
+    dictSearchPlaceholder: "ابحث عن كلمة... (تركي، إنجليزي، عربي)",
+    wbTitle: "🗂️ الكلمات والبتلات المكتسبة",
+    wbSubtitle: "الكلمات والبتلات التي قمت بسقايتها وتفتيحها في بستانك.",
+    wbEmptyText: "لم يتم تفتيح أي بتلات بعد. إلمس بتلات الأقحوان للبدء بالتعلم!",
+    yusufWelcome: "أهلاً بكِ يا سوزي! 🌼 لنختر بتلة من زهرة الأقحوان ونبدأ التعلم!"
+  }
 };
 
 // Initialize Application
 document.addEventListener("DOMContentLoaded", () => {
-  normalizeLearningDatabase();
-  loadProgress();
-  setupEventListeners();
-  renderLevelsList();
-  showLevelOverview(appState.activeLevelId);
-  setupMainHubsRouter();
-  populateDictionaryThemes();
-  renderDictionaryTable();
-  updateOverallProgress();
-
-  // Show welcome modal if not welcomed in this session
-  const welcomed = sessionStorage.getItem("suzi_tr_welcomed");
-  if (welcomed === "true") {
-    const modal = document.getElementById("welcome-modal");
-    if (modal) modal.style.display = "none";
-    triggerYusufMessage(learningDatabase.yusufFeedback.welcome);
-  }
+  initLanguageSelector();
+  initNavigation();
+  initLevelSelector();
+  renderCurrentView();
+  updateGlobalStats();
 });
 
-// Setup DOM Event Listeners
-function setupEventListeners() {
-  // Welcome Modal Start Button
-  const welcomeStartBtn = document.getElementById("btn-welcome-start");
-  if (welcomeStartBtn) {
-    welcomeStartBtn.addEventListener("click", () => {
-      // User gesture allows audio to play
-      initAudioContext();
-      
-      // Play arpeggiated major chord
-      playSynthTone(523.25, "sine", 0.3); // C5
-      setTimeout(() => playSynthTone(659.25, "sine", 0.3), 100); // E5
-      setTimeout(() => playSynthTone(783.99, "sine", 0.3), 200); // G5
-      setTimeout(() => playSynthTone(1046.50, "sine", 0.5), 300); // C6
-
-      // Hide modal
-      const modal = document.getElementById("welcome-modal");
-      if (modal) {
-        modal.classList.add("fade-out");
-        setTimeout(() => {
-          modal.style.display = "none";
-        }, 400);
-      }
-
-      sessionStorage.setItem("suzi_tr_welcomed", "true");
-
-      // Initial greeting
-      triggerYusufMessage(learningDatabase.yusufFeedback.welcome);
-      speakText(learningDatabase.yusufFeedback.welcome, true);
-      
-      // Highlight study streak
-      if (appState.streak > 1) {
-        setTimeout(() => {
-          const msg = `Harika Suzi! Çalışma serin devam ediyor! Tam ${appState.streak} gündür üst üste Türkçe öğreniyorsun! 🔥`;
-          triggerYusufMessage(msg);
-          speakText(msg);
-        }, 4000);
-      }
+// Internationalization Handler
+function initLanguageSelector() {
+  const langBtns = document.querySelectorAll(".lang-btn");
+  langBtns.forEach(btn => {
+    btn.addEventListener("click", () => {
+      langBtns.forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      appState.currentLang = btn.dataset.lang;
+      localStorage.setItem("suzitta_lang", appState.currentLang);
+      applyTrilingualText();
     });
+  });
+
+  // Set active button
+  const currentBtn = document.querySelector(`.lang-btn[data-lang="${appState.currentLang}"]`);
+  if (currentBtn) {
+    langBtns.forEach(b => b.classList.remove("active"));
+    currentBtn.classList.add("active");
   }
 
-  // Voice Speed Selector
-  document.getElementById("voice-speed").addEventListener("change", () => {
-    const speed = document.getElementById("voice-speed").value;
-    triggerYusufMessage(`Ses hızı ${speed}x olarak ayarlandı Suzi! 🗣️`);
-  });
+  applyTrilingualText();
+}
 
-  // Audio Test Button
-  document.getElementById("btn-audio-test").addEventListener("click", () => {
-    const testText = "Merhaba Suzi! Türkçe öğrenme bahçene hoş geldin.";
-    speakText(testText);
-    triggerYusufMessage("Ses sistemini kontrol ettim, gayet iyi duyuluyor! 🔊");
-  });
+function applyTrilingualText() {
+  const t = i18n[appState.currentLang] || i18n.tr;
 
-  // Back to Garden Button
-  document.getElementById("btn-back-to-garden").addEventListener("click", () => {
-    exitActiveLesson();
-  });
+  // Header & Sidebar UI
+  document.getElementById("ui-brand-title").textContent = t.brandTitle;
+  document.getElementById("ui-nav-garden").textContent = t.navGarden;
+  document.getElementById("ui-nav-cognates").textContent = t.navCognates;
+  document.getElementById("ui-nav-dictionary").textContent = t.navDictionary;
+  document.getElementById("ui-nav-bank").textContent = t.navBank;
+  document.getElementById("ui-levels-header").textContent = t.levelsHeader;
+  document.getElementById("ui-stat-petals-lbl").textContent = t.statPetalsLbl;
+  document.getElementById("ui-stat-progress-lbl").textContent = t.statProgressLbl;
+  document.getElementById("ui-lang-lbl").textContent = t.langLbl;
+  document.getElementById("ui-back-garden-lbl").textContent = t.backGarden;
 
-  // Workspace Tabs Selector
-  const tabs = document.querySelectorAll(".ws-tab-btn");
-  tabs.forEach(tab => {
-    tab.addEventListener("click", (e) => {
-      const targetTab = e.target.getAttribute("data-tab");
-      switchTab(targetTab);
-    });
-  });
+  // Workspace Titles
+  document.getElementById("ui-daisy-canvas-title").textContent = t.daisyTitle;
+  document.getElementById("ui-daisy-canvas-hint").textContent = t.daisyHint;
+  document.getElementById("ui-inspector-empty-title").textContent = t.inspectorEmptyTitle;
+  document.getElementById("ui-inspector-empty-desc").textContent = t.inspectorEmptyDesc;
 
-  // Start vocabulary plucker button inside intro tab
-  document.getElementById("btn-start-petals").addEventListener("click", () => {
-    switchTab("words");
-  });
+  // Dict & Bank Titles
+  document.getElementById("ui-dict-title").textContent = t.dictTitle;
+  document.getElementById("ui-dict-subtitle").textContent = t.dictSubtitle;
+  document.getElementById("dict-search-input").placeholder = t.dictSearchPlaceholder;
 
-  // Voice playback inside word details cards
-  document.getElementById("word-card-detail").addEventListener("click", (e) => {
-    const speechBtn = e.target.closest(".word-speech-btn");
-    if (speechBtn) {
-      const word = speechBtn.getAttribute("data-word");
-      speakText(word);
-    }
-  });
+  document.getElementById("ui-wb-title").textContent = t.wbTitle;
+  document.getElementById("ui-wb-subtitle").textContent = t.wbSubtitle;
+  document.getElementById("ui-wb-empty-text").textContent = t.wbEmptyText;
 
-  // Interactive Yusuf Mascot Avatar click -> reads bubble text out loud
-  document.getElementById("yusuf-avatar-btn").addEventListener("click", () => {
-    const bubbleText = document.getElementById("yusuf-text").textContent;
-    speakText(bubbleText);
-    const mascot = document.getElementById("yusuf-avatar-wrapper");
-    mascot.style.transform = "scale(1.15) rotate(-3deg)";
-    setTimeout(() => { mascot.style.transform = ""; }, 300);
-  });
+  document.getElementById("yusuf-text").textContent = t.yusufWelcome;
+}
 
-  // Dictionary Search Filters Events
-  document.getElementById("dict-search-input").addEventListener("input", renderDictionaryTable);
-  document.getElementById("dict-level-filter").addEventListener("change", renderDictionaryTable);
-  document.getElementById("dict-theme-filter").addEventListener("change", renderDictionaryTable);
-  document.getElementById("dict-only-cognates").addEventListener("change", renderDictionaryTable);
-  document.getElementById("dict-only-unlearned").addEventListener("change", renderDictionaryTable);
+// Main View Navigation
+function initNavigation() {
+  const navMap = [
+    { btnId: "nav-btn-garden", mobId: "mob-nav-garden", viewId: "garden" },
+    { btnId: "nav-btn-cognates", mobId: "mob-nav-cognates", viewId: "cognates" },
+    { btnId: "nav-btn-dictionary", mobId: "mob-nav-dictionary", viewId: "dictionary" },
+    { btnId: "nav-btn-bank", mobId: "mob-nav-bank", viewId: "bank" }
+  ];
 
-  // Mute Toggle Button
-  document.getElementById("btn-mute-toggle").addEventListener("click", () => {
-    appState.isMuted = !appState.isMuted;
-    const btn = document.getElementById("btn-mute-toggle");
-    btn.textContent = appState.isMuted ? '🔇' : '🔊';
-    btn.classList.toggle('muted', appState.isMuted);
-    if (appState.isMuted) {
-      window.speechSynthesis.cancel();
-      triggerYusufMessage("Ses kapatıldı. Sessiz modda çalışıyorsun.");
-    } else {
-      triggerYusufMessage("Ses açıldı! Telaffuzları dinleyebilirsin.");
-    }
-  });
+  navMap.forEach(item => {
+    const desktopBtn = document.getElementById(item.btnId);
+    const mobBtn = document.getElementById(item.mobId);
 
-  // Mobile Drawer Toggle Button
-  const drawerBtn = document.getElementById("btn-toggle-drawer");
-  const drawerBackdrop = document.getElementById("drawer-backdrop");
-  const sidebar = document.querySelector("aside");
-  
-  if (drawerBtn && sidebar && drawerBackdrop) {
-    const toggleDrawer = () => {
-      sidebar.classList.toggle("drawer-open");
-      drawerBackdrop.classList.toggle("active");
+    const switchHandler = () => {
+      document.querySelectorAll(".sidebar-nav-btn, .mobile-nav-item").forEach(b => b.classList.remove("active"));
+      if (desktopBtn) desktopBtn.classList.add("active");
+      if (mobBtn) mobBtn.classList.add("active");
+
+      appState.activeView = item.viewId;
+      renderCurrentView();
+
+      // Close mobile drawer
+      document.querySelector("aside").classList.remove("open");
     };
-    drawerBtn.addEventListener("click", toggleDrawer);
-    drawerBackdrop.addEventListener("click", toggleDrawer);
-  }
 
-  // Mobile Bottom Navigation Bar Buttons
-  const mobNavGarden = document.getElementById("mob-nav-garden");
-  const mobNavDict = document.getElementById("mob-nav-dictionary");
-  const mobNavBank = document.getElementById("mob-nav-bank");
-  const mobNavPractice = document.getElementById("mob-nav-practice");
+    if (desktopBtn) desktopBtn.addEventListener("click", switchHandler);
+    if (mobBtn) mobBtn.addEventListener("click", switchHandler);
+  });
 
-  if (mobNavGarden) {
-    mobNavGarden.addEventListener("click", () => {
-      switchHubFromAction("garden");
-      updateMobileBottomNav("mob-nav-garden");
-    });
-  }
-  if (mobNavDict) {
-    mobNavDict.addEventListener("click", () => {
-      switchHubFromAction("dictionary");
-      updateMobileBottomNav("mob-nav-dictionary");
-    });
-  }
-  if (mobNavBank) {
-    mobNavBank.addEventListener("click", () => {
-      switchHubFromAction("wordbank");
-      updateMobileBottomNav("mob-nav-bank");
-    });
-  }
-  if (mobNavPractice) {
-    mobNavPractice.addEventListener("click", () => {
-      openQuickPracticeModal();
-      updateMobileBottomNav("mob-nav-practice");
+  // Mobile Drawer Toggle
+  const drawerBtn = document.getElementById("btn-toggle-drawer");
+  if (drawerBtn) {
+    drawerBtn.addEventListener("click", () => {
+      document.querySelector("aside").classList.toggle("open");
     });
   }
 
-  // Modal Close Buttons
-  document.getElementById("btn-close-missions")?.addEventListener("click", () => {
-    document.getElementById("daily-missions-modal").style.display = "none";
+  // Back to Garden button
+  document.getElementById("btn-back-to-garden").addEventListener("click", () => {
+    document.getElementById("active-lesson-section").style.display = "none";
+    document.getElementById("level-overview-section").style.display = "block";
   });
-  document.getElementById("btn-close-league")?.addEventListener("click", () => {
-    document.getElementById("suzi-league-modal").style.display = "none";
-  });
-  document.getElementById("btn-close-practice")?.addEventListener("click", () => {
-    document.getElementById("quick-practice-modal").style.display = "none";
-  });
-
-  // Level Up Modal Next Button
-  document.getElementById("btn-lvl-up-next").addEventListener("click", () => {
-    dismissLevelUpAndAdvance();
-  });
-
-  setupGamificationActions();
 }
 
-function updateMobileBottomNav(activeId) {
-  const items = document.querySelectorAll(".mobile-nav-item");
-  items.forEach(item => item.classList.toggle("active", item.id === activeId));
-}
+function renderCurrentView() {
+  document.querySelectorAll(".main-view-panel").forEach(p => p.style.display = "none");
 
-// Router switcher for three Main Navigation Hubs (Garden, Dictionary, Wordbank)
-function setupMainHubsRouter() {
-  const gardenBtn = document.getElementById("nav-btn-garden");
-  const dictBtn = document.getElementById("nav-btn-dictionary");
-  const bankBtn = document.getElementById("nav-btn-bank");
-
-  const viewGarden = document.getElementById("view-garden");
-  const viewDict = document.getElementById("view-dictionary");
-  const viewBank = document.getElementById("view-wordbank");
-
-  const sidebarLevelNav = document.getElementById("sidebar-level-section");
-
-  const switchHub = (hubName) => {
-    appState.activeHub = hubName;
-    
-    // Toggle active buttons
-    gardenBtn.classList.toggle("active", hubName === "garden");
-    dictBtn.classList.toggle("active", hubName === "dictionary");
-    bankBtn.classList.toggle("active", hubName === "wordbank");
-
-    // Toggle view panels
-    viewGarden.style.display = hubName === "garden" ? "block" : "none";
-    viewDict.style.display = hubName === "dictionary" ? "block" : "none";
-    viewBank.style.display = hubName === "wordbank" ? "block" : "none";
-
-    // Level selector visible only on garden path
-    sidebarLevelNav.style.display = hubName === "garden" ? "block" : "none";
-
-    if (hubName === "dictionary") {
-      renderDictionaryTable();
-    } else if (hubName === "wordbank") {
-      renderWordbankDashboard();
-    }
-  };
-
-  gardenBtn.addEventListener("click", () => switchHub("garden"));
-  dictBtn.addEventListener("click", () => switchHub("dictionary"));
-  bankBtn.addEventListener("click", () => switchHub("wordbank"));
-}
-
-// Local Storage Progress Sync
-function saveProgress() {
-  localStorage.setItem("suzi_tr_points", appState.points);
-  localStorage.setItem("suzi_tr_completed", JSON.stringify(appState.completedLessons));
-  localStorage.setItem("suzi_tr_wordbank", JSON.stringify(appState.wordBank));
-}
-
-function loadProgress() {
-  const savedPoints = localStorage.getItem("suzi_tr_points");
-  if (savedPoints !== null) appState.points = parseInt(savedPoints);
-  
-  const savedCompleted = localStorage.getItem("suzi_tr_completed");
-  if (savedCompleted !== null) appState.completedLessons = safeParseArray(savedCompleted);
-
-  const savedWordBank = localStorage.getItem("suzi_tr_wordbank");
-  if (savedWordBank !== null) appState.wordBank = safeParseArray(savedWordBank);
-
-  document.getElementById("daisy-points").textContent = appState.points;
-  
-  // Calculate daily streak
-  updateDailyStreak();
-}
-
-function safeParseArray(value) {
-  try {
-    const parsed = JSON.parse(value);
-    return Array.isArray(parsed) ? parsed : [];
-  } catch (error) {
-    console.warn("Saved progress could not be read; starting with a clean list.", error);
-    return [];
+  if (appState.activeView === "garden") {
+    document.getElementById("view-garden").style.display = "block";
+    renderLevelOverview();
+  } else if (appState.activeView === "cognates") {
+    document.getElementById("view-cognates").style.display = "block";
+    renderCognatesView();
+  } else if (appState.activeView === "dictionary") {
+    document.getElementById("view-dictionary").style.display = "block";
+    renderDictionaryView();
+  } else if (appState.activeView === "bank") {
+    document.getElementById("view-wordbank").style.display = "block";
+    renderWordBankView();
   }
 }
 
-function normalizeLearningDatabase() {
-  if (typeof learningDatabase === "undefined" || learningDatabase.__normalized) return;
+// Sidebar Level Selector
+function initLevelSelector() {
+  const levelsListContainer = document.getElementById("levels-list");
+  levelsListContainer.innerHTML = "";
 
-  const arabicCognates = {
-    merhaba: { root: "مرحبا", ar: "مرحباً", sentence: "Merhaba, Suzi; bugün Türkçe dersine sakin ve düzenli başlıyoruz.", sentence_ar: "مرحباً يا سوزي؛ نبدأ اليوم درس التركية بهدوء وانتظام.", sentence_en: "Hello, Suzi; today we begin the Turkish lesson calmly and methodically." },
-    kitap: { root: "كتاب", ar: "كتاب", sentence: "Bu kitap, Türkçe cümle kurmayı adım adım öğretiyor.", sentence_ar: "هذا الكتاب يعلّم بناء الجملة التركية خطوةً خطوة.", sentence_en: "This book teaches Turkish sentence building step by step." },
-    aile: { root: "عائلة", ar: "عائلة", sentence: "Ailemle her akşam kısa Türkçe cümleler tekrar ediyorum.", sentence_ar: "أراجع جملاً تركية قصيرة مع عائلتي كل مساء.", sentence_en: "I review short Turkish sentences with my family every evening." },
-    kalem: { root: "قلم", ar: "قلم", sentence: "Kalem ile yeni kelimeleri defterime yazıyorum.", sentence_ar: "أكتب الكلمات الجديدة بالقلم في دفتري.", sentence_en: "I write new words in my notebook with a pen." },
-    ders: { root: "درس", ar: "درس", sentence: "Ders başlamadan önce hedefimi belirliyorum.", sentence_ar: "أحدد هدفي قبل أن يبدأ الدرس.", sentence_en: "I set my goal before the lesson begins." },
-    saat: { root: "ساعة", ar: "ساعة", sentence: "Saat dokuzda on dakikalık telaffuz çalışması yapıyorum.", sentence_ar: "في الساعة التاسعة أتدرّب على النطق عشر دقائق.", sentence_en: "At nine o’clock I practice pronunciation for ten minutes." },
-    sabah: { root: "صباح", ar: "صباح", sentence: "Sabah öğrenilen kelimeler gün içinde daha kolay hatırlanır.", sentence_ar: "الكلمات التي تُتعلّم صباحاً يسهل تذكّرها خلال اليوم.", sentence_en: "Words learned in the morning are easier to remember during the day." },
-    cevap: { root: "جواب", ar: "جواب / إجابة", sentence: "Doğru cevabı seçmeden önce cümlenin anlamını düşün.", sentence_ar: "فكّري في معنى الجملة قبل اختيار الجواب الصحيح.", sentence_en: "Think about the sentence meaning before choosing the correct answer." },
-    soru: { root: "سؤال", ar: "سؤال", sentence: "Her soru, Türkçeyi daha net anlamak için bir fırsattır.", sentence_ar: "كل سؤال فرصة لفهم التركية بوضوح أكبر.", sentence_en: "Every question is an opportunity to understand Turkish more clearly." },
-    renk: { root: "رنگ/رنك", ar: "لون", sentence: "Renk adlarını öğrenirken gerçek nesnelerle örnek kuruyoruz.", sentence_ar: "عند تعلم أسماء الألوان نكوّن أمثلة بأشياء حقيقية.", sentence_en: "While learning color names, we make examples with real objects." }
-  };
-
-  const polishWord = (wordObj) => {
-    const key = (wordObj.word || "").toLocaleLowerCase("tr-TR");
-    const cognate = arabicCognates[key];
-    if (cognate) {
-      wordObj.isCognate = true;
-      wordObj.arabicRoot = cognate.root;
-      wordObj.translation_ar = cognate.ar;
-      wordObj.sentence = cognate.sentence;
-      wordObj.sentence_ar = cognate.sentence_ar;
-      wordObj.sentence_en = cognate.sentence_en;
-      wordObj.academicNote = `Arapça ile ortak kök/benzerlik: ${cognate.root}. Türkçede telaffuz ve cümle içindeki görev değişebilir.`;
-    } else if (!wordObj.sentence || /hakkında kısa ve yararlı bir açıklama yaptı|alıştırması yaptı|gerçek bir bağlam içinde açıkladı/.test(wordObj.sentence)) {
-      wordObj.sentence = buildMeaningfulSentence(wordObj);
-      wordObj.sentence_ar = buildMeaningfulArabicSentence(wordObj);
-      wordObj.sentence_en = `We use “${wordObj.word}” in a clear, realistic Turkish sentence.`;
-    }
-  };
-
-  ensureMinimumDictionarySize(2500);
-  enrichLessonsForAcademicPath();
-
-  learningDatabase.levels.forEach((level) => {
-    level.description = `${level.description} Her ders; hedef, anlam, telaffuz, Arapça köprü ve kısa sınav sırasıyla ilerler.`;
-    level.lessons.forEach((lesson) => {
-      lesson.intro = `${lesson.intro} Önce anlamı kavra, sonra telaffuzu dinle, ardından örnek cümleyi okuyup mini sınavla pekiştir.`;
-      (lesson.vocabulary || []).forEach(polishWord);
-    });
-  });
-  (learningDatabase.vocabularyBank || []).forEach(polishWord);
-
-  learningDatabase.yusufFeedback.welcome = "Hoş geldin Suzi! Bu akademik Türkçe yolculuğunda hedefimiz net: anlamı doğru kurmak, telaffuzu bilinçli geliştirmek ve her kelimeyi gerçek bir bağlamda kullanmak. Arapça ile ortak kelimelerde sana özel köprüler göstereceğim. 🌼";
-  learningDatabase.__normalized = true;
-}
-
-function ensureMinimumDictionarySize(minimumSize) {
-  if (!Array.isArray(learningDatabase.vocabularyBank)) learningDatabase.vocabularyBank = [];
-
-  const originalBank = [...learningDatabase.vocabularyBank];
-  const existing = new Set(originalBank.map(w => (w.word || "").toLocaleLowerCase("tr-TR")));
-  const addEntry = (entry) => {
-    if (learningDatabase.vocabularyBank.length >= minimumSize) return;
-    const key = (entry.word || "").toLocaleLowerCase("tr-TR").trim();
-    if (!key || existing.has(key)) return;
-    existing.add(key);
-    learningDatabase.vocabularyBank.push(entry);
-  };
-
-  const pedagogicPatterns = [
-    {
-      suffix: " kelimesi",
-      ar: "كلمة",
-      en: "the word",
-      note: "Kelimenin yalın biçimini tanıma ve doğru telaffuz etme adımı."
-    },
-    {
-      suffix: " anlamı",
-      ar: "معنى",
-      en: "the meaning of",
-      note: "Anlamı Türkçe bağlamdan çıkarma ve çeviriyle kontrol etme adımı."
-    },
-    {
-      suffix: " örneği",
-      ar: "مثال",
-      en: "an example of",
-      note: "Kelimeyi doğru bir örnek cümlede görme adımı."
-    },
-    {
-      suffix: " cümlesi",
-      ar: "جملة",
-      en: "a sentence with",
-      note: "Kelimeyi kendi cümlesine taşıma adımı."
-    },
-    {
-      suffix: " kartı",
-      ar: "بطاقة",
-      en: "a flashcard for",
-      note: "Papatya yaprağında hızlı tekrar ve hatırlama adımı."
-    }
-  ];
-
-  originalBank.forEach((base) => {
-    if (learningDatabase.vocabularyBank.length >= minimumSize) return;
-    const root = (base.word || "").trim();
-    if (!root || root.length < 2) return;
-    pedagogicPatterns.forEach((pattern) => {
-      const word = `${root}${pattern.suffix}`;
-      addEntry({
-        word,
-        pronunciation: word,
-        translation_ar: `${pattern.ar} ${base.translation_ar || root}`,
-        translation_en: `${pattern.en} “${base.translation_en || root}”`,
-        translation_zh: base.translation_zh || "学习词条",
-        isCognate: Boolean(base.isCognate),
-        arabicRoot: base.arabicRoot || "",
-        sentence: `Suzi, papatya bahçesinde “${word}” üzerinde çalışır ve ardından kendi doğru cümlesini kurar.`,
-        sentence_ar: `تدرس سوزي «${word}» في حديقة الأقحوان ثم تؤلف جملتها الصحيحة.`,
-        sentence_en: `Suzi studies “${word}” in the daisy garden and then builds her own correct sentence.`,
-        sentence_zh: base.sentence_zh || "苏子在雏菊花园里学习这个词条，然后造一个正确的句子。",
-        level: base.level || 1,
-        category: base.category || "Akademik Kelime Çalışması",
-        wordType: "phrase",
-        academicNote: pattern.note
-      });
-    });
-  });
-
-  const gardenCurriculum = [
-    ["bahçe yolu", "مسار الحديقة", "garden path"],
-    ["papatya yaprağı", "بتلة الأقحوان", "daisy petal"],
-    ["çiçek tarhı", "حوض الزهور", "flower bed"],
-    ["tohum kutusu", "صندوق البذور", "seed box"],
-    ["sulama kabı", "إبريق الري", "watering can"],
-    ["güneş ışığı", "ضوء الشمس", "sunlight"],
-    ["öğrenme patikası", "مسار التعلم", "learning trail"],
-    ["tekrar köşesi", "زاوية المراجعة", "review corner"],
-    ["cümle fidanı", "شتلة الجملة", "sentence sapling"],
-    ["hedef tabelası", "لوحة الهدف", "goal sign"],
-    ["başarı rozeti", "شارة النجاح", "achievement badge"],
-    ["dinleme durağı", "محطة الاستماع", "listening station"],
-    ["okuma bankı", "مقعد القراءة", "reading bench"],
-    ["yazma defteri", "دفتر الكتابة", "writing notebook"],
-    ["sınav kapısı", "بوابة الاختبار", "quiz gate"]
-  ];
-
-  gardenCurriculum.forEach(([word, ar, en], idx) => {
-    addEntry({
-      word,
-      pronunciation: word,
-      translation_ar: ar,
-      translation_en: en,
-      translation_zh: "学习花园",
-      isCognate: false,
-      arabicRoot: "",
-      sentence: `Suzi, ${word} bölümünde bir kelimeyi dinler, okur ve anlamlı bir cümlede kullanır.`,
-      sentence_ar: `في قسم ${ar}، تستمع سوزي إلى كلمة وتقرأها وتستخدمها في جملة ذات معنى.`,
-      sentence_en: `In the ${en} section, Suzi listens to a word, reads it, and uses it in a meaningful sentence.`,
-      sentence_zh: "苏子在学习花园中听、读并使用这个词。",
-      level: (idx % 5) + 1,
-      category: "Papatya Bahçesi Akademik Akış",
-      wordType: "phrase",
-      academicNote: "Bahçe metaforu ile gerçek öğrenme adımını birleştiren anlamlı görev kelimesidir."
-    });
-  });
-}
-
-function enrichLessonsForAcademicPath() {
-  learningDatabase.levels.forEach((level) => {
-    level.lessons.forEach((lesson, index) => {
-      lesson.milestone = `${level.title.split(":")[0]} • Adım ${index + 1}: dinle, oku, örnekle, uygula, sınavla kanıtla.`;
-      lesson.successCriteria = [
-        "Kelimelerin anlamını Arapça/İngilizce köprüyle açıklar.",
-        "Telaffuzu dinleyip örnek cümleyi sesli tekrar eder.",
-        "Mini sınavda bağlama uygun cevabı seçer."
-      ];
-    });
-  });
-}
-
-function buildMeaningfulSentence(wordObj) {
-  if (wordObj.wordType === "v") return `Bugün “${wordObj.word}” fiilini kısa ve doğru bir cümlede kullanıyoruz.`;
-  if (wordObj.wordType === "a") return `Bu örnekte “${wordObj.word}” kelimesi bir ismi açıklıyor.`;
-  return `“${wordObj.word}” kelimesini günlük ve anlaşılır bir bağlamda öğreniyoruz.`;
-}
-
-function buildMeaningfulArabicSentence(wordObj) {
-  if (wordObj.wordType === "v") return `نستخدم فعل «${wordObj.translation_ar}» في جملة تركية قصيرة وصحيحة.`;
-  return `نتعلم كلمة «${wordObj.translation_ar}» ضمن سياق يومي واضح.`;
-}
-
-function updateDailyStreak() {
-  const today = new Date().toDateString();
-  const lastDate = localStorage.getItem("suzi_tr_last_study_date");
-  let streak = parseInt(localStorage.getItem("suzi_tr_streak") || "0");
-  
-  if (lastDate === today) {
-    if (streak === 0) streak = 1;
-  } else if (lastDate) {
-    const lastDateObj = new Date(lastDate);
-    const todayObj = new Date(today);
-    const diffTime = Math.abs(todayObj - lastDateObj);
-    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-    
-    if (diffDays === 1) {
-      streak++;
-    } else if (diffDays > 1) {
-      streak = 1;
-    }
-  } else {
-    streak = 1;
-  }
-  
-  localStorage.setItem("suzi_tr_last_study_date", today);
-  localStorage.setItem("suzi_tr_streak", streak);
-  appState.streak = streak;
-  
-  const streakEl = document.getElementById("streak-days");
-  if (streakEl) {
-    streakEl.textContent = `${streak} Gün`;
-  }
-}
-
-// Render Sidebar Level List
-function renderLevelsList() {
-  const levelsContainer = document.getElementById("levels-list");
-  levelsContainer.innerHTML = "";
-
-  learningDatabase.levels.forEach(level => {
-    const isLocked = isLevelLocked(level.id);
-    const isActive = level.id === appState.activeLevelId;
-
-    const navItem = document.createElement("div");
-    navItem.className = `level-nav-item ${isActive ? 'active' : ''} ${isLocked ? 'locked' : ''}`;
-    navItem.style.setProperty('--level-color', level.color);
-    
-    const totalLessons = level.lessons.length;
-    const completedInLevel = level.lessons.filter(l => appState.completedLessons.includes(l.id)).length;
-    const levelDone = completedInLevel === totalLessons;
-
-    navItem.innerHTML = `
-      <div class="level-nav-header">
-        <span class="level-tag" style="color: ${level.color}">${level.id === 5 ? 'C1' : 'A' + level.id} Seviye</span>
-        <span class="level-lock-icon">${isLocked ? '🔒' : levelDone ? '🌸' : '🌱'}</span>
-      </div>
-      <div class="level-title">${level.title.split(":")[1] || level.title}</div>
-      <div class="level-ar-title">${level.arabicTitle}</div>
+  learningDatabase.levels.forEach(lvl => {
+    const item = document.createElement("div");
+    item.className = `level-nav-item ${lvl.id === appState.currentLevelId ? "active" : ""}`;
+    item.innerHTML = `
+      <span class="lvl-dot"></span>
+      <span style="font-size: 13px; font-weight: 600;">Level A${lvl.id}</span>
     `;
 
-    if (!isLocked) {
-      navItem.addEventListener("click", () => {
-        document.querySelectorAll(".level-nav-item").forEach(item => item.classList.remove("active"));
-        navItem.classList.add("active");
-        
-        appState.activeLevelId = level.id;
-        showLevelOverview(level.id);
-      });
-    }
+    item.addEventListener("click", () => {
+      document.querySelectorAll(".level-nav-item").forEach(i => i.classList.remove("active"));
+      item.classList.add("active");
+      appState.currentLevelId = lvl.id;
+      appState.activeView = "garden";
+      document.getElementById("active-lesson-section").style.display = "none";
+      document.getElementById("level-overview-section").style.display = "block";
+      renderCurrentView();
+    });
 
-    levelsContainer.appendChild(navItem);
+    levelsListContainer.appendChild(item);
   });
 }
 
-function isLevelLocked(levelId) {
-  // BÜTÜN KİLİTLER AÇIK (Duolingo tarzı ama tamamen özgür)
-  return false;
-}
+// Render Garden Level Overview & Lessons
+function renderLevelOverview() {
+  const currentLvlObj = learningDatabase.levels.find(l => l.id === appState.currentLevelId) || learningDatabase.levels[0];
 
-// Render Level Overview Dashboard
-function showLevelOverview(levelId) {
-  document.getElementById("active-lesson-section").style.display = "none";
-  const levelOverview = document.getElementById("level-overview-section");
-  levelOverview.style.display = "flex";
-
-  const activeLevel = learningDatabase.levels.find(l => l.id === levelId);
-  
-  document.getElementById("current-level-title").textContent = activeLevel.title;
-  document.getElementById("current-level-title").style.color = activeLevel.color;
-  document.getElementById("current-level-ar-title").textContent = activeLevel.arabicTitle;
-  document.getElementById("current-level-desc").textContent = activeLevel.description;
+  document.getElementById("current-level-title").textContent = currentLvlObj.title;
+  document.getElementById("current-level-ar-title").textContent = currentLvlObj.arabicTitle;
 
   const lessonsGrid = document.getElementById("lessons-list");
   lessonsGrid.innerHTML = "";
 
-  activeLevel.lessons.forEach((lesson, index) => {
-    const isCompleted = appState.completedLessons.includes(lesson.id);
+  currentLvlObj.lessons.forEach(les => {
     const card = document.createElement("div");
-    card.className = `lesson-card ${isCompleted ? 'completed' : ''}`;
-    
+    card.className = "lesson-card";
+
+    // Calculate bloomed count for this lesson
+    const totalVocab = les.vocabulary.length;
+    const bloomedCount = les.vocabulary.filter(w => appState.bloomedWords.has(w.word)).length;
+
     card.innerHTML = `
-      <div class="lesson-card-header">
-        <span class="lesson-badge">Ders ${index + 1}</span>
-        <span class="status-badge">${isCompleted ? '🌸 Başarıldı' : '🌱 Hazır'}</span>
+      <h4>${les.title}</h4>
+      <p class="les-ar" dir="rtl">${les.arabicTitle}</p>
+      <p class="les-summary">${les.summary}</p>
+      <div class="lesson-card-footer">
+        <span>🌼 ${bloomedCount} / ${totalVocab} Yaprak Açtı</span>
+        <span>Aç ➡️</span>
       </div>
-      <h3>${lesson.title}</h3>
-      <div class="ar-h3">${lesson.arabicTitle}</div>
-      <p>${lesson.summary}</p>
-      <button class="start-lesson-btn">Çalışmaya Başla</button>
     `;
 
     card.addEventListener("click", () => {
-      enterActiveLesson(lesson);
+      openLessonWorkspace(les);
     });
 
     lessonsGrid.appendChild(card);
   });
 }
 
-// Compute total progress percentage
-function updateOverallProgress() {
-  let totalLessons = 0;
-  learningDatabase.levels.forEach(lvl => {
-    totalLessons += lvl.lessons.length;
-  });
-
-  const completedCount = appState.completedLessons.length;
-  const percentage = totalLessons > 0 ? Math.round((completedCount / totalLessons) * 100) : 0;
-  
-  document.getElementById("progress-percent").textContent = `${percentage}%`;
-  document.getElementById("overall-progress-bar").style.width = `${percentage}%`;
-}
-
-// Enter Lesson Workspace
-function enterActiveLesson(lesson) {
+// Open Active Lesson Workspace (Interactive Daisy Canvas)
+function openLessonWorkspace(lesson) {
   appState.activeLesson = lesson;
-  appState.activeTab = "intro";
-  appState.pluckedPetals = [];
-
   document.getElementById("level-overview-section").style.display = "none";
-  document.getElementById("active-lesson-section").style.display = "flex";
+  document.getElementById("active-lesson-section").style.display = "block";
 
   document.getElementById("ws-lesson-title").textContent = lesson.title;
-  document.getElementById("ws-lesson-ar-title").textContent = `${lesson.arabicTitle} • ${lesson.englishTitle}`;
-  
-  const hasVocab = lesson.vocabulary && lesson.vocabulary.length > 0;
-  const hasGrammar = lesson.grammar !== undefined || lesson.suffixBuilder !== undefined;
-  
-  document.getElementById("tab-btn-words").style.display = hasVocab ? "block" : "none";
-  document.getElementById("tab-btn-grammar").style.display = hasGrammar ? "block" : "none";
+  document.getElementById("ws-lesson-ar-title").textContent = lesson.arabicTitle;
 
-  document.getElementById("intro-lesson-eng-title").textContent = lesson.englishTitle;
-  document.getElementById("intro-lesson-text").innerHTML = `
-    <strong>Giriş Notları:</strong><br>
-    ${lesson.intro}<br><br>
-    <em>Profesyonel kelimeler ve örnek cümlelerin kilidini açmak için çalışmaya başlayalım!</em>
-  `;
+  renderDaisyFlower(lesson);
 
-  initPlantGrowthSvg(appState.completedLessons.includes(lesson.id));
-  switchTab("intro");
-  
-  renderAcademicPathCard(lesson);
-
-  const welcomeMsg = `Suzi! "${lesson.title}" dersine geldik. Başarılar dilerim! 🌸`;
-  triggerYusufMessage(welcomeMsg);
-  speakText(welcomeMsg);
-}
-
-function exitActiveLesson() {
-  appState.activeLesson = null;
-  showLevelOverview(appState.activeLevelId);
-  renderLevelsList();
-  updateOverallProgress();
-}
-
-function renderAcademicPathCard(lesson) {
-  const intro = document.getElementById("intro-lesson-text");
-  if (!intro) return;
-  const criteria = (lesson.successCriteria || []).map(item => `<li>✅ ${item}</li>`).join("");
-  const words = lesson.vocabulary || [];
-  const learnedCount = words.filter(w => appState.wordBank.includes(w.word.toLowerCase())).length;
-  const isCompleted = appState.completedLessons.includes(lesson.id);
-  intro.innerHTML += `
-    <div class="academic-path-card">
-      <div class="path-pill">🎓 Akademik Yol Haritası</div>
-      <strong>${lesson.milestone || "Anlam → Telaffuz → Cümle → Pratik → Sınav"}</strong>
-      <div class="path-status-grid">
-        <span>Başlatıldı: <b>Evet</b></span>
-        <span>Bitirildi: <b>${isCompleted ? "Evet" : "Hayır"}</b></span>
-        <span>Kelime: <b>${learnedCount}/${words.length}</b></span>
-      </div>
-      <ul>${criteria}</ul>
-      <div class="path-steps">
-        <span class="done">1 Dinle</span><span class="active-step">2 Yaprak seç</span><span>3 Cümle kur</span><span>4 Öğrendim</span><span>5 Sınav</span>
-      </div>
-    </div>`;
-}
-
-// Tabs switcher
-function switchTab(tabName) {
-  appState.activeTab = tabName;
-
-  const tabButtons = document.querySelectorAll(".ws-tab-btn");
-  tabButtons.forEach(btn => {
-    btn.classList.toggle("active", btn.getAttribute("data-tab") === tabName);
-  });
-
-  const panels = document.querySelectorAll(".tab-content-panel");
-  panels.forEach(panel => {
-    panel.classList.toggle("active", panel.id === `tab-${tabName}`);
-  });
-
-  if (tabName === "words") {
-    setupVocabularyDeck();
-  } else if (tabName === "grammar") {
-    setupGrammarSection();
-  } else if (tabName === "quiz") {
-    setupQuizSection();
-  }
-}
-
-// TAB 1: Plant growth SVG helper
-function initPlantGrowthSvg(alreadyCompleted) {
-  const stem = document.getElementById("plant-stem");
-  const leafL = document.getElementById("plant-leaf-l");
-  const leafR = document.getElementById("plant-leaf-r");
-  const flower = document.getElementById("plant-flower");
-
-  stem.setAttribute("d", "M 100 180 Q 100 180 100 180");
-  leafL.style.display = "none";
-  leafR.style.display = "none";
-  flower.style.display = "none";
-
-  if (alreadyCompleted) {
-    stem.setAttribute("d", "M 100 180 Q 80 130 100 80");
-    leafL.style.display = "block";
-    leafR.style.display = "block";
-    flower.style.display = "block";
-  } else {
-    setTimeout(() => {
-      stem.style.transition = "d 2s ease-out";
-      stem.setAttribute("d", "M 100 180 Q 90 150 100 120");
-    }, 500);
-
-    setTimeout(() => {
-      leafL.style.display = "block";
-      leafL.style.animation = "fadeIn 0.5s forwards";
-    }, 1500);
-  }
-}
-
-function advancePlantGrowth() {
-  const stem = document.getElementById("plant-stem");
-  const leafR = document.getElementById("plant-leaf-r");
-  const flower = document.getElementById("plant-flower");
-
-  if (appState.activeTab === "words" && leafR.style.display === "none") {
-    stem.setAttribute("d", "M 100 180 Q 80 130 100 80");
-    leafR.style.display = "block";
-    leafR.style.animation = "fadeIn 0.5s forwards";
-  } else if (appState.activeTab === "grammar" && flower.style.display === "none") {
-    flower.style.display = "block";
-    flower.style.animation = "scaleIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards";
-  }
-}
-
-// TAB 2: Vocabulary Cards Deck Layout (Simplified, high-density study mode)
-function setupVocabularyDeck() {
-  const deckContainer = document.getElementById("vocab-cards-deck");
-  const words = appState.activeLesson.vocabulary || [];
-
-  // Reset info box
+  // Clear inspector initially
   document.getElementById("word-empty-view").style.display = "flex";
   document.getElementById("word-card-detail").style.display = "none";
+}
 
-  deckContainer.innerHTML = "";
-  if (words.length === 0) return;
+// Render Interactive Daisy Flower Radial Petals
+function renderDaisyFlower(lesson) {
+  const canvas = document.getElementById("daisy-flower-canvas");
+  canvas.innerHTML = "";
 
-  // Build card deck items
-  words.forEach((vocab, idx) => {
-    const isLearned = appState.wordBank.includes(vocab.word.toLowerCase());
-    const card = document.createElement("div");
-    
-    card.className = `vocab-card-item petal-${idx % 12} ${isLearned ? 'learned' : ''}`;
-    card.style.setProperty("--petal-rotation", `${(idx % 12) * 30}deg`);
-    card.innerHTML = `
-      <span class="petal-word">${vocab.word}</span>
-      <small>${vocab.translation_en}</small>
-    `;
+  const total = lesson.vocabulary.length;
+  const bloomedCount = lesson.vocabulary.filter(w => appState.bloomedWords.has(w.word)).length;
 
-    card.addEventListener("click", () => {
-      // Toggle select styles
-      document.querySelectorAll(".vocab-card-item").forEach(c => c.classList.remove("active"));
-      card.classList.add("active");
-      
-      showLessonWordDetails(vocab, idx, card);
+  document.getElementById("ws-bloomed-count").textContent = bloomedCount;
+  document.getElementById("ws-total-count").textContent = total;
+
+  // Flower Core Center
+  const core = document.createElement("div");
+  core.className = "flower-center-core";
+  core.innerHTML = `
+    <span class="icon">🌼</span>
+    <span class="lbl">${bloomedCount}/${total} Açtı</span>
+  `;
+  canvas.appendChild(core);
+
+  // Render radial petals
+  const radius = 115; // Radius from center
+  lesson.vocabulary.forEach((wordObj, idx) => {
+    const angle = (idx / total) * (2 * Math.PI) - (Math.PI / 2);
+    const x = Math.cos(angle) * radius;
+    const y = Math.sin(angle) * radius;
+
+    const petal = document.createElement("div");
+    petal.className = "daisy-petal-item";
+    if (appState.bloomedWords.has(wordObj.word)) petal.classList.add("bloomed");
+    if (wordObj.is_cognate) petal.classList.add("is-cognate");
+
+    petal.style.transform = `translate(${x}px, ${y}px)`;
+    petal.textContent = wordObj.word;
+
+    petal.addEventListener("click", () => {
+      document.querySelectorAll(".daisy-petal-item").forEach(p => p.classList.remove("selected"));
+      petal.classList.add("selected");
+      appState.selectedWord = wordObj;
+      renderWordInspector(wordObj, petal);
     });
 
-    deckContainer.appendChild(card);
+    canvas.appendChild(petal);
   });
-
-  updateDeckProgressTracker();
-  advancePlantGrowth();
 }
 
-function updateDeckProgressTracker() {
-  const words = appState.activeLesson.vocabulary || [];
-  const total = words.length;
-  
-  // Count how many are marked learned in wordBank
-  const learnedCount = words.filter(w => appState.wordBank.includes(w.word.toLowerCase())).length;
-  
-  const percentage = total > 0 ? Math.round((learnedCount / total) * 100) : 0;
-  document.getElementById("vocab-card-progress").style.width = `${percentage}%`;
-  document.getElementById("vocab-card-progress-text").textContent = `${learnedCount} / ${total}`;
-}
-
-// Detailed card deck view item
-function showLessonWordDetails(vocab, idx, cardElement) {
+// Render Word Details Inspector Card
+function renderWordInspector(wordObj, petalElement) {
   document.getElementById("word-empty-view").style.display = "none";
-  const detail = document.getElementById("word-card-detail");
-  detail.style.display = "flex";
+  const detailCard = document.getElementById("word-card-detail");
+  detailCard.style.display = "flex";
 
-  speakText(vocab.word);
+  const isBloomed = appState.bloomedWords.has(wordObj.word);
+  const t = i18n[appState.currentLang] || i18n.tr;
 
-  let cognateBadge = "";
-  if (vocab.isCognate) {
-    cognateBadge = `
-      <div class="tag-cognate" style="background-color: var(--color-accent-light); padding: 4px 8px; border-radius: var(--border-radius-sm); font-size: 11px; color: var(--color-primary); font-weight: 700; margin-bottom: 8px; display: inline-block;">
-        <span>🌼 Ortak Kelime (${vocab.arabicRoot})</span>
+  detailCard.innerHTML = `
+    <div class="detail-word-header">
+      <div>
+        <h3>${wordObj.word}</h3>
+        <span style="font-size: 13px; color: var(--color-text-muted);">${wordObj.pronunciation || ''}</span>
       </div>
-    `;
-  }
+      <button class="audio-btn-large" id="btn-play-tts" title="Dinle">🔊</button>
+    </div>
 
-  detail.innerHTML = `
-    <div class="word-card-detail-header">
-      ${cognateBadge}
-      <button class="word-speech-btn" data-word="${vocab.word}" style="background-color: var(--color-primary); color: var(--bg-primary); border: none; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: var(--border-radius-sm); cursor: pointer; float: right;">🔊 Oku</button>
-    </div>
-    <div class="tr-word">
-      <span>${vocab.word}</span>
-    </div>
-    <div class="phonetic">[${vocab.pronunciation}]</div>
-    
-    <div class="meanings-section">
-      <div class="meaning-block ar-block">
-        <span class="lang-label">العربية (Arabic)</span>
-        <span class="value">${vocab.translation_ar}</span>
+    <div class="translations-box">
+      <div class="trans-item">
+        <span class="flag">🇬🇧</span>
+        <strong>${wordObj.en}</strong>
       </div>
-      <div class="meaning-block en-block">
-        <span class="lang-label">English Bridge</span>
-        <span class="value">${vocab.translation_en}</span>
+      <div class="trans-item">
+        <span class="flag">🇸🇦</span>
+        <p class="ar-text">${wordObj.ar}</p>
       </div>
     </div>
 
-    <!-- Long example sentence details -->
-    <div class="sentence-example-block">
-      <span class="lbl">Örnek Cümle (Example Sentence) 🔊</span>
-      <span class="tr-sent" style="cursor: pointer;" id="sentence-play-trigger">${vocab.sentence}</span>
-      <span class="ar-sent">${vocab.sentence_ar}</span>
-      <span class="en-sent">${vocab.sentence_en}</span>
-      ${vocab.academicNote ? `<span class="academic-note">🎓 ${vocab.academicNote}</span>` : ""}
-    </div>
-    
-    <div class="word-card-detail-actions">
-      <button class="learned-confirm-btn" id="btn-learned-confirm">Öğrendim! (+10 Puan) 🌼</button>
-    </div>
-  `;
-
-  // Example sentence play on click
-  document.getElementById("sentence-play-trigger").addEventListener("click", () => {
-    speakText(vocab.sentence);
-  });
-
-  // Learned confirm handler
-  document.getElementById("btn-learned-confirm").addEventListener("click", () => {
-    const wordKey = vocab.word.toLowerCase();
-    if (!appState.wordBank.includes(wordKey)) {
-      appState.wordBank.push(wordKey);
-      awardPoints(10);
-    }
-    
-    playSynthTone(659.25, "triangle", 0.15); // E5
-    cardElement.classList.add("learned");
-    updateDeckProgressTracker();
-
-    // Check if lesson complete
-    const words = appState.activeLesson.vocabulary || [];
-    const allLearned = words.every(w => appState.wordBank.includes(w.word.toLowerCase()));
-
-    if (allLearned) {
-      triggerYusufMessage("Harikasın Suzi! Bu dersteki tüm kelimeleri öğrendin! Şimdi dilbilgisi kuralını açalım.");
-      speakText("Bütün kelimeleri bitirdin, aferin Suzi!");
-      setTimeout(() => {
-        switchTab("grammar");
-      }, 2000);
-    } else {
-      triggerYusufMessage(`Aferin Suzi! "${vocab.word}" kelimesini listene ekledim.`);
-    }
-
-    document.getElementById("word-card-detail").style.display = "none";
-    document.getElementById("word-empty-view").style.display = "flex";
-  });
-}
-
-// TAB 3: Grammar & Suffix snapper
-function setupGrammarSection() {
-  const lesson = appState.activeLesson;
-  const grammarContainer = document.getElementById("grammar-text-explanation");
-  
-  advancePlantGrowth();
-
-  if (lesson.grammar) {
-    let listContent = "";
-    
-    if (lesson.grammar.examples) {
-      listContent = `
-        <table class="expl-examples-table">
-          <thead>
-            <tr>
-              <th>Root</th>
-              <th>Suffix</th>
-              <th>Result</th>
-              <th>Meaning</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${lesson.grammar.examples.map(ex => `
-              <tr>
-                <td>${ex.root}</td>
-                <td><b>${ex.suffix}</b></td>
-                <td><strong>${ex.result}</strong></td>
-                <td>${ex.meaning}</td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
-      `;
-    } else if (lesson.grammar.table) {
-      listContent = `
-        <table class="expl-examples-table">
-          <thead>
-            <tr>
-              <th>Türkçe</th>
-              <th>العربية</th>
-              <th>English</th>
-            </tr>
-          </thead>
-          <tbody>
-            ${lesson.grammar.table.map(row => `
-              <tr>
-                <td><strong>${row.tr}</strong></td>
-                <td style="direction: rtl;">${row.ar}</td>
-                <td>${row.en}</td>
-              </tr>
-            `).join("")}
-          </tbody>
-        </table>
-      `;
-    } else if (lesson.grammar.cases) {
-      listContent = `
-        <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 10px;">
-          ${lesson.grammar.cases.map(c => `
-            <div style="background-color: hsl(0,0%,15%); padding: 12px; border-radius: var(--border-radius-sm); border-left: 4px solid var(--color-primary);">
-              <strong>${c.name} : </strong> <span style="background-color: var(--color-accent-light); color: var(--color-primary); padding: 2px 6px; border-radius: 4px;">${c.suffix}</span>
-              <p style="margin-top: 4px; font-size: 12px; font-style: italic;">Örnek: <strong>${c.exTr}</strong> (${c.exAr} / ${c.exEn} / 中文: ${c.exZh})</p>
-            </div>
-          `).join("")}
-        </div>
-      `;
-    }
-
-    grammarContainer.innerHTML = `
-      <h4>Dilbilgisi Kuralı: ${lesson.grammar.title}</h4>
-      <div class="explanation-grid">
-        <div class="expl-item">
-          <div class="expl-desc-ar">${lesson.grammar.arExplanation}</div>
-          <div class="expl-desc-en"><b>Structure Note:</b> ${lesson.grammar.enExplanation}</div>
-          ${listContent}
+    ${wordObj.is_cognate ? `
+      <div class="cognate-note-card">
+        <span>💡</span>
+        <div>
+          <strong>Arapça Ortak Kelime (Cognate): ${wordObj.ar}</strong>
+          <p>${wordObj.cognate_info ? wordObj.cognate_info.note_tr : 'Türkçe ve Arapça ortak kökenli kelime.'}</p>
         </div>
       </div>
-    `;
-    grammarContainer.style.display = "block";
-  } else if (lesson.idioms) {
-    grammarContainer.innerHTML = `
-      <h4>Kültürel Ortak Deyimler (Idioms)</h4>
-      <div class="idioms-grid">
-        ${lesson.idioms.map(id => `
-          <div class="idiom-item-card">
-            <div class="idiom-tr">${id.tr}</div>
-            <div class="idiom-ar">${id.ar}</div>
-            <div class="idiom-en">
-              <b>Literal:</b> ${id.literalAr} <br> 
-              <b>Context:</b> ${id.meaning} <br>
-              <b>中文:</b> ${id.zh}
-            </div>
-            <button class="word-speech-btn" data-word="${id.tr}" style="background: none; border: none; color: var(--color-primary); cursor: pointer; float: right;">🔊</button>
-          </div>
-        `).join("")}
-      </div>
-    `;
-    grammarContainer.style.display = "block";
-  } else {
-    grammarContainer.style.display = "none";
-  }
+    ` : ''}
 
-  // Suffix Snapper Puzzle Game load
-  const suffixGame = document.getElementById("suffix-game-container");
-  if (lesson.suffixBuilder) {
-    suffixGame.style.display = "block";
-    appState.suffixCurrentWordIndex = 0;
-    appState.suffixAssembled = [];
-    loadSuffixPuzzleQuestion();
-  } else {
-    suffixGame.style.display = "none";
-  }
-}
-
-function loadSuffixPuzzleQuestion() {
-  const builder = appState.activeLesson.suffixBuilder;
-  const wordKeys = Object.keys(builder.correctAnswers);
-  
-  if (appState.suffixCurrentWordIndex >= wordKeys.length) {
-    document.getElementById("suffix-game-container").innerHTML = `
-      <div class="suffix-game-header" style="padding: 16px;">
-        <span style="font-size: 36px;">🏆</span>
-        <h4 style="color: var(--color-correct); margin-top: 8px;">Yapboz Tamamlandı!</h4>
-        <p>Ekleri doğru eklemeyi kavradın. Şimdi seviye sınavına hazırsın!</p>
-        <button class="action-cta-btn" onclick="switchTab('quiz')" style="margin-top: 10px;">Sınava Geç 📝</button>
-      </div>
-    `;
-    triggerYusufMessage("Tebrikler Suzi! Ek birleştirme oyununun hepsini doğru yaptın.");
-    speakText("Tebrikler Suzi, ek yapbozunu tamamladın.");
-    return;
-  }
-
-  const rootTerm = builder.root[appState.suffixCurrentWordIndex];
-  const targetResult = builder.correctAnswers[rootTerm];
-
-  appState.suffixAssembled = [rootTerm];
-  document.getElementById("suffix-live-translation").textContent = `Target word: ${targetResult.split(" ")[0]}`;
-
-  const slotsContainer = document.getElementById("suffix-slot-container");
-  slotsContainer.className = "suffix-slot-container";
-  slotsContainer.innerHTML = "";
-  
-  const rootPiece = document.createElement("div");
-  rootPiece.className = "word-puzzle-piece";
-  rootPiece.textContent = rootTerm.split(" ")[0];
-  slotsContainer.appendChild(rootPiece);
-
-  const pool = document.getElementById("suffix-pieces-pool");
-  pool.innerHTML = "";
-
-  builder.suffixes.forEach(suffix => {
-    const piece = document.createElement("div");
-    piece.className = "suffix-puzzle-piece";
-    piece.textContent = suffix;
-    piece.addEventListener("click", () => {
-      appendSuffixPiece(suffix, piece);
-    });
-    pool.appendChild(piece);
-  });
-}
-
-function appendSuffixPiece(suffix, pieceEl) {
-  appState.suffixAssembled.push(suffix);
-  
-  const slotsContainer = document.getElementById("suffix-slot-container");
-  const suffixPiece = document.createElement("div");
-  suffixPiece.className = "word-puzzle-piece suffix-puzzle-piece";
-  suffixPiece.textContent = suffix;
-  slotsContainer.appendChild(suffixPiece);
-
-  slotsContainer.classList.add("snap-glow");
-  setTimeout(() => { slotsContainer.classList.remove("snap-glow"); }, 600);
-
-  pieceEl.style.opacity = "0.3";
-  pieceEl.style.pointerEvents = "none";
-
-  const baseRoot = appState.suffixAssembled[0].split(" ")[0];
-  const assembledWord = (baseRoot + appState.suffixAssembled.slice(1).join("")).replace(/-/g, "");
-  const builder = appState.activeLesson.suffixBuilder;
-  const rootTerm = builder.root[appState.suffixCurrentWordIndex];
-  const targetResult = builder.correctAnswers[rootTerm].split(" ")[0].toLowerCase();
-
-  if (assembledWord.toLowerCase() === targetResult) {
-    awardPoints(15);
-    playSynthTone(880, "sine", 0.2); // A5 success
-
-    triggerYusufMessage(`Aferin Suzi! "${assembledWord}" yapısını doğru inşa ettin.`);
-    speakText(assembledWord);
-
-    slotsContainer.style.borderColor = "var(--color-correct)";
-    
-    setTimeout(() => {
-      appState.suffixCurrentWordIndex++;
-      loadSuffixPuzzleQuestion();
-    }, 1500);
-  } else {
-    const expectedLength = targetResult.length;
-    if (assembledWord.length >= expectedLength) {
-      playSynthTone(220, "sawtooth", 0.2);
-      slotsContainer.style.borderColor = "var(--color-incorrect)";
-      triggerYusufMessage(`Yanlış ekleme! Hadi baştan deneyelim.`);
-
-      setTimeout(() => {
-        loadSuffixPuzzleQuestion();
-      }, 1500);
-    }
-  }
-}
-
-// TAB 4: Quiz Engine (Dynamic Quiz Generation for maximum efficiency)
-function setupQuizSection() {
-  appState.quizIndex = 0;
-  appState.quizAnswers = [];
-  
-  const lesson = appState.activeLesson;
-  const vocab = lesson.vocabulary || [];
-  
-  let questions = [];
-
-  // 1. Add predefined quiz questions if available
-  if (lesson.quiz && lesson.quiz.length > 0) {
-    questions = [...lesson.quiz];
-  }
-
-  // 2. Generate dynamic translation questions to guarantee at least 5 questions per quiz
-  if (questions.length < 5 && vocab.length > 0) {
-    const needed = 5 - questions.length;
-    
-    // Shuffle vocab
-    const shuffledVocab = [...vocab].sort(() => 0.5 - Math.random());
-    const poolForAnswers = learningDatabase.vocabularyBank;
-
-    shuffledVocab.slice(0, needed).forEach(wordObj => {
-      // Pick 3 random wrong options from the massive vocabulary bank
-      const incorrectOptions = poolForAnswers
-        .filter(w => w.word !== wordObj.word)
-        .sort(() => 0.5 - Math.random())
-        .slice(0, 3)
-        .map(w => w.word);
-
-      const options = [wordObj.word, ...incorrectOptions].sort(() => 0.5 - Math.random());
-
-      questions.push({
-        question: `Hangisi "${wordObj.translation_ar}" kelimesinin Türkçe karşılığıdır?`,
-        options: options,
-        answer: wordObj.word,
-        hint: wordObj.isCognate ? `Bu kelime Arapça kökenlidir (${wordObj.arabicRoot}).` : `Örnek cümle: ${wordObj.sentence}`
-      });
-    });
-  }
-
-  appState.quizQuestions = questions;
-  renderQuizQuestion();
-}
-
-function renderQuizQuestion() {
-  const quizWorkspace = document.getElementById("quiz-workspace");
-  const questions = appState.quizQuestions;
-
-  if (questions.length === 0) {
-    quizWorkspace.innerHTML = "<p>Ders için sınav bulunamadı.</p>";
-    return;
-  }
-
-  if (appState.quizIndex >= questions.length) {
-    // End of quiz
-    const score = appState.quizAnswers.filter(a => a.isCorrect).length;
-    const passed = score >= Math.ceil(questions.length * 0.8); // 80% passing grade
-
-    if (passed) {
-      // Complete lesson in state
-      if (!appState.completedLessons.includes(appState.activeLesson.id)) {
-        appState.completedLessons.push(appState.activeLesson.id);
-        awardPoints(50);
-        saveProgress();
-      }
-      
-      triggerCelebration();
-
-      // Check if all lessons in current level are completed to trigger LEVEL UP systematic transition modal!
-      const activeLevel = learningDatabase.levels.find(l => l.id === appState.activeLevelId);
-      const levelLessons = activeLevel.lessons.map(l => l.id);
-      const levelFinished = levelLessons.every(id => appState.completedLessons.includes(id));
-
-      if (levelFinished) {
-        showLevelUpModal();
-        return; // level up handles output
-      } else {
-        triggerYusufMessage("Tebrikler Suzi! Dersi geçtin. Bahçeye dönüp bir sonraki derse başlayabilirsin.");
-        speakText("Dersi geçtin, tebrikler Suzi!");
-      }
-    } else {
-      triggerYusufMessage("Sınavı geçemedin ama sorun değil! Tekrar deneyerek puanını yükseltebilirsin.");
-      speakText("Tekrar deneyelim mi?");
-    }
-
-    quizWorkspace.innerHTML = `
-      <div class="quiz-card quiz-score-screen" style="text-align: center;">
-        <span class="score-emoji" style="font-size: 40px; display: block; margin-bottom: 12px;">${passed ? '🌸🏆' : '🌱💪'}</span>
-        <h3 class="score-screen-title" style="color: var(--color-primary); font-size: 20px; font-weight: 700; margin-bottom: 8px;">${passed ? 'Başarılı!' : 'Tekrar Dene!'}</h3>
-        <p class="score-screen-detail" style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 20px;">
-          Doğru Sayın: <strong>${score} / ${questions.length}</strong><br>
-          ${passed ? 'Ders tamamlandı, Yusuf seninle gurur duyuyor!' : 'Birkaç hatan var. Kelimeleri tekrar gözden geçirip sınavı geçebilirsin.'}
-        </p>
-        <button class="action-cta-btn" onclick="${passed ? 'exitActiveLesson()' : 'setupQuizSection()'}">
-          ${passed ? 'Derslerden Çık (Finish)' : 'Yeniden Başlat (Retry)'}
-        </button>
-      </div>
-    `;
-    return;
-  }
-
-  const q = questions[appState.quizIndex];
-  
-  quizWorkspace.innerHTML = `
-    <div class="quiz-card">
-      <div class="quiz-header">
-        <span class="quiz-badge">Soru ${appState.quizIndex + 1}</span>
-        <span class="quiz-progress-text" style="font-size: 11px; color: var(--color-text-muted);">${appState.quizIndex + 1} / ${questions.length}</span>
-      </div>
-
-      <div class="quiz-question-box" style="margin-bottom: 20px;">
-        <h4 style="font-size: 15px; font-weight: 700; line-height: 1.5;">${q.question}</h4>
-      </div>
-
-      <div class="quiz-options-list" id="quiz-options-box">
-        ${q.options.map((opt, idx) => `
-          <button class="quiz-option-btn" data-option="${opt}">
-            <span>${opt}</span>
-            <span class="quiz-option-feedback-icon" id="opt-icon-${idx}"></span>
-          </button>
-        `).join("")}
-      </div>
-
-      <div class="quiz-feedback-box" id="quiz-feedback-box">
-        <span class="quiz-feedback-title" id="quiz-feedback-title"></span>
-        <span class="quiz-feedback-text" id="quiz-feedback-text"></span>
-      </div>
-
-      <div class="quiz-actions" style="margin-top: 16px; display: flex; justify-content: flex-end;">
-        <button class="quiz-next-btn" id="btn-quiz-next" style="display: none;">Sonraki Soru ➡️</button>
-      </div>
+    <div class="sentence-card-box">
+      <p class="sentence-tr">"${wordObj.sentence_tr || ''}"</p>
+      <p class="sentence-en">${wordObj.sentence_en || ''}</p>
+      <p class="sentence-ar" dir="rtl">${wordObj.sentence_ar || ''}</p>
     </div>
+
+    <button class="bloom-action-btn ${isBloomed ? 'bloomed-state' : ''}" id="btn-bloom-petal">
+      ${isBloomed ? t.bloomedStateBtn : t.bloomBtnAction}
+    </button>
   `;
 
-  const optionsButtons = document.querySelectorAll(".quiz-option-btn");
-  optionsButtons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const selectedOpt = btn.getAttribute("data-option");
-      submitQuizAnswer(selectedOpt, q, optionsButtons);
-    });
+  // TTS Audio playback
+  document.getElementById("btn-play-tts").addEventListener("click", () => {
+    speakText(wordObj.word);
   });
 
-  document.getElementById("btn-quiz-next").addEventListener("click", () => {
-    appState.quizIndex++;
-    renderQuizQuestion();
-  });
-}
+  // Bloom Petal Action
+  document.getElementById("btn-bloom-petal").addEventListener("click", () => {
+    if (!appState.bloomedWords.has(wordObj.word)) {
+      appState.bloomedWords.add(wordObj.word);
+      localStorage.setItem("suzitta_bloomed_words", JSON.stringify(Array.from(appState.bloomedWords)));
 
-function submitQuizAnswer(selectedOpt, questionObj, allButtons) {
-  const isCorrect = selectedOpt === questionObj.answer;
-  appState.quizAnswers.push({ selected: selectedOpt, isCorrect: isCorrect });
+      if (petalElement) petalElement.classList.add("bloomed");
+      speakText(`Tebrikler! ${wordObj.word} kelimesini öğrendin.`);
 
-  allButtons.forEach(btn => {
-    btn.disabled = true;
-    const optVal = btn.getAttribute("data-option");
-    if (optVal === questionObj.answer) {
-      btn.classList.add("correct");
-      btn.querySelector(".quiz-option-feedback-icon").textContent = "✓";
-    } else if (optVal === selectedOpt) {
-      btn.classList.add("incorrect");
-      btn.querySelector(".quiz-option-feedback-icon").textContent = "✗";
+      // Update workspace counts
+      renderDaisyFlower(appState.activeLesson);
+      updateGlobalStats();
+      renderWordInspector(wordObj, petalElement);
     }
   });
-
-  const feedbackBox = document.getElementById("quiz-feedback-box");
-  const feedbackTitle = document.getElementById("quiz-feedback-title");
-  const feedbackText = document.getElementById("quiz-feedback-text");
-  
-  feedbackBox.classList.add("active");
-  feedbackBox.style.display = "block";
-  
-  if (isCorrect) {
-    feedbackTitle.className = "quiz-feedback-title correct";
-    feedbackTitle.textContent = "Aferin Suzi! Doğru! 🎉";
-    feedbackText.textContent = `Açıklama: ${questionObj.hint}`;
-    playSynthTone(987.77, "sine", 0.2);
-
-    const msg = learningDatabase.yusufFeedback.correct[Math.floor(Math.random() * learningDatabase.yusufFeedback.correct.length)];
-    triggerYusufMessage(msg);
-  } else {
-    feedbackTitle.className = "quiz-feedback-title incorrect";
-    feedbackTitle.textContent = "Hata! 💡";
-    feedbackText.textContent = `Doğru cevap "${questionObj.answer}" olmalıydı. ${questionObj.hint}`;
-    playSynthTone(196, "sawtooth", 0.2);
-
-    const msg = learningDatabase.yusufFeedback.wrong[Math.floor(Math.random() * learningDatabase.yusufFeedback.wrong.length)];
-    triggerYusufMessage(msg);
-  }
-
-  document.getElementById("btn-quiz-next").style.display = "block";
 }
 
-// SYSTEMATIC LEVEL UP TRANSITION SCREEN
-function showLevelUpModal() {
-  const modal = document.getElementById("level-up-modal");
-  const activeLevel = learningDatabase.levels.find(l => l.id === appState.activeLevelId);
-  
-  // Fill stats
-  document.getElementById("lvl-up-stat-words").textContent = appState.wordBank.length;
-  document.getElementById("lvl-up-stat-points").textContent = appState.points;
-  
-  document.getElementById("lvl-up-title").textContent = `Seviye Atladın: Level ${activeLevel.id}! 🎉`;
-  document.getElementById("lvl-up-desc").innerHTML = `
-    Tebrikler Suzi! <strong>${activeLevel.title}</strong> seviyesini mükemmel başarıyla bitirdin!<br>
-    Yusuf seninle çok gurur duyuyor. Yıldızlı pekiyi aldın! ⭐🌼
-  `;
-
-  // Play nice success sounds
-  playLevelUpChords();
-  triggerCelebration();
-
-  modal.style.display = "flex";
-}
-
-function dismissLevelUpAndAdvance() {
-  const modal = document.getElementById("level-up-modal");
-  modal.style.display = "none";
-
-  const nextLvlId = appState.activeLevelId + 1;
-  const nextLvlExists = learningDatabase.levels.some(l => l.id === nextLvlId);
-
-  exitActiveLesson();
-
-  if (nextLvlExists) {
-    appState.activeLevelId = nextLvlId;
-    
-    // Visual toggle sidebar levels list
-    renderLevelsList();
-    showLevelOverview(nextLvlId);
-    
-    const levelObj = learningDatabase.levels.find(l => l.id === nextLvlId);
-    const cheer = `Harika Suzi! Bir sonraki seviye olan "${levelObj.title}" kilidi açıldı. Başarılar dilerim! 🚀🌼`;
-    triggerYusufMessage(cheer);
-    speakText(cheer, true);
-  } else {
-    const masteredMsg = "İnanılmaz! Bütün seviyeleri bitirdin Suzi! Artık Türkçe senin için bitti, harika konuşuyorsun! Yusuf sana kocaman sarılıyor! 🌼👑";
-    triggerYusufMessage(masteredMsg);
-    speakText(masteredMsg, true);
-  }
-}
-
-function setupGamificationActions() {
-  document.getElementById("btn-daily-missions")?.addEventListener("click", () => {
-    openDailyMissionsModal();
-  });
-  document.getElementById("btn-suzi-league")?.addEventListener("click", () => {
-    openSuziLeagueModal();
-  });
-  document.getElementById("btn-quick-practice")?.addEventListener("click", () => {
-    openQuickPracticeModal();
-  });
-}
-
-// GAMIFICATION 1: Daily Missions System
-function openDailyMissionsModal() {
-  const modal = document.getElementById("daily-missions-modal");
-  if (!modal) return;
-  
-  renderDailyMissions();
-  modal.style.display = "flex";
-  
-  const msg = `🎯 Bugünkü Akademik Görevler açık! Görevleri tamamlayıp Daisy Puanı (XP) topla!`;
-  triggerYusufMessage(msg);
-  speakText(msg);
-}
-
-function renderDailyMissions() {
-  const container = document.getElementById("missions-list");
-  if (!container) return;
-
-  const learnedCount = appState.wordBank.length;
-  const completedLessons = appState.completedLessons.length;
-  const claimedMissions = JSON.parse(localStorage.getItem("suzi_tr_claimed_missions") || "[]");
-
-  const missions = [
-    {
-      id: "m1",
-      title: "🌱 5 Kelime Öğren",
-      desc: "Bahçeden veya sözlükten 5 yeni kelime çalış.",
-      progress: Math.min(learnedCount, 5),
-      target: 5,
-      reward: 20
-    },
-    {
-      id: "m2",
-      title: "🌸 1 Ders Tamamla",
-      desc: "Seviyendeki en az 1 dersi başarıyla bitir.",
-      progress: Math.min(completedLessons, 1),
-      target: 1,
-      reward: 30
-    },
-    {
-      id: "m3",
-      title: "⚡ Hızlı Pratik Yap",
-      desc: "Flaşkart modunda 3 kelimeyi tekrar et.",
-      progress: Math.min(learnedCount, 3),
-      target: 3,
-      reward: 25
-    }
-  ];
-
+// Render Arabic Cognates View (💡 Ortak Kelimeler)
+function renderCognatesView() {
+  const container = document.getElementById("cognates-grid-container");
   container.innerHTML = "";
-  missions.forEach(m => {
-    const isReady = m.progress >= m.target;
-    const isClaimed = claimedMissions.includes(m.id);
 
-    const div = document.createElement("div");
-    div.className = "mission-item";
-    div.innerHTML = `
-      <div class="mission-info">
-        <h4>${m.title}</h4>
-        <p>${m.desc} (${m.progress}/${m.target})</p>
+  const cognates = learningDatabase.vocabularyBank.filter(w => w.is_cognate);
+
+  cognates.forEach(c => {
+    const card = document.createElement("div");
+    card.className = "cognate-card";
+    card.innerHTML = `
+      <div class="cognate-card-top">
+        <h4>${c.word}</h4>
+        <span class="ar-root">${c.ar}</span>
       </div>
-      <button class="mission-claim-btn ${isClaimed ? 'claimed' : ''}" ${(!isReady || isClaimed) ? 'disabled' : ''}>
-        ${isClaimed ? '✅ Alındı' : isReady ? `Ödülü Al (+${m.reward} XP)` : 'Devam Ediyor'}
-      </button>
-    `;
-
-    if (isReady && !isClaimed) {
-      div.querySelector("button").addEventListener("click", () => {
-        claimedMissions.push(m.id);
-        localStorage.setItem("suzi_tr_claimed_missions", JSON.stringify(claimedMissions));
-        awardPoints(m.reward);
-        triggerCelebration();
-        triggerYusufMessage(`Tebrikler Suzi! ${m.title} görevini tamamlayıp +${m.reward} Puan kazandın! 🎉`);
-        renderDailyMissions();
-      });
-    }
-
-    container.appendChild(div);
-  });
-}
-
-// GAMIFICATION 2: Suzi League Leaderboard Simulator
-function openSuziLeagueModal() {
-  const modal = document.getElementById("suzi-league-modal");
-  if (!modal) return;
-
-  renderLeaderboard();
-  modal.style.display = "flex";
-
-  const msg = `🏆 Suzi Akademik Ligi! Şu an ${appState.points} Daisy Puanı ile ligde üst sıralardasın!`;
-  triggerYusufMessage(msg);
-  speakText(msg);
-}
-
-function renderLeaderboard() {
-  const container = document.getElementById("league-leaderboard");
-  if (!container) return;
-
-  // Base list of friendly mock learners sorted by XP
-  const learners = [
-    { name: "Yusuf (Öğretmen)", points: Math.max(appState.points + 150, 450), badge: "👑" },
-    { name: "Suzi (Sen) 🌼", points: appState.points, badge: "⭐", isUser: true },
-    { name: "Layla", points: Math.max(appState.points - 30, 180), badge: "🌸" },
-    { name: "Ahmed", points: Math.max(appState.points - 70, 120), badge: "🌱" },
-    { name: "Chen", points: Math.max(appState.points - 110, 90), badge: "🌿" }
-  ];
-
-  // Sort descending by points
-  learners.sort((a, b) => b.points - a.points);
-
-  container.innerHTML = "";
-  learners.forEach((user, index) => {
-    const rank = index + 1;
-    const row = document.createElement("div");
-    row.className = `leaderboard-row ${user.isUser ? 'user-row' : ''}`;
-    row.innerHTML = `
-      <span class="rank-num">${rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`}</span>
-      <span class="user-name">${user.badge} ${user.name}</span>
-      <span class="user-xp">${user.points} XP</span>
-    `;
-    container.appendChild(row);
-  });
-}
-
-// GAMIFICATION 3: Quick Practice Spaced Repetition Flashcards
-let flashcardDeck = [];
-let currentFlashcardIndex = 0;
-
-function openQuickPracticeModal() {
-  const modal = document.getElementById("quick-practice-modal");
-  if (!modal) return;
-
-  // Gather cards from vocabularyBank
-  const bank = learningDatabase.vocabularyBank || [];
-  if (bank.length === 0) return;
-
-  // Pick 10 random cards
-  flashcardDeck = [...bank].sort(() => 0.5 - Math.random()).slice(0, 10);
-  currentFlashcardIndex = 0;
-
-  renderFlashcardPractice();
-  modal.style.display = "flex";
-
-  const msg = `⚡ Hızlı Pratik Modu! Flaşkartı çevirerek kendini test et!`;
-  triggerYusufMessage(msg);
-  speakText(msg);
-}
-
-function renderFlashcardPractice() {
-  const container = document.getElementById("flashcard-practice-container");
-  if (!container) return;
-
-  if (currentFlashcardIndex >= flashcardDeck.length) {
-    container.innerHTML = `
-      <div style="text-align: center; padding: 20px;">
-        <span style="font-size: 48px;">🎉</span>
-        <h4 style="color: var(--color-primary); margin: 10px 0;">Harika İlerleme Suzi!</h4>
-        <p style="font-size: 13px; color: var(--color-text-muted); margin-bottom: 16px;">
-          10 kartlık hızlı pratik turunu tamamladın! +15 Daisy Puanı kazandın.
-        </p>
-        <button class="action-cta-btn" onclick="openQuickPracticeModal()">Tekrar Pratik Yap 🔄</button>
+      <div class="cognate-meanings">
+        <p><strong>EN:</strong> ${c.en}</p>
+      </div>
+      <div style="font-size: 12px; color: var(--color-primary); background: #FFF; padding: 8px; border-radius: 8px; border: 1px solid var(--color-border);">
+        "${c.sentence_tr}"
       </div>
     `;
-    awardPoints(15);
-    triggerCelebration();
-    return;
-  }
 
-  const card = flashcardDeck[currentFlashcardIndex];
-  container.innerHTML = `
-    <div class="flashcard-box" id="active-flashcard">
-      <div class="flashcard-inner">
-        <div class="flashcard-front">
-          <span style="font-size: 12px; color: var(--color-text-muted); text-transform: uppercase; margin-bottom: 8px;">Türkçe Kelime</span>
-          <h2 style="font-size: 26px; color: var(--color-primary); margin-bottom: 6px;">${card.word}</h2>
-          <span style="font-size: 12px; color: var(--color-secondary);">[${card.pronunciation}]</span>
-          <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 16px;">🔄 Çevirmek için dokun</p>
-        </div>
-        <div class="flashcard-back">
-          <span style="font-size: 12px; color: var(--color-primary); font-weight: 700; margin-bottom: 4px;">Anlamı & Cümle</span>
-          <h3 style="font-size: 18px; color: var(--color-primary); margin-bottom: 4px;">${card.translation_ar}</h3>
-          <p style="font-size: 13px; color: var(--color-secondary); margin-bottom: 10px;">${card.translation_en}</p>
-          <div style="background: var(--bg-card); padding: 8px; border-radius: 8px; border: 1px solid var(--color-border); width: 100%;">
-            <p style="font-size: 12px; font-weight: 600; color: var(--color-text);">${card.sentence}</p>
-            <p style="font-size: 11px; color: var(--color-text-muted); margin-top: 2px;">${card.sentence_ar}</p>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <div class="flashcard-actions">
-      <button class="fc-btn fc-btn-again" id="btn-fc-again">❌ Tekrar Et</button>
-      <button class="fc-btn fc-btn-know" id="btn-fc-know">✅ Biliyorum (+5 XP)</button>
-    </div>
-  `;
-
-  // Audio speech on render
-  speakText(card.word);
-
-  const fcBox = document.getElementById("active-flashcard");
-  fcBox.addEventListener("click", () => {
-    fcBox.classList.toggle("flipped");
-    if (fcBox.classList.contains("flipped")) {
-      speakText(card.sentence);
-    }
-  });
-
-  document.getElementById("btn-fc-again").addEventListener("click", () => {
-    currentFlashcardIndex++;
-    renderFlashcardPractice();
-  });
-
-  document.getElementById("btn-fc-know").addEventListener("click", () => {
-    const wordKey = card.word.toLowerCase();
-    if (!appState.wordBank.includes(wordKey)) {
-      appState.wordBank.push(wordKey);
-    }
-    awardPoints(5);
-    playSynthTone(783.99, "sine", 0.2); // G5
-    currentFlashcardIndex++;
-    renderFlashcardPractice();
+    card.addEventListener("click", () => speakText(c.word));
+    container.appendChild(card);
   });
 }
 
-
-function switchHubFromAction(hubName) {
-  const buttonByHub = {
-    garden: "nav-btn-garden",
-    dictionary: "nav-btn-dictionary",
-    wordbank: "nav-btn-bank"
-  };
-  const navButton = document.getElementById(buttonByHub[hubName]);
-  if (navButton) navButton.click();
-}
-
-// VIEW 2: Searchable Dictionary Engine (Handles 5,050 vocabulary entries instantly)
-function populateDictionaryThemes() {
-  const themeFilter = document.getElementById("dict-theme-filter");
-  themeFilter.innerHTML = `<option value="all">Tüm Temalar (All Themes)</option>`;
-  
-  const themes = new Set();
-  learningDatabase.vocabularyBank.forEach(w => {
-    if (w.category) themes.add(w.category);
-  });
-
-  themes.forEach(theme => {
-    const opt = document.createElement("option");
-    opt.value = theme;
-    opt.textContent = theme;
-    themeFilter.appendChild(opt);
-  });
-}
-
-function renderDictionaryTable() {
-  const searchInput = document.getElementById("dict-search-input").value.toLowerCase().trim();
-  const levelFilter = document.getElementById("dict-level-filter").value;
-  const themeFilter = document.getElementById("dict-theme-filter").value;
-  const onlyCognates = document.getElementById("dict-only-cognates").checked;
-  const onlyUnlearned = document.getElementById("dict-only-unlearned").checked;
-
+// Render Searchable Dictionary View (📚 Sözlük)
+function renderDictionaryView() {
   const tbody = document.getElementById("dictionary-table-body");
-  const noResults = document.getElementById("dict-no-results-msg");
-  
-  tbody.innerHTML = "";
-  
-  // Filter 5,000+ items (supports searching Chinese as well!)
-  const filtered = learningDatabase.vocabularyBank.filter(wordObj => {
-    const wordTr = wordObj.word.toLowerCase();
-    const wordAr = (wordObj.translation_ar || "").toLowerCase();
-    const wordEn = (wordObj.translation_en || "").toLowerCase();
-    const wordZh = (wordObj.translation_zh || "").toLowerCase();
-    
-    const matchesSearch = searchInput === "" || 
-      wordTr.includes(searchInput) || 
-      wordAr.includes(searchInput) || 
-      wordEn.includes(searchInput) ||
-      wordZh.includes(searchInput);
+  const input = document.getElementById("dict-search-input");
+  const filter = document.getElementById("dict-level-filter");
 
-    const matchesLvl = levelFilter === "all" || wordObj.level.toString() === levelFilter;
-    const matchesTheme = themeFilter === "all" || wordObj.category === themeFilter;
-    const matchesCognate = !onlyCognates || wordObj.isCognate;
-    
-    const isLearned = appState.wordBank.includes(wordObj.word.toLowerCase());
-    const matchesUnlearned = !onlyUnlearned || !isLearned;
+  const renderTable = () => {
+    tbody.innerHTML = "";
+    const query = input.value.toLowerCase().trim();
+    const selectedLvl = filter.value;
 
-    return matchesSearch && matchesLvl && matchesTheme && matchesCognate && matchesUnlearned;
-  });
+    let items = learningDatabase.vocabularyBank;
 
-  // Limit rendering to first 120 items for top UI speed
-  const displayLimit = 120;
-  const displayList = filtered.slice(0, displayLimit);
-
-  if (displayList.length === 0) {
-    noResults.style.display = "block";
-  } else {
-    noResults.style.display = "none";
-  }
-
-  displayList.forEach(wordObj => {
-    const tr = document.createElement("tr");
-    if (wordObj.isCognate) {
-      tr.className = "cog-row";
+    if (selectedLvl !== "all") {
+      items = items.filter(w => w.level.toString() === selectedLvl);
     }
 
-    const arField = wordObj.isCognate 
-      ? `<span style="font-family: 'Noto Sans Arabic'; font-weight: 700;">${wordObj.translation_ar}</span> <br><small style="color: var(--color-text-muted);">أصلها: ${wordObj.arabicRoot}</small>`
-      : `<span style="font-family: 'Noto Sans Arabic';">${wordObj.translation_ar}</span>`;
-
-    tr.innerHTML = `
-      <td>
-        <div class="dict-row-tr-block">
-          <button class="dict-row-speaker-btn" data-word="${wordObj.word}">🔊</button>
-          <strong>${wordObj.word}</strong>
-        </div>
-      </td>
-      <td><small style="color: var(--color-text-muted);">${wordObj.pronunciation}</small></td>
-      <td style="direction: rtl; text-align: right;">${arField}</td>
-      <td>${wordObj.translation_en}</td>
-      <td><span style="color: var(--color-primary); font-weight: 500;">${wordObj.translation_zh}</span></td>
-      <td>
-        <span style="font-size: 11px; font-weight: 600; color: var(--color-text); cursor: pointer;" class="dict-sent-play" data-sent="${wordObj.sentence}">${wordObj.sentence}</span> <br>
-        <small style="color: var(--color-text-muted); direction: rtl; display: block; text-align: right; margin-top: 2px;">${wordObj.sentence_ar}</small>
-        <small style="color: var(--color-text-muted); display: block; margin-top: 2px;">${wordObj.sentence_en}</small>
-      </td>
-    `;
-
-    tbody.appendChild(tr);
-  });
-
-  // Add a single delegated handler; replacing onclick prevents stacked listeners after filtering.
-  tbody.onclick = (e) => {
-    const btn = e.target.closest(".dict-row-speaker-btn");
-    if (btn) {
-      speakText(btn.getAttribute("data-word"));
+    if (query) {
+      items = items.filter(w =>
+        w.word.toLowerCase().includes(query) ||
+        w.en.toLowerCase().includes(query) ||
+        w.ar.includes(query)
+      );
     }
-    
-    const sentSpan = e.target.closest(".dict-sent-play");
-    if (sentSpan) {
-      speakText(sentSpan.getAttribute("data-sent"));
-    }
+
+    items.slice(0, 100).forEach(w => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td><strong>${w.word}</strong> ${w.is_cognate ? '💡' : ''}</td>
+        <td style="color: var(--color-text-muted);">${w.pronunciation || ''}</td>
+        <td>${w.en}</td>
+        <td class="ar-cell">${w.ar}</td>
+        <td>${w.sentence_tr || ''}</td>
+      `;
+      tr.addEventListener("click", () => speakText(w.word));
+      tbody.appendChild(tr);
+    });
   };
+
+  input.oninput = renderTable;
+  filter.onchange = renderTable;
+  renderTable();
 }
 
-// VIEW 3: Word Bank Render Dashboard
-function renderWordbankDashboard() {
-  const totalLearnedEl = document.getElementById("wb-stat-total-learned");
-  const totalPointsEl = document.getElementById("wb-stat-total-points");
-  const currentLvlEl = document.getElementById("wb-stat-level-unlocked");
-  const tagsContainer = document.getElementById("wb-learned-tags-cloud");
+// Render Word Bank View (🗂️ Kelime Bankam)
+function renderWordBankView() {
+  const container = document.getElementById("wb-learned-tags-cloud");
   const emptyMsg = document.getElementById("wb-empty-msg");
+  container.innerHTML = "";
 
-  totalLearnedEl.textContent = appState.wordBank.length;
-  totalPointsEl.textContent = appState.points;
-  
-  // Find highest unlocked level
-  let highestLvl = "A1";
-  for (let l = 5; l >= 1; l--) {
-    if (!isLevelLocked(l)) {
-      highestLvl = l === 5 ? "C1" : "A" + l;
-      break;
-    }
-  }
-  currentLvlEl.textContent = highestLvl;
+  const bloomedList = Array.from(appState.bloomedWords);
 
-  tagsContainer.innerHTML = "";
-  if (appState.wordBank.length === 0) {
+  if (bloomedList.length === 0) {
     emptyMsg.style.display = "block";
     return;
   }
+
   emptyMsg.style.display = "none";
 
-  appState.wordBank.forEach(wordKey => {
-    const badge = document.createElement("div");
-    badge.className = "wb-tag-badge";
-    badge.textContent = `🌼 ${wordKey}`;
-    
-    badge.addEventListener("click", () => {
-      speakText(wordKey);
-    });
-
-    tagsContainer.appendChild(badge);
+  bloomedList.forEach(wName => {
+    const tag = document.createElement("div");
+    tag.className = "wb-tag-item";
+    tag.innerHTML = `<span>🌼</span> <span>${wName}</span>`;
+    tag.addEventListener("click", () => speakText(wName));
+    container.appendChild(tag);
   });
 }
 
-// Award points utility
-function awardPoints(pts) {
-  appState.points += pts;
-  document.getElementById("daisy-points").textContent = appState.points;
-  
-  const ptsBadge = document.getElementById("daisy-points");
-  ptsBadge.style.transform = "scale(1.25)";
-  ptsBadge.style.color = "var(--color-primary)";
-  setTimeout(() => {
-    ptsBadge.style.transform = "";
-    ptsBadge.style.color = "";
-  }, 400);
+// Global Stats & Progress
+function updateGlobalStats() {
+  const totalBloomed = appState.bloomedWords.size;
+  const totalVocab = learningDatabase.vocabularyBank.length;
 
-  // Gamification: Floating points animation
-  const floater = document.createElement("div");
-  floater.className = "floating-points-anim";
-  floater.textContent = `+${pts} 🌼`;
-  document.body.appendChild(floater);
-  
-  setTimeout(() => {
-    floater.remove();
-  }, 1500);
+  document.getElementById("bloomed-petals-count").textContent = `${totalBloomed} Yaprak`;
 
-  saveProgress();
+  const percent = Math.min(100, Math.round((totalBloomed / totalVocab) * 100));
+  document.getElementById("progress-percent").textContent = `${percent}%`;
+  document.getElementById("overall-progress-bar").style.width = `${percent}%`;
 }
 
-// Yusuf speech messages trigger
-function triggerYusufMessage(text) {
-  const bubble = document.getElementById("yusuf-bubble");
-  const textEl = document.getElementById("yusuf-text");
-  const notif = document.getElementById("yusuf-notification");
-
-  bubble.classList.remove("visible");
-  
-  setTimeout(() => {
-    textEl.textContent = text;
-    bubble.classList.add("visible");
-    notif.style.display = "flex";
-    notif.textContent = "!";
-  }, 300);
-}
-
-// Speech Synthesizer Voice Player - Premium Voice Selection
-let cachedPremiumVoice = null;
-
-function findBestTurkishVoice() {
-  const voices = window.speechSynthesis.getVoices();
-  const trVoices = voices.filter(v => v.lang.startsWith("tr"));
-  
-  if (trVoices.length === 0) return null;
-  
-  const normalize = (value) => value.toLocaleLowerCase("tr-TR");
-
-  // Premium/neural voice priority list (best quality first). Availability depends on browser/OS.
-  const premiumNames = [
-    "microsoft emel online",
-    "microsoft ahmet online",
-    "microsoft tolga online",
-    "google türkçe",
-    "google turkish",
-    "yelda",
-    "cem",
-    "microsoft emel",
-    "microsoft ahmet",
-    "microsoft tolga"
-  ];
-
-  const scoredVoices = trVoices
-    .map((voice) => {
-      const normalizedName = normalize(voice.name);
-      const priorityIndex = premiumNames.findIndex((name) => normalizedName.includes(name));
-      const neuralScore = /(online|natural|neural|premium)/i.test(voice.name) ? 30 : 0;
-      const remoteScore = voice.localService ? 0 : 20;
-      const priorityScore = priorityIndex >= 0 ? 100 - priorityIndex : 0;
-      return { voice, score: priorityScore + neuralScore + remoteScore };
-    })
-    .sort((a, b) => b.score - a.score);
-
-  return scoredVoices[0].voice;
-}
-
-// Cache premium voice as soon as voices are loaded
-if ('speechSynthesis' in window) {
-  window.speechSynthesis.onvoiceschanged = () => {
-    cachedPremiumVoice = findBestTurkishVoice();
-    if (cachedPremiumVoice) {
-      console.log("Premium Turkish voice loaded:", cachedPremiumVoice.name);
-    }
-  };
-  // Try immediately in case voices are already loaded
-  cachedPremiumVoice = findBestTurkishVoice();
-}
-
+// TTS Audio Pronunciation Helper (Web Speech API)
 function speakText(text) {
-  if (!('speechSynthesis' in window)) return;
-  if (appState.isMuted) return;
-  
+  if (appState.isMuted || !('speechSynthesis' in window)) return;
+
   window.speechSynthesis.cancel();
-  // Strip emojis
-  const cleanText = text.replace(/[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF]/g, "");
-
-  const utterance = new SpeechSynthesisUtterance(cleanText);
+  const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = "tr-TR";
-
-  const rateSelector = document.getElementById("voice-speed");
-  utterance.rate = rateSelector ? parseFloat(rateSelector.value) : 0.85;
-  utterance.pitch = 1.02;
-  utterance.volume = 1;
-
-  // Use cached premium voice or find best available
-  const bestVoice = cachedPremiumVoice || findBestTurkishVoice();
-  if (bestVoice) {
-    utterance.voice = bestVoice;
-  }
-
-  utterance.onstart = () => {
-    const btn = document.getElementById("btn-audio-test");
-    if (btn) btn.classList.add("speaking");
-  };
-  utterance.onend = () => {
-    const btn = document.getElementById("btn-audio-test");
-    if (btn) btn.classList.remove("speaking");
-  };
-
+  utterance.rate = appState.voiceSpeed;
   window.speechSynthesis.speak(utterance);
-}
-
-// Sound Synthesizers (Web Audio API)
-let audioCtx = null;
-
-function initAudioContext() {
-  if (!audioCtx) {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  }
-  if (audioCtx.state === 'suspended') {
-    audioCtx.resume();
-  }
-}
-
-function playSynthTone(frequency, type, duration) {
-  if (appState.isMuted) return;
-  try {
-    initAudioContext();
-    if (!audioCtx) return;
-
-    const osc = audioCtx.createOscillator();
-    const gainNode = audioCtx.createGain();
-
-    osc.type = type;
-    osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
-
-    gainNode.gain.setValueAtTime(0.08, audioCtx.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
-
-    osc.connect(gainNode);
-    gainNode.connect(audioCtx.destination);
-
-    osc.start();
-    osc.stop(audioCtx.currentTime + duration);
-  } catch (e) {
-    console.warn(e);
-  }
-}
-
-function playLevelUpChords() {
-  try {
-    initAudioContext();
-    if (!audioCtx) return;
-    
-    const arpeggio = [261.63, 329.63, 392.00, 523.25, 659.25, 783.99, 1046.50]; // C Major scale arpeggio
-    arpeggio.forEach((note, idx) => {
-      setTimeout(() => {
-        playSynthTone(note, "sine", 0.4);
-      }, idx * 100);
-    });
-  } catch (e) {
-    console.warn(e);
-  }
-}
-
-// Confetti Screen Overlay
-function triggerCelebration() {
-  const overlay = document.getElementById("fireworks-overlay");
-  overlay.innerHTML = "";
-
-  const colors = ["#FFD23F", "#A7C957", "#4E8752", "#FFFFFF", "#FF6B6B"];
-
-  for (let i = 0; i < 50; i++) {
-    const confetti = document.createElement("div");
-    confetti.className = "confetti-piece";
-    
-    confetti.style.left = `${Math.random() * 100}vw`;
-    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-    confetti.style.width = `${Math.random() * 6 + 5}px`;
-    confetti.style.height = `${Math.random() * 10 + 5}px`;
-    confetti.style.animationDelay = `${Math.random() * 1.5}s`;
-    confetti.style.animationDuration = `${Math.random() * 2 + 1.5}s`;
-    confetti.style.transform = `rotate(${Math.random() * 360}deg)`;
-
-    overlay.appendChild(confetti);
-  }
-
-  setTimeout(() => {
-    overlay.innerHTML = "";
-  }, 4000);
 }

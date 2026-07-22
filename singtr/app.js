@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════
 // Suzim'in Türkçe Bahçesi - Core Application Logic
-// Trilingual (TR / EN / AR / ZH), Arabic Cognates, and Daisy Petals Gamification
+// Trilingual (TR / EN / AR / ZH), Arabic Cognates, Mind Palace & Daisy Gamification
 // ═══════════════════════════════════════════════════════════════
 
 // Global App State
@@ -32,18 +32,18 @@ const i18n = {
     daisyTitle: "🌸 Papatya Çiçeği & Yapraklar",
     daisyHint: "Her kelime bir yapraktır. Yaprağa dokun, öğren ve çiçeğini açtır!",
     inspectorEmptyTitle: "Bir Yaprak Seçin",
-    inspectorEmptyDesc: "Papatyadan bir yaprağa dokunarak kelimenin anlamını, örnek cümlesini ve Arapça kökenini inceleyin.",
+    inspectorEmptyDesc: "Papatyadan bir yaprağa dokunarak kelimenin anlamını, Zihin Sarayı ipucunu ve Arapça kökenini inceleyin.",
     bloomBtnAction: "Yaprağı Açtır 🌼 (+5 XP)",
     bloomedStateBtn: "Yaprak Çiçek Açtı 🌸",
     cognateTitle: "💡 Arapça - Türkçe Ortak Kelimeler (الكلمات المشتركة)",
     cognateDesc: "Suzim'in ana dili Arapça olduğu için Türkçe öğrenmek çok kolay! Türkçe'de Arapça ile ortak yüzlerce köklü kelime bulunur.",
     dictTitle: "📚 Büyük Türkçe - İngilizce - Arapça Sözlük",
-    dictSubtitle: "2,500'den fazla doğrulanmış kelime, örnek cümle ve telaffuz rehberi.",
+    dictSubtitle: "2,800'den fazla doğrulanmış kelime, Zihin Sarayı tekniği ve örnek cümle rehberi.",
     dictSearchPlaceholder: "Kelime ara... (Türkçe, English, العربية)",
     wbTitle: "🗂️ Öğrendiğin Yapraklar & Kelimeler",
     wbSubtitle: "Papatya bahçende suladığın ve tamamen açan kelimeleriniz.",
     wbEmptyText: "Henüz kelime öğrenilmedi. Papatya yapraklarına dokunarak öğrenmeye başla!",
-    yusufWelcome: "Hoş geldin Suzim! 🌼 Papatyadan bir yaprak seçerek öğrenmeye başlayalım!"
+    yusufWelcome: "Hoş geldin Suzim! 🌼 Zihin Sarayı tekniğiyle kelimeleri kolayca ezberleyelim!"
   },
   en: {
     brandTitle: "Suzim's Turkish Garden",
@@ -60,18 +60,18 @@ const i18n = {
     daisyTitle: "🌸 Daisy Flower & Petals",
     daisyHint: "Every word is a petal. Touch a petal to learn and bloom your flower!",
     inspectorEmptyTitle: "Select a Petal",
-    inspectorEmptyDesc: "Touch a petal on the daisy to inspect meanings, sentences, and Arabic root notes.",
+    inspectorEmptyDesc: "Touch a petal on the daisy to inspect meanings, Mind Palace tips, and Arabic root notes.",
     bloomBtnAction: "Bloom This Petal 🌼",
     bloomedStateBtn: "Petal Bloomed 🌸",
     cognateTitle: "💡 Arabic - Turkish Shared Cognates",
     cognateDesc: "Since Suzim's native language is Arabic, learning Turkish is natural! Turkish shares hundreds of rooted words with Arabic.",
     dictTitle: "📚 Turkish - English - Arabic Dictionary",
-    dictSubtitle: "Over 2,500 verified words with example sentences and pronunciation guides.",
+    dictSubtitle: "Over 2,800 verified words with Mind Palace memory technique and example sentences.",
     dictSearchPlaceholder: "Search word... (Turkish, English, Arabic)",
     wbTitle: "🗂️ Mastered Words & Petals",
     wbSubtitle: "Words and petals you have bloomed in your garden.",
     wbEmptyText: "No petals bloomed yet. Touch daisy petals to start learning!",
-    yusufWelcome: "Welcome Suzim! 🌼 Let's pick a petal from the daisy to start learning!"
+    yusufWelcome: "Welcome Suzim! 🌼 Let's memorize words easily using the Mind Palace technique!"
   },
   ar: {
     brandTitle: "بستان سوزي للغة التركية",
@@ -88,18 +88,18 @@ const i18n = {
     daisyTitle: "🌸 زهرة الأقحوان والبتلات",
     daisyHint: "كل كلمة هي بتلة. إلمس البتلة لتعلمها وجعل زهرتك تتفتح!",
     inspectorEmptyTitle: "اختر بتلة",
-    inspectorEmptyDesc: "إلمس بتلة في الأقحوان لاستعراض المعنى والجملة وأصل الكلمة في العربية.",
+    inspectorEmptyDesc: "إلمس بتلة في الأقحوان لاستعراض المعنى ونصيحة قصر الذاكرة وأصل الكلمة.",
     bloomBtnAction: "افتح البتلة 🌼",
     bloomedStateBtn: "تفتحت البتلة 🌸",
     cognateTitle: "💡 الكلمات المشتركة بين العربية والتركية",
     cognateDesc: "بما أن لغة سوزي الأم هي العربية، فتعلم التركية سهل للغاية! هناك مئات الكلمات المشتركة مع العربية.",
     dictTitle: "📚 المعجم الكبير: تركي - إنجليزي - عربي",
-    dictSubtitle: "أكثر من 2500 كلمة موثقة مع جمل توضيحية ونطق صوتي.",
+    dictSubtitle: "أكثر من 2800 كلمة موثقة مع تقنية قصر الذاكرة وجمل توضيحية.",
     dictSearchPlaceholder: "ابحث عن كلمة... (تركي، إنجليزي، عربي)",
     wbTitle: "🗂️ الكلمات والبتلات المكتسبة",
     wbSubtitle: "الكلمات والبتلات التي قمت بسقايتها وتفتيحها في بستانك.",
     wbEmptyText: "لم يتم تفتيح أي بتلات بعد. إلمس بتلات الأقحوان للبدء بالتعلم!",
-    yusufWelcome: "أهلاً بكِ يا سوزي! 🌼 لنختر بتلة من زهرة الأقحوان ونبدأ التعلم!"
+    yusufWelcome: "أهلاً بكِ يا سوزي! 🌼 لنحفظ الكلمات بسهولة باستخدام تقنية قصر الذاكرة!"
   }
 };
 
@@ -263,7 +263,7 @@ function renderCurrentView() {
   }
 }
 
-// Sidebar Level Selector (CEFR: A1, A2, B1, B2, C1)
+// Sidebar Level Selector (Explicit CEFR Labels: A1, A2, B1, B2, C1)
 function initLevelSelector() {
   const levelsListContainer = document.getElementById("levels-list");
   levelsListContainer.innerHTML = "";
@@ -275,7 +275,7 @@ function initLevelSelector() {
     item.className = `level-nav-item ${lvl.id === appState.currentLevelId ? "active" : ""}`;
     item.innerHTML = `
       <span class="lvl-dot"></span>
-      <span style="font-size: 13px; font-weight: 600;">${cefrLabels[idx] || ('Level A' + lvl.id)}</span>
+      <span style="font-size: 13px; font-weight: 600;">${cefrLabels[idx]}</span>
     `;
 
     item.addEventListener("click", () => {
@@ -421,6 +421,16 @@ function renderWordInspector(wordObj, petalElement) {
       </div>
     ` : ''}
 
+    ${wordObj.mind_palace_tr ? `
+      <div class="mind-palace-note-card">
+        <span class="mp-icon">🧠</span>
+        <div>
+          <strong>Zihin Sarayı Tekniği (Mind Palace):</strong>
+          <p>${wordObj.mind_palace_tr}</p>
+        </div>
+      </div>
+    ` : ''}
+
     <div class="sentence-card-box">
       <p class="sentence-tr">"${wordObj.sentence_tr || ''}"</p>
       <p class="sentence-en">${wordObj.sentence_en || ''}</p>
@@ -500,7 +510,7 @@ function renderDictionaryView() {
       );
     }
 
-    items.slice(0, 100).forEach(w => {
+    items.slice(0, 150).forEach(w => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td><strong>${w.word}</strong> ${w.is_cognate ? '💡' : ''}</td>

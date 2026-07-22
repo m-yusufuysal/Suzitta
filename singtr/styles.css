@@ -821,7 +821,7 @@ main {
   font-size: 12px;
 }
 
-/* Word Inspector Card */
+/* Word Inspector Card & Mind Palace Card */
 .daisy-word-inspector {
   border-radius: var(--radius-zh-lg);
   padding: 28px;
@@ -912,6 +912,20 @@ main {
   font-size: 13px;
   color: var(--color-cognate);
 }
+
+.mind-palace-note-card {
+  background: rgba(242, 187, 5, 0.12);
+  border: 1px solid rgba(242, 187, 5, 0.4);
+  padding: 14px 18px;
+  border-radius: var(--radius-zh-sm);
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--color-primary-dark);
+}
+
+.mind-palace-note-card .mp-icon { font-size: 20px; }
 
 .sentence-card-box {
   background: rgba(255, 255, 255, 0.75);

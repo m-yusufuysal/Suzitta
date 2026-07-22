@@ -107,6 +107,7 @@ const i18n = {
 document.addEventListener("DOMContentLoaded", () => {
   initWelcomeModal();
   initLanguageSelector();
+  initMuteControls();
   initNavigation();
   initLevelSelector();
   renderCurrentView();
@@ -125,6 +126,29 @@ function initWelcomeModal() {
       setTimeout(() => {
         modal.style.display = "none";
       }, 400);
+    });
+  }
+}
+
+// Mute & TTS Audio Speed Controls
+function initMuteControls() {
+  const muteBtn = document.getElementById("btn-mute-toggle");
+  const muteIcon = document.getElementById("mute-icon");
+  const muteLabel = document.getElementById("mute-label");
+  const voiceSpeedSelect = document.getElementById("voice-speed");
+
+  if (muteBtn) {
+    muteBtn.addEventListener("click", () => {
+      appState.isMuted = !appState.isMuted;
+      if (muteIcon) muteIcon.textContent = appState.isMuted ? "🔇" : "🔊";
+      if (muteLabel) muteLabel.textContent = appState.isMuted ? "Sessiz" : "Ses Açık";
+      if (appState.isMuted && window.speechSynthesis) window.speechSynthesis.cancel();
+    });
+  }
+
+  if (voiceSpeedSelect) {
+    voiceSpeedSelect.addEventListener("change", (e) => {
+      appState.voiceSpeed = parseFloat(e.target.value);
     });
   }
 }
@@ -310,6 +334,7 @@ function openLessonWorkspace(lesson) {
   document.getElementById("word-card-detail").style.display = "none";
 }
 
+// Render Daisy Flower Radial Canvas without Overlap
 function renderDaisyFlower(lesson) {
   const canvas = document.getElementById("daisy-flower-canvas");
   canvas.innerHTML = "";
@@ -320,6 +345,7 @@ function renderDaisyFlower(lesson) {
   document.getElementById("ws-bloomed-count").textContent = bloomedCount;
   document.getElementById("ws-total-count").textContent = total;
 
+  // Center Flower Core
   const core = document.createElement("div");
   core.className = "flower-center-core";
   core.innerHTML = `
@@ -328,7 +354,8 @@ function renderDaisyFlower(lesson) {
   `;
   canvas.appendChild(core);
 
-  const radius = 118;
+  // Dynamic Radial Distance calculation to prevent overlap
+  const radius = 150; // Increased radius for 440px canvas
   lesson.vocabulary.forEach((wordObj, idx) => {
     const angle = (idx / total) * (2 * Math.PI) - (Math.PI / 2);
     const x = Math.cos(angle) * radius;

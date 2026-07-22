@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════
-// Suzi'nin Papatya Bahçesi - Core Application Logic
-// Trilingual (TR / EN / AR), Arabic Cognates, and Daisy Petals Gamification
+// Suzim'in Türkçe Bahçesi - Core Application Logic
+// Trilingual (TR / EN / AR / ZH), Arabic Cognates, and Daisy Petals Gamification
 // ═══════════════════════════════════════════════════════════════
 
 // Global App State
@@ -18,7 +18,7 @@ const appState = {
 // Interface Internationalization Dictionary (TR / EN / AR)
 const i18n = {
   tr: {
-    brandTitle: "Suzi'nin Bahçesi",
+    brandTitle: "Suzim'in Türkçe Bahçesi",
     brandSub: "بستان سوزي للغة التركية",
     navGarden: "Papatya Bahçem",
     navCognates: "Ortak Kelimeler",
@@ -27,7 +27,7 @@ const i18n = {
     levelsHeader: "SEVİYELER (LEVELS)",
     statPetalsLbl: "Açan Yapraklar",
     statProgressLbl: "Genel İlerleme",
-    langLbl: "Dil / Language:",
+    langLbl: "Dil:",
     backGarden: "Bahçeye Dön",
     daisyTitle: "🌸 Papatya Çiçeği & Yapraklar",
     daisyHint: "Her kelime bir yapraktır. Yaprağa dokun, öğren ve çiçeğini açtır!",
@@ -36,18 +36,18 @@ const i18n = {
     bloomBtnAction: "Yaprağı Açtır 🌼 (+5 XP)",
     bloomedStateBtn: "Yaprak Çiçek Açtı 🌸",
     cognateTitle: "💡 Arapça - Türkçe Ortak Kelimeler (الكلمات المشتركة)",
-    cognateDesc: "Suzi'nin ana dili Arapça olduğu için Türkçe öğrenmek çok kolay! Türkçe'de Arapça ile ortak yüzlerce köklü kelime bulunur.",
+    cognateDesc: "Suzim'in ana dili Arapça olduğu için Türkçe öğrenmek çok kolay! Türkçe'de Arapça ile ortak yüzlerce köklü kelime bulunur.",
     dictTitle: "📚 Büyük Türkçe - İngilizce - Arapça Sözlük",
     dictSubtitle: "2,500'den fazla doğrulanmış kelime, örnek cümle ve telaffuz rehberi.",
     dictSearchPlaceholder: "Kelime ara... (Türkçe, English, العربية)",
     wbTitle: "🗂️ Öğrendiğin Yapraklar & Kelimeler",
     wbSubtitle: "Papatya bahçende suladığın ve tamamen açan kelimeleriniz.",
     wbEmptyText: "Henüz kelime öğrenilmedi. Papatya yapraklarına dokunarak öğrenmeye başla!",
-    yusufWelcome: "Hoş geldin Suzi! 🌼 Papatyadan bir yaprak seçerek öğrenmeye başlayalım!"
+    yusufWelcome: "Hoş geldin Suzim! 🌼 Papatyadan bir yaprak seçerek öğrenmeye başlayalım!"
   },
   en: {
-    brandTitle: "Suzi's Garden",
-    brandSub: "Suzi's Turkish Learning Garden",
+    brandTitle: "Suzim's Turkish Garden",
+    brandSub: "Suzim's Turkish Learning Garden",
     navGarden: "Daisy Garden",
     navCognates: "Arabic Cognates",
     navDictionary: "Dictionary",
@@ -64,17 +64,17 @@ const i18n = {
     bloomBtnAction: "Bloom This Petal 🌼",
     bloomedStateBtn: "Petal Bloomed 🌸",
     cognateTitle: "💡 Arabic - Turkish Shared Cognates",
-    cognateDesc: "Since Suzi's native language is Arabic, learning Turkish is natural! Turkish shares hundreds of rooted words with Arabic.",
+    cognateDesc: "Since Suzim's native language is Arabic, learning Turkish is natural! Turkish shares hundreds of rooted words with Arabic.",
     dictTitle: "📚 Turkish - English - Arabic Dictionary",
     dictSubtitle: "Over 2,500 verified words with example sentences and pronunciation guides.",
     dictSearchPlaceholder: "Search word... (Turkish, English, Arabic)",
     wbTitle: "🗂️ Mastered Words & Petals",
     wbSubtitle: "Words and petals you have bloomed in your garden.",
     wbEmptyText: "No petals bloomed yet. Touch daisy petals to start learning!",
-    yusufWelcome: "Welcome Suzi! 🌼 Let's pick a petal from the daisy to start learning!"
+    yusufWelcome: "Welcome Suzim! 🌼 Let's pick a petal from the daisy to start learning!"
   },
   ar: {
-    brandTitle: "بستان سوزي",
+    brandTitle: "بستان سوزي للغة التركية",
     brandSub: "بستان سوزي لتعلم اللغة التركية",
     navGarden: "بستان الأقحوان",
     navCognates: "الكلمات المشتركة",
@@ -105,12 +105,29 @@ const i18n = {
 
 // Initialize Application
 document.addEventListener("DOMContentLoaded", () => {
+  initWelcomeModal();
   initLanguageSelector();
   initNavigation();
   initLevelSelector();
   renderCurrentView();
   updateGlobalStats();
 });
+
+// Welcome Modal Handler
+function initWelcomeModal() {
+  const modal = document.getElementById("welcome-modal");
+  const startBtn = document.getElementById("btn-welcome-start");
+
+  if (startBtn && modal) {
+    startBtn.addEventListener("click", () => {
+      modal.style.opacity = "0";
+      modal.style.transition = "opacity 0.4s ease";
+      setTimeout(() => {
+        modal.style.display = "none";
+      }, 400);
+    });
+  }
+}
 
 // Internationalization Handler
 function initLanguageSelector() {
@@ -125,7 +142,6 @@ function initLanguageSelector() {
     });
   });
 
-  // Set active button
   const currentBtn = document.querySelector(`.lang-btn[data-lang="${appState.currentLang}"]`);
   if (currentBtn) {
     langBtns.forEach(b => b.classList.remove("active"));
@@ -138,7 +154,6 @@ function initLanguageSelector() {
 function applyTrilingualText() {
   const t = i18n[appState.currentLang] || i18n.tr;
 
-  // Header & Sidebar UI
   document.getElementById("ui-brand-title").textContent = t.brandTitle;
   document.getElementById("ui-nav-garden").textContent = t.navGarden;
   document.getElementById("ui-nav-cognates").textContent = t.navCognates;
@@ -150,13 +165,11 @@ function applyTrilingualText() {
   document.getElementById("ui-lang-lbl").textContent = t.langLbl;
   document.getElementById("ui-back-garden-lbl").textContent = t.backGarden;
 
-  // Workspace Titles
   document.getElementById("ui-daisy-canvas-title").textContent = t.daisyTitle;
   document.getElementById("ui-daisy-canvas-hint").textContent = t.daisyHint;
   document.getElementById("ui-inspector-empty-title").textContent = t.inspectorEmptyTitle;
   document.getElementById("ui-inspector-empty-desc").textContent = t.inspectorEmptyDesc;
 
-  // Dict & Bank Titles
   document.getElementById("ui-dict-title").textContent = t.dictTitle;
   document.getElementById("ui-dict-subtitle").textContent = t.dictSubtitle;
   document.getElementById("dict-search-input").placeholder = t.dictSearchPlaceholder;
@@ -188,8 +201,6 @@ function initNavigation() {
 
       appState.activeView = item.viewId;
       renderCurrentView();
-
-      // Close mobile drawer
       document.querySelector("aside").classList.remove("open");
     };
 
@@ -197,7 +208,6 @@ function initNavigation() {
     if (mobBtn) mobBtn.addEventListener("click", switchHandler);
   });
 
-  // Mobile Drawer Toggle
   const drawerBtn = document.getElementById("btn-toggle-drawer");
   if (drawerBtn) {
     drawerBtn.addEventListener("click", () => {
@@ -205,7 +215,6 @@ function initNavigation() {
     });
   }
 
-  // Back to Garden button
   document.getElementById("btn-back-to-garden").addEventListener("click", () => {
     document.getElementById("active-lesson-section").style.display = "none";
     document.getElementById("level-overview-section").style.display = "block";
@@ -230,7 +239,6 @@ function renderCurrentView() {
   }
 }
 
-// Sidebar Level Selector
 function initLevelSelector() {
   const levelsListContainer = document.getElementById("levels-list");
   levelsListContainer.innerHTML = "";
@@ -257,7 +265,6 @@ function initLevelSelector() {
   });
 }
 
-// Render Garden Level Overview & Lessons
 function renderLevelOverview() {
   const currentLvlObj = learningDatabase.levels.find(l => l.id === appState.currentLevelId) || learningDatabase.levels[0];
 
@@ -271,7 +278,6 @@ function renderLevelOverview() {
     const card = document.createElement("div");
     card.className = "lesson-card";
 
-    // Calculate bloomed count for this lesson
     const totalVocab = les.vocabulary.length;
     const bloomedCount = les.vocabulary.filter(w => appState.bloomedWords.has(w.word)).length;
 
@@ -285,15 +291,11 @@ function renderLevelOverview() {
       </div>
     `;
 
-    card.addEventListener("click", () => {
-      openLessonWorkspace(les);
-    });
-
+    card.addEventListener("click", () => openLessonWorkspace(les));
     lessonsGrid.appendChild(card);
   });
 }
 
-// Open Active Lesson Workspace (Interactive Daisy Canvas)
 function openLessonWorkspace(lesson) {
   appState.activeLesson = lesson;
   document.getElementById("level-overview-section").style.display = "none";
@@ -304,12 +306,10 @@ function openLessonWorkspace(lesson) {
 
   renderDaisyFlower(lesson);
 
-  // Clear inspector initially
   document.getElementById("word-empty-view").style.display = "flex";
   document.getElementById("word-card-detail").style.display = "none";
 }
 
-// Render Interactive Daisy Flower Radial Petals
 function renderDaisyFlower(lesson) {
   const canvas = document.getElementById("daisy-flower-canvas");
   canvas.innerHTML = "";
@@ -320,7 +320,6 @@ function renderDaisyFlower(lesson) {
   document.getElementById("ws-bloomed-count").textContent = bloomedCount;
   document.getElementById("ws-total-count").textContent = total;
 
-  // Flower Core Center
   const core = document.createElement("div");
   core.className = "flower-center-core";
   core.innerHTML = `
@@ -329,8 +328,7 @@ function renderDaisyFlower(lesson) {
   `;
   canvas.appendChild(core);
 
-  // Render radial petals
-  const radius = 115; // Radius from center
+  const radius = 118;
   lesson.vocabulary.forEach((wordObj, idx) => {
     const angle = (idx / total) * (2 * Math.PI) - (Math.PI / 2);
     const x = Math.cos(angle) * radius;
@@ -355,7 +353,6 @@ function renderDaisyFlower(lesson) {
   });
 }
 
-// Render Word Details Inspector Card
 function renderWordInspector(wordObj, petalElement) {
   document.getElementById("word-empty-view").style.display = "none";
   const detailCard = document.getElementById("word-card-detail");
@@ -405,21 +402,16 @@ function renderWordInspector(wordObj, petalElement) {
     </button>
   `;
 
-  // TTS Audio playback
-  document.getElementById("btn-play-tts").addEventListener("click", () => {
-    speakText(wordObj.word);
-  });
+  document.getElementById("btn-play-tts").addEventListener("click", () => speakText(wordObj.word));
 
-  // Bloom Petal Action
   document.getElementById("btn-bloom-petal").addEventListener("click", () => {
     if (!appState.bloomedWords.has(wordObj.word)) {
       appState.bloomedWords.add(wordObj.word);
       localStorage.setItem("suzitta_bloomed_words", JSON.stringify(Array.from(appState.bloomedWords)));
 
       if (petalElement) petalElement.classList.add("bloomed");
-      speakText(`Tebrikler! ${wordObj.word} kelimesini öğrendin.`);
+      speakText(`Tebrikler Suzim! ${wordObj.word} kelimesini öğrendin.`);
 
-      // Update workspace counts
       renderDaisyFlower(appState.activeLesson);
       updateGlobalStats();
       renderWordInspector(wordObj, petalElement);
@@ -427,7 +419,6 @@ function renderWordInspector(wordObj, petalElement) {
   });
 }
 
-// Render Arabic Cognates View (💡 Ortak Kelimeler)
 function renderCognatesView() {
   const container = document.getElementById("cognates-grid-container");
   container.innerHTML = "";
@@ -445,7 +436,7 @@ function renderCognatesView() {
       <div class="cognate-meanings">
         <p><strong>EN:</strong> ${c.en}</p>
       </div>
-      <div style="font-size: 12px; color: var(--color-primary); background: #FFF; padding: 8px; border-radius: 8px; border: 1px solid var(--color-border);">
+      <div style="font-size: 12px; color: var(--color-primary); background: rgba(255,255,255,0.7); padding: 8px; border-radius: 8px; border: 1px solid var(--color-border-subtle);">
         "${c.sentence_tr}"
       </div>
     `;
@@ -455,7 +446,6 @@ function renderCognatesView() {
   });
 }
 
-// Render Searchable Dictionary View (📚 Sözlük)
 function renderDictionaryView() {
   const tbody = document.getElementById("dictionary-table-body");
   const input = document.getElementById("dict-search-input");
@@ -499,7 +489,6 @@ function renderDictionaryView() {
   renderTable();
 }
 
-// Render Word Bank View (🗂️ Kelime Bankam)
 function renderWordBankView() {
   const container = document.getElementById("wb-learned-tags-cloud");
   const emptyMsg = document.getElementById("wb-empty-msg");
@@ -523,7 +512,6 @@ function renderWordBankView() {
   });
 }
 
-// Global Stats & Progress
 function updateGlobalStats() {
   const totalBloomed = appState.bloomedWords.size;
   const totalVocab = learningDatabase.vocabularyBank.length;
@@ -535,7 +523,6 @@ function updateGlobalStats() {
   document.getElementById("overall-progress-bar").style.width = `${percent}%`;
 }
 
-// TTS Audio Pronunciation Helper (Web Speech API)
 function speakText(text) {
   if (appState.isMuted || !('speechSynthesis' in window)) return;
 

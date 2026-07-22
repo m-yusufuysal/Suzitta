@@ -3,15 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Suzi'nin Papatya Bahçesi - Learn Turkish (TR / EN / AR)</title>
+  <title>Suzim'in Türkçe Bahçesi - Learn Turkish (TR / EN / AR / ZH)</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-  <!-- Floating Decorative Background Daisies -->
+  <!-- Liquid Ambient Background Mesh -->
+  <div class="liquid-bg-mesh">
+    <div class="liquid-blob blob-1"></div>
+    <div class="liquid-blob blob-2"></div>
+    <div class="liquid-blob blob-3"></div>
+  </div>
+
+  <!-- Floating Glass Daisies -->
   <div class="bg-decorations" id="bg-daisies">
     <div class="floating-daisy fd-1">🌼</div>
     <div class="floating-daisy fd-2">🌸</div>
@@ -20,20 +27,36 @@
     <div class="floating-daisy fd-5">🌼</div>
   </div>
 
+  <!-- Welcome Entrance Liquid Glass Modal -->
+  <div class="welcome-modal-backdrop" id="welcome-modal">
+    <div class="welcome-glass-card">
+      <div class="welcome-flower-icon">🌼</div>
+      <h2>Hoş Geldin Suzim! 🌼✈️</h2>
+      <p class="welcome-subtitle-ar" dir="rtl">أهلاً بكِ في بستان اللغة التركية!</p>
+      <p class="welcome-subtitle-zh">欢迎来到土耳其语学习花园！</p>
+      
+      <div class="welcome-intro-box">
+        <p>Suzim, Türkiye yolculuğuna ve Türkçe öğrenmeye hazır mısın? 🇹🇷</p>
+      </div>
+
+      <button class="welcome-start-btn" id="btn-welcome-start">Türkiye Yolculuğunu Başlat! 🚀</button>
+    </div>
+  </div>
+
   <!-- App Wrapper Container -->
   <div id="app-container">
     
-    <!-- Sidebar Navigation -->
-    <aside>
+    <!-- Sidebar Navigation (Liquid Glass Pane) -->
+    <aside class="liquid-glass-sidebar">
       <div class="logo-section">
         <div class="logo-daisy-icon">🌼</div>
         <div>
-          <h1 id="ui-brand-title">Suzi'nin Bahçesi</h1>
+          <h1 id="ui-brand-title">Suzim'in Türkçe Bahçesi</h1>
           <span class="ar-brand-sub">بستان سوزي للغة التركية</span>
         </div>
       </div>
 
-      <!-- Trilingual Main Navigation Buttons -->
+      <!-- Navigation Buttons -->
       <div class="sidebar-nav-container">
         <button class="sidebar-nav-btn active" id="nav-btn-garden">
           <span class="nav-icon">🌸</span>
@@ -57,7 +80,7 @@
         </button>
       </div>
 
-      <!-- Level Selector in Garden View -->
+      <!-- Level Selector -->
       <div id="sidebar-level-section">
         <h4 class="sidebar-section-title" id="ui-levels-header">SEVİYELER (LEVELS)</h4>
         <nav class="levels-menu" id="levels-list">
@@ -65,9 +88,9 @@
         </nav>
       </div>
 
-      <!-- Sidebar Progress & Petal Count -->
+      <!-- Progress Footer -->
       <div class="sidebar-footer">
-        <div class="stats-card">
+        <div class="stats-glass-card">
           <div class="stat-row">
             <span class="stat-icon">🌼</span>
             <div class="stat-label">
@@ -76,7 +99,7 @@
             </div>
           </div>
           
-          <div class="stat-row" style="flex-direction: column; align-items: flex-start; gap: 6px; margin-top: 6px;">
+          <div class="stat-row" style="flex-direction: column; align-items: flex-start; gap: 6px; margin-top: 8px;">
             <div style="display: flex; justify-content: space-between; width: 100%; font-size: 11px; font-weight: 600; color: var(--color-text-muted);">
               <span id="ui-stat-progress-lbl">Genel İlerleme</span>
               <span id="progress-percent">0%</span>
@@ -92,19 +115,19 @@
     <!-- Main Content Area -->
     <main>
       
-      <!-- Top Clean Header Bar -->
-      <header>
+      <!-- Liquid Glass Header Bar -->
+      <header class="liquid-glass-header">
         <button class="mobile-drawer-toggle" id="btn-toggle-drawer" title="Menüyü Aç/Kapat">☰</button>
         
         <div class="header-title-container">
           <h2 id="page-main-title">Papatya Bahçesi 🌼</h2>
-          <p id="page-subtitle">Suzi için Türkçe - İngilizce - Arapça Öğrenme Bahçesi</p>
+          <p id="page-subtitle">Suzim için Türkçe - İngilizce - Arapça - Çince Öğrenme Bahçesi</p>
         </div>
 
         <!-- Trilingual Language Switcher & Controls -->
         <div class="controls-panel">
           <div class="lang-switch-box">
-            <span style="font-size: 12px; font-weight: 600; color: var(--color-text-muted);" id="ui-lang-lbl">Dil / Language:</span>
+            <span style="font-size: 12px; font-weight: 600; color: var(--color-text-muted);" id="ui-lang-lbl">Dil:</span>
             <div class="lang-btn-group">
               <button class="lang-btn active" data-lang="tr">🇹🇷 TR</button>
               <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
@@ -130,7 +153,7 @@
         
         <!-- Level Overview Section -->
         <section id="level-overview-section">
-          <div class="level-banner-card">
+          <div class="level-banner-card liquid-glass-card">
             <h3 id="current-level-title">Level A1: Başlangıç</h3>
             <p id="current-level-ar-title" dir="rtl">المستوى A1: التعارف والأساسيات</p>
             <p id="current-level-desc">Temel selamlaşmalar, kişi zamirleri, sayılar, renkler ve Arapça ortak kelimeler.</p>
@@ -143,7 +166,7 @@
 
         <!-- Active Lesson Workspace Section -->
         <section id="active-lesson-section" style="display: none;">
-          <div class="workspace-nav-bar">
+          <div class="workspace-nav-bar liquid-glass-card">
             <button class="back-to-garden" id="btn-back-to-garden">
               <span>⬅️</span> <span id="ui-back-garden-lbl">Bahçeye Dön</span>
             </button>
@@ -161,7 +184,7 @@
           <div class="daisy-workspace-grid">
             
             <!-- Left: Interactive Daisy Flower Canvas -->
-            <div class="daisy-flower-card">
+            <div class="daisy-flower-card liquid-glass-card">
               <div class="daisy-flower-header">
                 <h4 id="ui-daisy-canvas-title">🌸 Papatya Çiçeği & Yapraklar</h4>
                 <p id="ui-daisy-canvas-hint">Her kelime bir yapraktır. Yaprağa dokun, öğren ve çiçeğini açtır!</p>
@@ -174,7 +197,7 @@
             </div>
 
             <!-- Right: Petal Word Details Card Inspector -->
-            <div class="daisy-word-inspector" id="word-detail-container">
+            <div class="daisy-word-inspector liquid-glass-card" id="word-detail-container">
               
               <div class="inspector-empty-state" id="word-empty-view">
                 <span class="empty-icon">🌼</span>
@@ -183,7 +206,7 @@
               </div>
 
               <div class="word-card-detail" id="word-card-detail" style="display: none;">
-                <!-- Dynamically filled with word, translations, audio, cognate badge, and bloom action button -->
+                <!-- Dynamically filled -->
               </div>
 
             </div>
@@ -196,10 +219,10 @@
 
       <!-- VIEW 2: Arabic-Turkish Cognates (💡 Ortak Kelimeler) -->
       <div class="main-view-panel" id="view-cognates" style="display: none;">
-        <div class="cognates-hero-card">
+        <div class="cognates-hero-card liquid-glass-card">
           <div class="cognate-hero-header">
             <h3>💡 Arapça - Türkçe Ortak Kelimeler (الكلمات المشتركة)</h3>
-            <p>Suzi'nin ana dili Arapça olduğu için Türkçe öğrenmek çok kolay! Türkçe'de Arapça ile ortak yüzlerce köklü kelime bulunur.</p>
+            <p>Suzim'in ana dili Arapça olduğu için Türkçe öğrenmek çok kolay! Türkçe'de Arapça ile ortak yüzlerce köklü kelime bulunur.</p>
           </div>
           
           <div class="cognates-grid" id="cognates-grid-container">
@@ -210,7 +233,7 @@
 
       <!-- VIEW 3: Searchable Dictionary (📚 Sözlük) -->
       <div class="main-view-panel" id="view-dictionary" style="display: none;">
-        <div class="search-dictionary-card">
+        <div class="search-dictionary-card liquid-glass-card">
           <div class="dict-search-header">
             <h3 id="ui-dict-title">📚 Büyük Türkçe - İngilizce - Arapça Sözlük</h3>
             <p id="ui-dict-subtitle">2,500'den fazla doğrulanmış kelime, örnek cümle ve telaffuz rehberi.</p>
@@ -257,7 +280,7 @@
 
       <!-- VIEW 4: Word Bank (🗂️ Kelime Bankam) -->
       <div class="main-view-panel" id="view-wordbank" style="display: none;">
-        <div class="wordbank-summary-card">
+        <div class="wordbank-summary-card liquid-glass-card">
           <div class="wb-header">
             <h3 id="ui-wb-title">🗂️ Öğrendiğin Yapraklar & Kelimeler</h3>
             <p id="ui-wb-subtitle">Papatya bahçende suladığın ve tamamen açan kelimeleriniz.</p>
@@ -276,10 +299,10 @@
 
     </main>
 
-    <!-- Yusuf's Helpful Tutor Mascot (Fixed Bottom Right) -->
+    <!-- Yusuf's Mascot -->
     <div id="yusufs-corner">
-      <div class="yusuf-bubble" id="yusuf-bubble">
-        <p id="yusuf-text">Hoş geldin Suzi! 🌼 Papatyadan bir yaprak seçerek öğrenmeye başlayalım!</p>
+      <div class="yusuf-bubble liquid-glass-card" id="yusuf-bubble">
+        <p id="yusuf-text">Hoş geldin Suzim! 🌼 Papatyadan bir yaprak seçerek öğrenmeye başlayalım!</p>
       </div>
       <div class="yusuf-avatar-wrapper" id="yusuf-avatar-btn">
         <div class="yusuf-avatar">👨‍🏫</div>
@@ -289,7 +312,7 @@
   </div>
 
   <!-- Mobile Bottom Navigation Bar -->
-  <nav class="mobile-bottom-bar">
+  <nav class="mobile-bottom-bar liquid-glass-bar">
     <button class="mobile-nav-item active" id="mob-nav-garden">
       <span class="icon">🌸</span>
       <span class="lbl">Bahçem</span>

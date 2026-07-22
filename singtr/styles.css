@@ -24,7 +24,6 @@
   --font-main: 'Outfit', 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
   --font-arabic: 'Noto Sans Arabic', sans-serif;
 
-  /* Zaha Hadid Parametric Asymmetric Curvatures */
   --radius-zh-sm: 14px 28px 14px 28px;
   --radius-zh-md: 24px 44px 24px 44px;
   --radius-zh-lg: 32px 64px 32px 64px;
@@ -51,7 +50,7 @@ body {
   position: relative;
 }
 
-/* Zaha Hadid Liquid Ambient Background Mesh */
+/* Liquid Ambient Background Mesh */
 .liquid-bg-mesh {
   position: fixed;
   top: 0;
@@ -98,9 +97,9 @@ body {
 }
 
 @keyframes liquidFluid {
-  0% { transform: translate(0, 0) rotate(0deg) scale(1); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; }
-  50% { transform: translate(80px, -50px) rotate(90deg) scale(1.12); border-radius: 60% 40% 30% 70% / 50% 30% 70% 50%; }
-  100% { transform: translate(-50px, 60px) rotate(180deg) scale(0.92); border-radius: 30% 70% 50% 50% / 30% 60% 40% 70%; }
+  0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+  50% { transform: translate(80px, -50px) rotate(90deg) scale(1.12); }
+  100% { transform: translate(-50px, 60px) rotate(180deg) scale(0.92); }
 }
 
 /* Floating Glass Daisies */
@@ -132,7 +131,7 @@ body {
   50% { transform: translateY(-20px) rotate(14deg); }
 }
 
-/* Welcome Entrance Glass Modal */
+/* Welcome Entrance Modal */
 .welcome-modal-backdrop {
   position: fixed;
   top: 0;
@@ -688,7 +687,7 @@ main {
   color: var(--color-primary);
 }
 
-/* Daisy Workspace Grid (Clean 2-Column) */
+/* Daisy Workspace Grid */
 .daisy-workspace-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -785,10 +784,12 @@ main {
   z-index: 10;
 }
 
+/* Pluck & Bloom Animations */
 .daisy-petal-item.selected {
   border-color: var(--color-primary);
-  box-shadow: 0 0 20px rgba(45, 90, 39, 0.45);
-  transform: scale(1.2) !important;
+  box-shadow: 0 0 22px rgba(45, 90, 39, 0.45);
+  transform: scale(1.22) rotate(-6deg) !important;
+  animation: leafPluck 0.5s ease-out;
   z-index: 10;
 }
 
@@ -796,7 +797,20 @@ main {
   background: linear-gradient(135deg, #FFFDF0 0%, #FFF2C2 100%);
   border-color: var(--color-accent);
   color: var(--color-primary-dark);
-  box-shadow: 0 0 24px rgba(242, 187, 5, 0.7);
+  box-shadow: 0 0 26px rgba(242, 187, 5, 0.75);
+  animation: leafBloomSparkle 0.6s ease-out;
+}
+
+@keyframes leafPluck {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.28) rotate(-12deg) translateY(-8px); }
+  100% { transform: scale(1.22) rotate(-6deg) translateY(-4px); }
+}
+
+@keyframes leafBloomSparkle {
+  0% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.32) rotate(8deg); filter: brightness(1.4) drop-shadow(0 0 28px rgba(242, 187, 5, 0.95)); }
+  100% { transform: scale(1.15); filter: brightness(1) drop-shadow(0 0 20px rgba(242, 187, 5, 0.75)); }
 }
 
 .daisy-petal-item.is-cognate::after {

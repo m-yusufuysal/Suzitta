@@ -5,9 +5,10 @@ const learningDatabase = {
   levels: [
   {
     "id": 1,
-    "title": "Level 1: Başlangıç (A1)",
-    "arabicTitle": "المستوى 1",
-    "englishTitle": "Level 1",
+    "cefrCode": "A1",
+    "title": "Level A1: Başlangıç (A1)",
+    "arabicTitle": "المستوى A1",
+    "englishTitle": "Level A1",
     "lessons": [
       {
         "id": "l1_1",
@@ -1918,9 +1919,10 @@ const learningDatabase = {
   },
   {
     "id": 2,
-    "title": "Level 2: Günlük Yaşam (A2)",
-    "arabicTitle": "المستوى 2",
-    "englishTitle": "Level 2",
+    "cefrCode": "A2",
+    "title": "Level A2: Temel Türkçe (A2)",
+    "arabicTitle": "المستوى A2",
+    "englishTitle": "Level A2",
     "lessons": [
       {
         "id": "l2_1",
@@ -3726,9 +3728,10 @@ const learningDatabase = {
   },
   {
     "id": 3,
-    "title": "Level 3: Zamanlar & Bağlam (B1)",
-    "arabicTitle": "المستوى 3",
-    "englishTitle": "Level 3",
+    "cefrCode": "B1",
+    "title": "Level B1: Orta Seviye (B1)",
+    "arabicTitle": "المستوى B1",
+    "englishTitle": "Level B1",
     "lessons": [
       {
         "id": "l3_1",
@@ -5374,9 +5377,10 @@ const learningDatabase = {
   },
   {
     "id": 4,
-    "title": "Level 4: Akıcı İfade (B2)",
-    "arabicTitle": "المستوى 4",
-    "englishTitle": "Level 4",
+    "cefrCode": "B2",
+    "title": "Level B2: Akıcı Türkçe (B2)",
+    "arabicTitle": "المستوى B2",
+    "englishTitle": "Level B2",
     "lessons": [
       {
         "id": "l4_1",
@@ -6522,9 +6526,10 @@ const learningDatabase = {
   },
   {
     "id": 5,
-    "title": "Level 5: Akademik Akıcılık (C1)",
-    "arabicTitle": "المستوى 5",
-    "englishTitle": "Level 5",
+    "cefrCode": "C1",
+    "title": "Level C1: Akademik Akıcılık (C1)",
+    "arabicTitle": "المستوى C1",
+    "englishTitle": "Level C1",
     "lessons": [
       {
         "id": "l5_1",

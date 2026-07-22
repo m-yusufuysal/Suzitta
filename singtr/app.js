@@ -263,16 +263,19 @@ function renderCurrentView() {
   }
 }
 
+// Sidebar Level Selector (CEFR: A1, A2, B1, B2, C1)
 function initLevelSelector() {
   const levelsListContainer = document.getElementById("levels-list");
   levelsListContainer.innerHTML = "";
 
-  learningDatabase.levels.forEach(lvl => {
+  const cefrLabels = ["Level A1", "Level A2", "Level B1", "Level B2", "Level C1"];
+
+  learningDatabase.levels.forEach((lvl, idx) => {
     const item = document.createElement("div");
     item.className = `level-nav-item ${lvl.id === appState.currentLevelId ? "active" : ""}`;
     item.innerHTML = `
       <span class="lvl-dot"></span>
-      <span style="font-size: 13px; font-weight: 600;">Level A${lvl.id}</span>
+      <span style="font-size: 13px; font-weight: 600;">${cefrLabels[idx] || ('Level A' + lvl.id)}</span>
     `;
 
     item.addEventListener("click", () => {
@@ -334,7 +337,7 @@ function openLessonWorkspace(lesson) {
   document.getElementById("word-card-detail").style.display = "none";
 }
 
-// Render Daisy Flower Radial Canvas without Overlap
+// Render Daisy Flower Radial Canvas with Leaf Plucking Animation
 function renderDaisyFlower(lesson) {
   const canvas = document.getElementById("daisy-flower-canvas");
   canvas.innerHTML = "";
@@ -355,7 +358,7 @@ function renderDaisyFlower(lesson) {
   canvas.appendChild(core);
 
   // Dynamic Radial Distance calculation to prevent overlap
-  const radius = 150; // Increased radius for 440px canvas
+  const radius = 150;
   lesson.vocabulary.forEach((wordObj, idx) => {
     const angle = (idx / total) * (2 * Math.PI) - (Math.PI / 2);
     const x = Math.cos(angle) * radius;

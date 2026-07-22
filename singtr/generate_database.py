@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # generate_database.py
 # Compiles a CEFR-aligned Turkish learning database from Level A1 to C1.
-# Contains 200+ authentic Turkish roots, Arabic cognates, trilingual sentences (TR/EN/AR),
-# and 50 structured lessons across 5 levels.
+# Contains authentic Turkish roots, Arabic cognates, trilingual sentences (TR/EN/AR),
+# and 50 structured lessons across 5 CEFR levels (A1, A2, B1, B2, C1).
 
 import json
 import os
@@ -231,7 +231,7 @@ for stem, stem_ar, stem_en, lvl, cat, deriv_list in real_derived_stems:
 print(f"Total authentic real vocabulary items: {len(vocab_list)}")
 
 # ═══════════════════════════════════════════════════════════════
-# LESSON DEFINITIONS (LEVEL 1 TO LEVEL 5 - C1)
+# LESSON DEFINITIONS (EXPLICIT CEFR NAMES: A1, A2, B1, B2, C1)
 # ═══════════════════════════════════════════════════════════════
 
 level_lessons_meta = {
@@ -297,6 +297,15 @@ level_lessons_meta = {
     ]
 }
 
+cefr_titles = ["Level A1", "Level A2", "Level B1", "Level B2", "Level C1"]
+cefr_desc = [
+    "Başlangıç (A1)",
+    "Temel Türkçe (A2)",
+    "Orta Seviye (B1)",
+    "Akıcı Türkçe (B2)",
+    "Akademik Akıcılık (C1)"
+]
+
 levels_definition = []
 for lvl in range(1, 6):
     lessons_list = []
@@ -328,9 +337,10 @@ for lvl in range(1, 6):
 
     levels_definition.append({
         "id": lvl,
-        "title": f"Level {lvl}: {['Başlangıç (A1)', 'Günlük Yaşam (A2)', 'Zamanlar & Bağlam (B1)', 'Akıcı İfade (B2)', 'Akademik Akıcılık (C1)'][lvl-1]}",
-        "arabicTitle": f"المستوى {lvl}",
-        "englishTitle": f"Level {lvl}",
+        "cefrCode": ["A1", "A2", "B1", "B2", "C1"][lvl-1],
+        "title": f"{cefr_titles[lvl-1]}: {cefr_desc[lvl-1]}",
+        "arabicTitle": f"المستوى {['A1', 'A2', 'B1', 'B2', 'C1'][lvl-1]}",
+        "englishTitle": f"{cefr_titles[lvl-1]}",
         "lessons": lessons_list
     })
 
@@ -346,4 +356,4 @@ with open(output_path, "w", encoding="utf-8") as f:
     json.dump(vocab_list, f, ensure_ascii=False, indent=2)
     f.write("\n};\n")
 
-print(f"Database generated successfully with {len(vocab_list)} items for Levels A1-C1!")
+print(f"Database generated successfully for Levels A1, A2, B1, B2, C1!")

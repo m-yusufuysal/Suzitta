@@ -1,11 +1,11 @@
-// Suzim'in Türkçe Bahçesi - Authentic CEFR Learning Database
-// Contains 136 authentic real Turkish vocabulary items
+// Suzim'in Türkçe Bahçesi - Authentic CEFR Learning Database (A1 to C1)
+// Contains 134 authentic real Turkish vocabulary items
 
 const learningDatabase = {
   levels: [
   {
     "id": 1,
-    "title": "Level 1: Başlangıç",
+    "title": "Level 1: Başlangıç (A1)",
     "arabicTitle": "المستوى 1",
     "englishTitle": "Level 1",
     "lessons": [
@@ -740,7 +740,7 @@ const learningDatabase = {
             "word": "rahmet",
             "tr": "rahmet",
             "ar": "رَحْمَة",
-            "en": "mercy / rain",
+            "en": "mercy",
             "level": 1,
             "category": "Ortak Kelimeler",
             "sentence_tr": "İnsanlara karşı her zaman rahmetle yaklaşmalıdır.",
@@ -959,21 +959,6 @@ const learningDatabase = {
           },
           {
             "id": "v_0064",
-            "word": "iyi akşamlar",
-            "tr": "iyi akşamlar",
-            "ar": "مساء الخير",
-            "en": "good evening",
-            "level": 1,
-            "category": "Tanışma & Selamlaşma",
-            "sentence_tr": "İyi akşamlar sevgili arkadaşlar.",
-            "sentence_en": "Good evening dear friends.",
-            "sentence_ar": "مساء الخير أيها الأصدقاء الأعزاء.",
-            "pronunciation": "[iyi akşamlar]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0065",
             "word": "lütfen",
             "tr": "lütfen",
             "ar": "رجاءً",
@@ -988,7 +973,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0066",
+            "id": "v_0065",
             "word": "teşekkürler",
             "tr": "teşekkürler",
             "ar": "شكراً",
@@ -1003,7 +988,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0067",
+            "id": "v_0066",
             "word": "evet",
             "tr": "evet",
             "ar": "نعم",
@@ -1018,17 +1003,32 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0068",
-            "word": "hayır",
-            "tr": "hayır",
-            "ar": "لا",
-            "en": "no",
+            "id": "v_0067",
+            "word": "anne",
+            "tr": "anne",
+            "ar": "أم",
+            "en": "mother",
             "level": 1,
-            "category": "Tanışma & Selamlaşma",
-            "sentence_tr": "Hayır, henüz işim bitmedi.",
-            "sentence_en": "No, my work is not finished yet.",
-            "sentence_ar": "لا، لم ينتهِ عملي بعد.",
-            "pronunciation": "[hayır]",
+            "category": "Günlük Yaşam",
+            "sentence_tr": "Annem lezzetli bir çorba pişirdi.",
+            "sentence_en": "My mother cooked a delicious soup.",
+            "sentence_ar": "طبخت أمي شوربة لديدة.",
+            "pronunciation": "[anne]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0068",
+            "word": "baba",
+            "tr": "baba",
+            "ar": "أب",
+            "en": "father",
+            "level": 1,
+            "category": "Günlük Yaşam",
+            "sentence_tr": "Babam akşam eve erkenden geldi.",
+            "sentence_en": "My father came home early in the evening.",
+            "sentence_ar": "عاد أبي إلى البيت مبكراً في المساء.",
+            "pronunciation": "[baba]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -1046,36 +1046,6 @@ const learningDatabase = {
         "vocabulary": [
           {
             "id": "v_0067",
-            "word": "evet",
-            "tr": "evet",
-            "ar": "نعم",
-            "en": "yes",
-            "level": 1,
-            "category": "Tanışma & Selamlaşma",
-            "sentence_tr": "Evet, Türkçe öğrenmeyi çok seviyorum.",
-            "sentence_en": "Yes, I love learning Turkish very much.",
-            "sentence_ar": "نعم، أحب تعلم اللغة التركية كثيراً.",
-            "pronunciation": "[evet]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0068",
-            "word": "hayır",
-            "tr": "hayır",
-            "ar": "لا",
-            "en": "no",
-            "level": 1,
-            "category": "Tanışma & Selamlaşma",
-            "sentence_tr": "Hayır, henüz işim bitmedi.",
-            "sentence_en": "No, my work is not finished yet.",
-            "sentence_ar": "لا، لم ينتهِ عملي بعد.",
-            "pronunciation": "[hayır]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0069",
             "word": "anne",
             "tr": "anne",
             "ar": "أم",
@@ -1090,7 +1060,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0070",
+            "id": "v_0068",
             "word": "baba",
             "tr": "baba",
             "ar": "أب",
@@ -1105,7 +1075,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0071",
+            "id": "v_0069",
             "word": "çocuk",
             "tr": "çocuk",
             "ar": "طفل",
@@ -1120,7 +1090,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0072",
+            "id": "v_0070",
             "word": "ev",
             "tr": "ev",
             "ar": "بيت",
@@ -1135,22 +1105,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0073",
-            "word": "oda",
-            "tr": "oda",
-            "ar": "غرفة",
-            "en": "room",
-            "level": 1,
-            "category": "Günlük Yaşam",
-            "sentence_tr": "Odama yeni bir çalışma masası aldım.",
-            "sentence_en": "I bought a new study desk for my room.",
-            "sentence_ar": "اشتريت مكتب دراسة جديداً لغرفتي.",
-            "pronunciation": "[oda]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0074",
+            "id": "v_0071",
             "word": "su",
             "tr": "su",
             "ar": "ماء",
@@ -1165,32 +1120,77 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0075",
-            "word": "ekmek",
-            "tr": "ekmek",
-            "ar": "خبز",
-            "en": "bread",
+            "id": "v_0072",
+            "word": "bahçe",
+            "tr": "bahçe",
+            "ar": "حديقة",
+            "en": "garden",
             "level": 1,
-            "category": "Günlük Yaşam",
-            "sentence_tr": "Fırından taze ve sıcak bir ekmek aldım.",
-            "sentence_en": "I bought fresh and hot bread from the bakery.",
-            "sentence_ar": "اشتريت خبزاً طازجاً وساخناً من المخبز.",
-            "pronunciation": "[ekmek]",
+            "category": "Doğa & Çevre",
+            "sentence_tr": "Suzim'in bahçesinde rengarenk papatyalar var.",
+            "sentence_en": "There are colorful daisies in Suzim's garden.",
+            "sentence_ar": "هناك زهور أقحوان ملونة في حديقة سوزي.",
+            "pronunciation": "[bahçe]",
             "is_cognate": false,
             "cognate_info": null
           },
           {
-            "id": "v_0076",
-            "word": "göz",
-            "tr": "göz",
-            "ar": "عين",
-            "en": "eye",
+            "id": "v_0073",
+            "word": "çiçek",
+            "tr": "çiçek",
+            "ar": "زهرة",
+            "en": "flower",
             "level": 1,
-            "category": "Sağlık & Vücut",
-            "sentence_tr": "Göz sağlığı için bilgisayara çok bakmamalıyız.",
-            "sentence_en": "We shouldn't look at the computer too much for eye health.",
-            "sentence_ar": "يجب ألا ننظر إلى الكمبيوتر كثيراً من أجل صحة العين.",
-            "pronunciation": "[göz]",
+            "category": "Doğa & Çevre",
+            "sentence_tr": "Balkondaki saksıda güzel bir çiçek açtı.",
+            "sentence_en": "A beautiful flower bloomed in the pot on the balcony.",
+            "sentence_ar": "تفتحت زهرة جميلة في الأصيص على الشرفة.",
+            "pronunciation": "[çiçek]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0074",
+            "word": "yaprak",
+            "tr": "yaprak",
+            "ar": "بتلة / ورقة",
+            "en": "petal / leaf",
+            "level": 1,
+            "category": "Doğa & Çevre",
+            "sentence_tr": "Sonbaharda ağaçların yaprakları sararır.",
+            "sentence_en": "In autumn, the leaves of the trees turn yellow.",
+            "sentence_ar": "في الخريف، تصفر أوراق الأشجار.",
+            "pronunciation": "[yaprak]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0075",
+            "word": "güneş",
+            "tr": "güneş",
+            "ar": "شمس",
+            "en": "sun",
+            "level": 1,
+            "category": "Doğa & Çevre",
+            "sentence_tr": "Sabah güneşi odayı aydınlattı.",
+            "sentence_en": "The morning sun illuminated the room.",
+            "sentence_ar": "أضاءت شمس الصباح الغرفة.",
+            "pronunciation": "[güneş]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0100",
+            "word": "papatya",
+            "tr": "papatya",
+            "ar": "أقحوان",
+            "en": "daisy",
+            "level": 1,
+            "category": "Doğa & Çevre",
+            "sentence_tr": "Suzim'in bahçesinde sapsarı göbekli beyaz papatyalar açtı.",
+            "sentence_en": "White daisies with yellow centers bloomed in Suzim's garden.",
+            "sentence_ar": "تفتحت زهور الأقحوان في حديقة سوزي.",
+            "pronunciation": "[papatya]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -1208,96 +1208,6 @@ const learningDatabase = {
         "vocabulary": [
           {
             "id": "v_0075",
-            "word": "ekmek",
-            "tr": "ekmek",
-            "ar": "خبز",
-            "en": "bread",
-            "level": 1,
-            "category": "Günlük Yaşam",
-            "sentence_tr": "Fırından taze ve sıcak bir ekmek aldım.",
-            "sentence_en": "I bought fresh and hot bread from the bakery.",
-            "sentence_ar": "اشتريت خبزاً طازجاً وساخناً من المخبز.",
-            "pronunciation": "[ekmek]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0076",
-            "word": "göz",
-            "tr": "göz",
-            "ar": "عين",
-            "en": "eye",
-            "level": 1,
-            "category": "Sağlık & Vücut",
-            "sentence_tr": "Göz sağlığı için bilgisayara çok bakmamalıyız.",
-            "sentence_en": "We shouldn't look at the computer too much for eye health.",
-            "sentence_ar": "يجب ألا ننظر إلى الكمبيوتر كثيراً من أجل صحة العين.",
-            "pronunciation": "[göz]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0077",
-            "word": "el",
-            "tr": "el",
-            "ar": "يد",
-            "en": "hand",
-            "level": 1,
-            "category": "Sağlık & Vücut",
-            "sentence_tr": "Yemekten önce ellerimizi yıkamalıyız.",
-            "sentence_en": "We should wash our hands before eating.",
-            "sentence_ar": "يجب أن نغسل أيدينا قبل الأكل.",
-            "pronunciation": "[el]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0078",
-            "word": "bahçe",
-            "tr": "bahçe",
-            "ar": "حديقة",
-            "en": "garden",
-            "level": 1,
-            "category": "Doğa & Çevre",
-            "sentence_tr": "Suzim'in bahçesinde rengarenk papatyalar var.",
-            "sentence_en": "There are colorful daisies in Suzim's garden.",
-            "sentence_ar": "هناك زهور أقحوان ملونة في حديقة سوزي.",
-            "pronunciation": "[bahçe]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0079",
-            "word": "çiçek",
-            "tr": "çiçek",
-            "ar": "زهرة",
-            "en": "flower",
-            "level": 1,
-            "category": "Doğa & Çevre",
-            "sentence_tr": "Balkondaki saksıda güzel bir çiçek açtı.",
-            "sentence_en": "A beautiful flower bloomed in the pot on the balcony.",
-            "sentence_ar": "تفتحت زهرة جميلة في الأصيص على الشرفة.",
-            "pronunciation": "[çiçek]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0080",
-            "word": "yaprak",
-            "tr": "yaprak",
-            "ar": "بتلة / ورقة",
-            "en": "petal / leaf",
-            "level": 1,
-            "category": "Doğa & Çevre",
-            "sentence_tr": "Sonbaharda ağaçların yaprakları sararır.",
-            "sentence_en": "In autumn, the leaves of the trees turn yellow.",
-            "sentence_ar": "في الخريف، تصفر أوراق الأشجار.",
-            "pronunciation": "[yaprak]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0081",
             "word": "güneş",
             "tr": "güneş",
             "ar": "شمس",
@@ -1312,7 +1222,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0106",
+            "id": "v_0100",
             "word": "papatya",
             "tr": "papatya",
             "ar": "أقحوان",
@@ -1327,7 +1237,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0107",
+            "id": "v_0105",
             "word": "gözlük",
             "tr": "gözlük",
             "ar": "نظارات",
@@ -1342,7 +1252,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0108",
+            "id": "v_0106",
             "word": "gözcü",
             "tr": "gözcü",
             "ar": "fenni gözlükçü",
@@ -1353,6 +1263,96 @@ const learningDatabase = {
             "sentence_en": "Suzim learned the word gözcü.",
             "sentence_ar": "تعلمت سوزي كلمة fenni gözlükçü.",
             "pronunciation": "[gözcü]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0117",
+            "word": "sağlıklı",
+            "tr": "sağlıklı",
+            "ar": "صحي",
+            "en": "healthy",
+            "level": 1,
+            "category": "Sağlık",
+            "sentence_tr": "Suzim sağlıklı kavramını öğrendi.",
+            "sentence_en": "Suzim learned the word sağlıklı.",
+            "sentence_ar": "تعلمت سوزي كلمة صحي.",
+            "pronunciation": "[sağlıklı]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0118",
+            "word": "sağlıksız",
+            "tr": "sağlıksız",
+            "ar": "غير صحي",
+            "en": "unhealthy",
+            "level": 1,
+            "category": "Sağlık",
+            "sentence_tr": "Suzim sağlıksız kavramını öğrendi.",
+            "sentence_en": "Suzim learned the word sağlıksız.",
+            "sentence_ar": "تعلمت سوزي كلمة غير صحي.",
+            "pronunciation": "[sağlıksız]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0119",
+            "word": "dostluk",
+            "tr": "dostluk",
+            "ar": "صداقة",
+            "en": "friendship",
+            "level": 1,
+            "category": "Duygular",
+            "sentence_tr": "Suzim dostluk kavramını öğrendi.",
+            "sentence_en": "Suzim learned the word dostluk.",
+            "sentence_ar": "تعلمت سوزي كلمة صداقة.",
+            "pronunciation": "[dostluk]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0120",
+            "word": "dostça",
+            "tr": "dostça",
+            "ar": "بشكل ودي",
+            "en": "friendly",
+            "level": 1,
+            "category": "Duygular",
+            "sentence_tr": "Suzim dostça kavramını öğrendi.",
+            "sentence_en": "Suzim learned the word dostça.",
+            "sentence_ar": "تعلمت سوزي كلمة بشكل ودي.",
+            "pronunciation": "[dostça]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0125",
+            "word": "akıllı",
+            "tr": "akıllı",
+            "ar": "عاقل",
+            "en": "smart",
+            "level": 1,
+            "category": "Ortak Kelimeler",
+            "sentence_tr": "Suzim akıllı kavramını öğrendi.",
+            "sentence_en": "Suzim learned the word akıllı.",
+            "sentence_ar": "تعلمت سوزي كلمة عاقل.",
+            "pronunciation": "[akıllı]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0126",
+            "word": "akılsız",
+            "tr": "akılsız",
+            "ar": "عديم العقل",
+            "en": "foolish",
+            "level": 1,
+            "category": "Ortak Kelimeler",
+            "sentence_tr": "Suzim akılsız kavramını öğrendi.",
+            "sentence_en": "Suzim learned the word akılsız.",
+            "sentence_ar": "تعلمت سوزي كلمة عديم العقل.",
+            "pronunciation": "[akılsız]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -1369,97 +1369,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الأفعال الأساسية'.",
         "vocabulary": [
           {
-            "id": "v_0107",
-            "word": "gözlük",
-            "tr": "gözlük",
-            "ar": "نظارات",
-            "en": "glasses",
-            "level": 1,
-            "category": "Sağlık",
-            "sentence_tr": "Suzim gözlük kavramını öğrendi.",
-            "sentence_en": "Suzim learned the word gözlük.",
-            "sentence_ar": "تعلمت سوزي كلمة نظارات.",
-            "pronunciation": "[gözlük]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0108",
-            "word": "gözcü",
-            "tr": "gözcü",
-            "ar": "fenni gözlükçü",
-            "en": "optician",
-            "level": 1,
-            "category": "Sağlık",
-            "sentence_tr": "Suzim gözcü kavramını öğrendi.",
-            "sentence_en": "Suzim learned the word gözcü.",
-            "sentence_ar": "تعلمت سوزي كلمة fenni gözlükçü.",
-            "pronunciation": "[gözcü]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0119",
-            "word": "sağlıklı",
-            "tr": "sağlıklı",
-            "ar": "صحي",
-            "en": "healthy",
-            "level": 1,
-            "category": "Sağlık",
-            "sentence_tr": "Suzim sağlıklı kavramını öğrendi.",
-            "sentence_en": "Suzim learned the word sağlıklı.",
-            "sentence_ar": "تعلمت سوزي كلمة صحي.",
-            "pronunciation": "[sağlıklı]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0120",
-            "word": "sağlıksız",
-            "tr": "sağlıksız",
-            "ar": "غير صحي",
-            "en": "unhealthy",
-            "level": 1,
-            "category": "Sağlık",
-            "sentence_tr": "Suzim sağlıksız kavramını öğrendi.",
-            "sentence_en": "Suzim learned the word sağlıksız.",
-            "sentence_ar": "تعلمت سوزي كلمة غير صحي.",
-            "pronunciation": "[sağlıksız]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0121",
-            "word": "dostluk",
-            "tr": "dostluk",
-            "ar": "صداقة",
-            "en": "friendship",
-            "level": 1,
-            "category": "Duygular",
-            "sentence_tr": "Suzim dostluk kavramını öğrendi.",
-            "sentence_en": "Suzim learned the word dostluk.",
-            "sentence_ar": "تعلمت سوزي كلمة صداقة.",
-            "pronunciation": "[dostluk]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0122",
-            "word": "dostça",
-            "tr": "dostça",
-            "ar": "بشكل ودي",
-            "en": "friendly",
-            "level": 1,
-            "category": "Duygular",
-            "sentence_tr": "Suzim dostça kavramını öğrendi.",
-            "sentence_en": "Suzim learned the word dostça.",
-            "sentence_ar": "تعلمت سوزي كلمة بشكل ودي.",
-            "pronunciation": "[dostça]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0127",
+            "id": "v_0125",
             "word": "akıllı",
             "tr": "akıllı",
             "ar": "عاقل",
@@ -1474,7 +1384,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0128",
+            "id": "v_0126",
             "word": "akılsız",
             "tr": "akılsız",
             "ar": "عديم العقل",
@@ -1489,7 +1399,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0129",
+            "id": "v_0127",
             "word": "şekerli",
             "tr": "şekerli",
             "ar": "محلى",
@@ -1504,7 +1414,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0130",
+            "id": "v_0128",
             "word": "şekersiz",
             "tr": "şekersiz",
             "ar": "بدون سكر",
@@ -1517,51 +1427,9 @@ const learningDatabase = {
             "pronunciation": "[şekersiz]",
             "is_cognate": false,
             "cognate_info": null
-          }
-        ]
-      },
-      {
-        "id": "l1_9",
-        "title": "9. Zaman ve Günler",
-        "arabicTitle": "الوقت والأيام",
-        "englishTitle": "Time & Days",
-        "summary": "Saatler, günler, aylar ve mevsimler.",
-        "intro_tr": "Bu derste 'Zaman ve Günler' konusunu öğreneceksiniz.",
-        "intro_en": "In this lesson, you will learn 'Time & Days'.",
-        "intro_ar": "في هذا الدرس ستتعلم موضوع 'الوقت والأيام'.",
-        "vocabulary": [
+          },
           {
             "id": "v_0129",
-            "word": "şekerli",
-            "tr": "şekerli",
-            "ar": "محلى",
-            "en": "sweet",
-            "level": 1,
-            "category": "Yiyecek",
-            "sentence_tr": "Suzim şekerli kavramını öğrendi.",
-            "sentence_en": "Suzim learned the word şekerli.",
-            "sentence_ar": "تعلمت سوزي كلمة محلى.",
-            "pronunciation": "[şekerli]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0130",
-            "word": "şekersiz",
-            "tr": "şekersiz",
-            "ar": "بدون سكر",
-            "en": "sugarfree",
-            "level": 1,
-            "category": "Yiyecek",
-            "sentence_tr": "Suzim şekersiz kavramını öğrendi.",
-            "sentence_en": "Suzim learned the word şekersiz.",
-            "sentence_ar": "تعلمت سوزي كلمة بدون سكر.",
-            "pronunciation": "[şekersiz]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0131",
             "word": "tuzlu",
             "tr": "tuzlu",
             "ar": "مالح",
@@ -1576,7 +1444,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0132",
+            "id": "v_0130",
             "word": "tuzsuz",
             "tr": "tuzsuz",
             "ar": "بدون ملح",
@@ -1591,7 +1459,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0133",
+            "id": "v_0131",
             "word": "evli",
             "tr": "evli",
             "ar": "متزوج",
@@ -1606,7 +1474,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0134",
+            "id": "v_0132",
             "word": "evsiz",
             "tr": "evsiz",
             "ar": "أعزب",
@@ -1623,15 +1491,55 @@ const learningDatabase = {
         ]
       },
       {
-        "id": "l1_10",
-        "title": "10. Ortak Kelimeler I (Arapça Kökenliler)",
-        "arabicTitle": "الكلمات المشتركة 1",
-        "englishTitle": "Arabic Cognates I",
-        "summary": "Kitap, kalem, defter, saat, dünya ortak kelimeleri.",
-        "intro_tr": "Bu derste 'Ortak Kelimeler I (Arapça Kökenliler)' konusunu öğreneceksiniz.",
-        "intro_en": "In this lesson, you will learn 'Arabic Cognates I'.",
-        "intro_ar": "في هذا الدرس ستتعلم موضوع 'الكلمات المشتركة 1'.",
+        "id": "l1_9",
+        "title": "9. Zaman ve Günler",
+        "arabicTitle": "الوقت والأيام",
+        "englishTitle": "Time & Days",
+        "summary": "Saatler, günler, aylar ve mevsimler.",
+        "intro_tr": "Bu derste 'Zaman ve Günler' konusunu öğreneceksiniz.",
+        "intro_en": "In this lesson, you will learn 'Time & Days'.",
+        "intro_ar": "في هذا الدرس ستتعلم موضوع 'الوقت والأيام'.",
         "vocabulary": [
+          {
+            "id": "v_0001",
+            "word": "kitap",
+            "tr": "kitap",
+            "ar": "كِتَاب",
+            "en": "book",
+            "level": 1,
+            "category": "Ortak Kelimeler",
+            "sentence_tr": "Suzim kütüphaneden harika bir kitap aldı.",
+            "sentence_en": "Suzim got a great book from the library.",
+            "sentence_ar": "أخذت سوزي كتاباً رائعاً من المكتبة.",
+            "pronunciation": "[kitap]",
+            "is_cognate": true,
+            "cognate_info": {
+              "ar_root": "كتب",
+              "note_tr": "Arapça kökenli ortak kelime: كِتَاب (Kök: كتب)",
+              "note_en": "Shared Arabic cognate: كِتَاب (Root: كتب)",
+              "note_ar": "كلمة مشتركة مع العربية: كِتَاب (جذر: كتب)"
+            }
+          },
+          {
+            "id": "v_0002",
+            "word": "kalem",
+            "tr": "kalem",
+            "ar": "قَلَم",
+            "en": "pen / pencil",
+            "level": 1,
+            "category": "Ortak Kelimeler",
+            "sentence_tr": "Masadaki kırmızı kalemi bana verir misin?",
+            "sentence_en": "Could you give me the red pen on the table?",
+            "sentence_ar": "هل يمكنك إعطائي القلم الأحمر على الطاولة؟",
+            "pronunciation": "[kalem]",
+            "is_cognate": true,
+            "cognate_info": {
+              "ar_root": "قلم",
+              "note_tr": "Arapça kökenli ortak kelime: قَلَم (Kök: قلم)",
+              "note_en": "Shared Arabic cognate: قَلَم (Root: قلم)",
+              "note_ar": "كلمة مشتركة مع العربية: قَلَم (جذر: قلم)"
+            }
+          },
           {
             "id": "v_0003",
             "word": "defter",
@@ -1791,6 +1699,58 @@ const learningDatabase = {
               "note_en": "Shared Arabic cognate: زَمَان (Root: زمن)",
               "note_ar": "كلمة مشتركة مع العربية: زَمَان (جذر: زمن)"
             }
+          }
+        ]
+      },
+      {
+        "id": "l1_10",
+        "title": "10. Ortak Kelimeler I (Arapça Kökenliler)",
+        "arabicTitle": "الكلمات المشتركة 1",
+        "englishTitle": "Arabic Cognates I",
+        "summary": "Kitap, kalem, defter, saat, dünya ortak kelimeleri.",
+        "intro_tr": "Bu derste 'Ortak Kelimeler I (Arapça Kökenliler)' konusunu öğreneceksiniz.",
+        "intro_en": "In this lesson, you will learn 'Arabic Cognates I'.",
+        "intro_ar": "في هذا الدرس ستتعلم موضوع 'الكلمات المشتركة 1'.",
+        "vocabulary": [
+          {
+            "id": "v_0009",
+            "word": "akıl",
+            "tr": "akıl",
+            "ar": "عَقْل",
+            "en": "mind / intellect",
+            "level": 1,
+            "category": "Ortak Kelimeler",
+            "sentence_tr": "Akıl ve mantık her zaman en doğru rehberdir.",
+            "sentence_en": "Mind and logic are always the true guide.",
+            "sentence_ar": "العقل والمنطق هما دائماً الهادي الأصح.",
+            "pronunciation": "[akıl]",
+            "is_cognate": true,
+            "cognate_info": {
+              "ar_root": "عقل",
+              "note_tr": "Arapça kökenli ortak kelime: عَقْل (Kök: عقل)",
+              "note_en": "Shared Arabic cognate: عَقْل (Root: عقل)",
+              "note_ar": "كلمة مشتركة مع العربية: عَقْل (جذر: عقل)"
+            }
+          },
+          {
+            "id": "v_0010",
+            "word": "zaman",
+            "tr": "zaman",
+            "ar": "زَمَان",
+            "en": "time",
+            "level": 1,
+            "category": "Ortak Kelimeler",
+            "sentence_tr": "Zamanı verimli kullanmak büyük bir sanattır.",
+            "sentence_en": "Using time efficiently is a great art.",
+            "sentence_ar": "استخدام الوقت بفعالية هو فن كبير.",
+            "pronunciation": "[zaman]",
+            "is_cognate": true,
+            "cognate_info": {
+              "ar_root": "زمن",
+              "note_tr": "Arapça kökenli ortak kelime: زَمَان (Kök: زمن)",
+              "note_en": "Shared Arabic cognate: زَمَان (Root: زمن)",
+              "note_ar": "كلمة مشتركة مع العربية: زَمَان (جذر: زمن)"
+            }
           },
           {
             "id": "v_0011",
@@ -1831,6 +1791,126 @@ const learningDatabase = {
               "note_en": "Shared Arabic cognate: شُكْر (Root: شكر)",
               "note_ar": "كلمة مشتركة مع العربية: شُكْر (جذر: شكر)"
             }
+          },
+          {
+            "id": "v_0013",
+            "word": "selam",
+            "tr": "selam",
+            "ar": "سَلَام",
+            "en": "peace / greeting",
+            "level": 1,
+            "category": "Ortak Kelimeler",
+            "sentence_tr": "Arkadaşlarıma içten bir selam verdim.",
+            "sentence_en": "I gave a warm greeting to my friends.",
+            "sentence_ar": "ألقيت سلاماً حاراً على أصدقائي.",
+            "pronunciation": "[selam]",
+            "is_cognate": true,
+            "cognate_info": {
+              "ar_root": "سلم",
+              "note_tr": "Arapça kökenli ortak kelime: سَلَام (Kök: سلم)",
+              "note_en": "Shared Arabic cognate: سَلَام (Root: سلم)",
+              "note_ar": "كلمة مشتركة مع العربية: سَلَام (جذر: سلم)"
+            }
+          },
+          {
+            "id": "v_0014",
+            "word": "haber",
+            "tr": "haber",
+            "ar": "خَبَر",
+            "en": "news",
+            "level": 1,
+            "category": "Ortak Kelimeler",
+            "sentence_tr": "Sabah gazetesinde sevindirici bir haber okudum.",
+            "sentence_en": "I read good news in the morning newspaper.",
+            "sentence_ar": "قرأت خبراً ساراً في صحيفة الصباح.",
+            "pronunciation": "[haber]",
+            "is_cognate": true,
+            "cognate_info": {
+              "ar_root": "خبر",
+              "note_tr": "Arapça kökenli ortak kelime: خَبَر (Kök: خبر)",
+              "note_en": "Shared Arabic cognate: خَبَر (Root: خبر)",
+              "note_ar": "كلمة مشتركة مع العربية: خَبَر (جذر: خبر)"
+            }
+          },
+          {
+            "id": "v_0015",
+            "word": "cevap",
+            "tr": "cevap",
+            "ar": "جَوَاب",
+            "en": "answer / reply",
+            "level": 1,
+            "category": "Ortak Kelimeler",
+            "sentence_tr": "Öğretmenin sorusuna doğru cevap verdi.",
+            "sentence_en": "She answered the teacher's question correctly.",
+            "sentence_ar": "أجابت على سؤال المعلم بإجابة صحيحة.",
+            "pronunciation": "[cevap]",
+            "is_cognate": true,
+            "cognate_info": {
+              "ar_root": "جوب",
+              "note_tr": "Arapça kökenli ortak kelime: جَوَاب (Kök: جوب)",
+              "note_en": "Shared Arabic cognate: جَوَاب (Root: جوب)",
+              "note_ar": "كلمة مشتركة مع العربية: جَوَاب (جذر: جوب)"
+            }
+          },
+          {
+            "id": "v_0016",
+            "word": "soru",
+            "tr": "soru",
+            "ar": "سُؤَال",
+            "en": "question",
+            "level": 1,
+            "category": "Ortak Kelimeler",
+            "sentence_tr": "Kafasındaki tüm soruları tek tek sordu.",
+            "sentence_en": "He asked all the questions in his mind one by one.",
+            "sentence_ar": "طرح جميع الأسئلة التي في ذهنه واحداً تلو الآخر.",
+            "pronunciation": "[soru]",
+            "is_cognate": true,
+            "cognate_info": {
+              "ar_root": "سأل",
+              "note_tr": "Arapça kökenli ortak kelime: سُؤَال (Kök: سأل)",
+              "note_en": "Shared Arabic cognate: سُؤَال (Root: سأل)",
+              "note_ar": "كلمة مشتركة مع العربية: سُؤَال (جذر: سأل)"
+            }
+          },
+          {
+            "id": "v_0017",
+            "word": "resim",
+            "tr": "resim",
+            "ar": "رَسْم",
+            "en": "picture / painting",
+            "level": 1,
+            "category": "Ortak Kelimeler",
+            "sentence_tr": "Müzideki tarihi resimler bizi büyüledi.",
+            "sentence_en": "The historical paintings in the museum fascinated us.",
+            "sentence_ar": "بهرتنا اللوحات التاريخية في المتحف.",
+            "pronunciation": "[resim]",
+            "is_cognate": true,
+            "cognate_info": {
+              "ar_root": "رسم",
+              "note_tr": "Arapça kökenli ortak kelime: رَسْم (Kök: رسم)",
+              "note_en": "Shared Arabic cognate: رَسْم (Root: رسم)",
+              "note_ar": "كلمة مشتركة مع العربية: رَسْم (جذر: رسم)"
+            }
+          },
+          {
+            "id": "v_0018",
+            "word": "harita",
+            "tr": "harita",
+            "ar": "خَرِيطَة",
+            "en": "map",
+            "level": 1,
+            "category": "Ortak Kelimeler",
+            "sentence_tr": "Türkiye haritası üzerinde İstanbul'u bulduk.",
+            "sentence_en": "We found Istanbul on the map of Turkey.",
+            "sentence_ar": "وجدنا إسطنبول على خريطة تركيا.",
+            "pronunciation": "[harita]",
+            "is_cognate": true,
+            "cognate_info": {
+              "ar_root": "خرط",
+              "note_tr": "Arapça kökenli ortak kelime: خَرِيطَة (Kök: خرط)",
+              "note_en": "Shared Arabic cognate: خَرِيطَة (Root: خرط)",
+              "note_ar": "كلمة مشتركة مع العربية: خَرِيطَة (جذر: خرط)"
+            }
           }
         ]
       }
@@ -1838,7 +1918,7 @@ const learningDatabase = {
   },
   {
     "id": 2,
-    "title": "Level 2: Günlük Yaşam",
+    "title": "Level 2: Günlük Yaşam (A2)",
     "arabicTitle": "المستوى 2",
     "englishTitle": "Level 2",
     "lessons": [
@@ -2357,7 +2437,7 @@ const learningDatabase = {
             }
           },
           {
-            "id": "v_0082",
+            "id": "v_0076",
             "word": "okul",
             "tr": "okul",
             "ar": "مدرسة",
@@ -2372,7 +2452,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0083",
+            "id": "v_0077",
             "word": "öğretmen",
             "tr": "öğretmen",
             "ar": "معلم",
@@ -2387,7 +2467,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0084",
+            "id": "v_0078",
             "word": "öğrenci",
             "tr": "öğrenci",
             "ar": "طالب",
@@ -2402,7 +2482,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0085",
+            "id": "v_0079",
             "word": "şehir",
             "tr": "şehir",
             "ar": "مدينة",
@@ -2417,7 +2497,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0086",
+            "id": "v_0080",
             "word": "otobüs",
             "tr": "otobüs",
             "ar": "حافلة",
@@ -2432,7 +2512,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0087",
+            "id": "v_0081",
             "word": "elma",
             "tr": "elma",
             "ar": "تفاح",
@@ -2459,7 +2539,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'التعليم والمدرسة'.",
         "vocabulary": [
           {
-            "id": "v_0086",
+            "id": "v_0080",
             "word": "otobüs",
             "tr": "otobüs",
             "ar": "حافلة",
@@ -2474,7 +2554,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0087",
+            "id": "v_0081",
             "word": "elma",
             "tr": "elma",
             "ar": "تفاح",
@@ -2489,7 +2569,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0088",
+            "id": "v_0082",
             "word": "peynir",
             "tr": "peynir",
             "ar": "جبن",
@@ -2504,7 +2584,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0089",
+            "id": "v_0083",
             "word": "alışveriş",
             "tr": "alışveriş",
             "ar": "تسوق",
@@ -2519,7 +2599,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0109",
+            "id": "v_0107",
             "word": "bilgili",
             "tr": "bilgili",
             "ar": "ذو معرفة",
@@ -2534,7 +2614,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0110",
+            "id": "v_0108",
             "word": "bilgisayar",
             "tr": "bilgisayar",
             "ar": "حاسوب",
@@ -2549,7 +2629,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0111",
+            "id": "v_0109",
             "word": "sevgili",
             "tr": "sevgili",
             "ar": "محبوب",
@@ -2564,7 +2644,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0112",
+            "id": "v_0110",
             "word": "sevgisiz",
             "tr": "sevgisiz",
             "ar": "خالي من الحب",
@@ -2579,7 +2659,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0113",
+            "id": "v_0111",
             "word": "saygılı",
             "tr": "saygılı",
             "ar": "محترم",
@@ -2594,7 +2674,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0114",
+            "id": "v_0112",
             "word": "saygısız",
             "tr": "saygısız",
             "ar": "غير محترم",
@@ -2621,7 +2701,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الطقس والفصول'.",
         "vocabulary": [
           {
-            "id": "v_0113",
+            "id": "v_0111",
             "word": "saygılı",
             "tr": "saygılı",
             "ar": "محترم",
@@ -2636,7 +2716,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0114",
+            "id": "v_0112",
             "word": "saygısız",
             "tr": "saygısız",
             "ar": "غير محترم",
@@ -2651,7 +2731,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0117",
+            "id": "v_0115",
             "word": "başarılı",
             "tr": "başarılı",
             "ar": "ناجح",
@@ -2666,7 +2746,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0118",
+            "id": "v_0116",
             "word": "başarısız",
             "tr": "başarısız",
             "ar": "فاشل",
@@ -2681,7 +2761,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0123",
+            "id": "v_0121",
             "word": "bilimsel",
             "tr": "bilimsel",
             "ar": "علمي",
@@ -2696,7 +2776,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0124",
+            "id": "v_0122",
             "word": "biliminsanı",
             "tr": "biliminsanı",
             "ar": "عالم",
@@ -2711,7 +2791,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0135",
+            "id": "v_0133",
             "word": "işçi",
             "tr": "işçi",
             "ar": "عامل",
@@ -2726,7 +2806,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0136",
+            "id": "v_0134",
             "word": "işsiz",
             "tr": "işsiz",
             "ar": "عاطل عن العمل",
@@ -3257,7 +3337,7 @@ const learningDatabase = {
             }
           },
           {
-            "id": "v_0082",
+            "id": "v_0076",
             "word": "okul",
             "tr": "okul",
             "ar": "مدرسة",
@@ -3272,7 +3352,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0083",
+            "id": "v_0077",
             "word": "öğretmen",
             "tr": "öğretmen",
             "ar": "معلم",
@@ -3287,7 +3367,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0084",
+            "id": "v_0078",
             "word": "öğrenci",
             "tr": "öğrenci",
             "ar": "طالب",
@@ -3302,7 +3382,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0085",
+            "id": "v_0079",
             "word": "şehir",
             "tr": "şehir",
             "ar": "مدينة",
@@ -3317,7 +3397,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0086",
+            "id": "v_0080",
             "word": "otobüs",
             "tr": "otobüs",
             "ar": "حافلة",
@@ -3332,7 +3412,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0087",
+            "id": "v_0081",
             "word": "elma",
             "tr": "elma",
             "ar": "تفاح",
@@ -3359,7 +3439,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الصحة والمواعيد'.",
         "vocabulary": [
           {
-            "id": "v_0086",
+            "id": "v_0080",
             "word": "otobüs",
             "tr": "otobüs",
             "ar": "حافلة",
@@ -3374,7 +3454,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0087",
+            "id": "v_0081",
             "word": "elma",
             "tr": "elma",
             "ar": "تفاح",
@@ -3389,7 +3469,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0088",
+            "id": "v_0082",
             "word": "peynir",
             "tr": "peynir",
             "ar": "جبن",
@@ -3404,7 +3484,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0089",
+            "id": "v_0083",
             "word": "alışveriş",
             "tr": "alışveriş",
             "ar": "تسوق",
@@ -3419,7 +3499,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0109",
+            "id": "v_0107",
             "word": "bilgili",
             "tr": "bilgili",
             "ar": "ذو معرفة",
@@ -3434,7 +3514,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0110",
+            "id": "v_0108",
             "word": "bilgisayar",
             "tr": "bilgisayar",
             "ar": "حاسوب",
@@ -3449,7 +3529,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0111",
+            "id": "v_0109",
             "word": "sevgili",
             "tr": "sevgili",
             "ar": "محبوب",
@@ -3464,7 +3544,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0112",
+            "id": "v_0110",
             "word": "sevgisiz",
             "tr": "sevgisiz",
             "ar": "خالي من الحب",
@@ -3479,7 +3559,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0113",
+            "id": "v_0111",
             "word": "saygılı",
             "tr": "saygılı",
             "ar": "محترم",
@@ -3494,7 +3574,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0114",
+            "id": "v_0112",
             "word": "saygısız",
             "tr": "saygısız",
             "ar": "غير محترم",
@@ -3521,7 +3601,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الكلمات المشتركة 2'.",
         "vocabulary": [
           {
-            "id": "v_0113",
+            "id": "v_0111",
             "word": "saygılı",
             "tr": "saygılı",
             "ar": "محترم",
@@ -3536,7 +3616,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0114",
+            "id": "v_0112",
             "word": "saygısız",
             "tr": "saygısız",
             "ar": "غير محترم",
@@ -3551,7 +3631,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0117",
+            "id": "v_0115",
             "word": "başarılı",
             "tr": "başarılı",
             "ar": "ناجح",
@@ -3566,7 +3646,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0118",
+            "id": "v_0116",
             "word": "başarısız",
             "tr": "başarısız",
             "ar": "فاشل",
@@ -3581,7 +3661,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0123",
+            "id": "v_0121",
             "word": "bilimsel",
             "tr": "bilimsel",
             "ar": "علمي",
@@ -3596,7 +3676,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0124",
+            "id": "v_0122",
             "word": "biliminsanı",
             "tr": "biliminsanı",
             "ar": "عالم",
@@ -3611,7 +3691,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0135",
+            "id": "v_0133",
             "word": "işçi",
             "tr": "işçi",
             "ar": "عامل",
@@ -3626,7 +3706,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0136",
+            "id": "v_0134",
             "word": "işsiz",
             "tr": "işsiz",
             "ar": "عاطل عن العمل",
@@ -3646,7 +3726,7 @@ const learningDatabase = {
   },
   {
     "id": 3,
-    "title": "Level 3: Zamanlar & Bağlam",
+    "title": "Level 3: Zamanlar & Bağlam (B1)",
     "arabicTitle": "المستوى 3",
     "englishTitle": "Level 3",
     "lessons": [
@@ -3781,7 +3861,7 @@ const learningDatabase = {
             }
           },
           {
-            "id": "v_0090",
+            "id": "v_0084",
             "word": "meslek",
             "tr": "meslek",
             "ar": "مهنة",
@@ -3796,7 +3876,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0091",
+            "id": "v_0085",
             "word": "doktor",
             "tr": "doktor",
             "ar": "طبيب",
@@ -3811,7 +3891,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0092",
+            "id": "v_0086",
             "word": "doğa",
             "tr": "doğa",
             "ar": "طبيعة",
@@ -3826,7 +3906,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0093",
+            "id": "v_0087",
             "word": "orman",
             "tr": "orman",
             "ar": "غابة",
@@ -3853,7 +3933,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الزمن الماضي'.",
         "vocabulary": [
           {
-            "id": "v_0092",
+            "id": "v_0086",
             "word": "doğa",
             "tr": "doğa",
             "ar": "طبيعة",
@@ -3868,7 +3948,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0093",
+            "id": "v_0087",
             "word": "orman",
             "tr": "orman",
             "ar": "غابة",
@@ -3883,7 +3963,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0094",
+            "id": "v_0088",
             "word": "mutluluk",
             "tr": "mutluluk",
             "ar": "سعادة",
@@ -3898,7 +3978,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0095",
+            "id": "v_0089",
             "word": "cesaret",
             "tr": "cesaret",
             "ar": "شجاعة",
@@ -3913,7 +3993,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0115",
+            "id": "v_0113",
             "word": "güvenli",
             "tr": "güvenli",
             "ar": "آمن",
@@ -3928,7 +4008,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0116",
+            "id": "v_0114",
             "word": "güvensiz",
             "tr": "güvensiz",
             "ar": "غير آمن",
@@ -4035,7 +4115,7 @@ const learningDatabase = {
             }
           },
           {
-            "id": "v_0090",
+            "id": "v_0084",
             "word": "meslek",
             "tr": "meslek",
             "ar": "مهنة",
@@ -4050,7 +4130,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0091",
+            "id": "v_0085",
             "word": "doktor",
             "tr": "doktor",
             "ar": "طبيب",
@@ -4065,7 +4145,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0092",
+            "id": "v_0086",
             "word": "doğa",
             "tr": "doğa",
             "ar": "طبيعة",
@@ -4080,7 +4160,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0093",
+            "id": "v_0087",
             "word": "orman",
             "tr": "orman",
             "ar": "غابة",
@@ -4095,7 +4175,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0094",
+            "id": "v_0088",
             "word": "mutluluk",
             "tr": "mutluluk",
             "ar": "سعادة",
@@ -4110,7 +4190,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0095",
+            "id": "v_0089",
             "word": "cesaret",
             "tr": "cesaret",
             "ar": "شجاعة",
@@ -4257,7 +4337,7 @@ const learningDatabase = {
             }
           },
           {
-            "id": "v_0090",
+            "id": "v_0084",
             "word": "meslek",
             "tr": "meslek",
             "ar": "مهنة",
@@ -4272,7 +4352,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0091",
+            "id": "v_0085",
             "word": "doktor",
             "tr": "doktor",
             "ar": "طبيب",
@@ -4287,7 +4367,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0092",
+            "id": "v_0086",
             "word": "doğa",
             "tr": "doğa",
             "ar": "طبيعة",
@@ -4302,7 +4382,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0093",
+            "id": "v_0087",
             "word": "orman",
             "tr": "orman",
             "ar": "غابة",
@@ -4369,7 +4449,7 @@ const learningDatabase = {
             }
           },
           {
-            "id": "v_0090",
+            "id": "v_0084",
             "word": "meslek",
             "tr": "meslek",
             "ar": "مهنة",
@@ -4384,7 +4464,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0091",
+            "id": "v_0085",
             "word": "doktor",
             "tr": "doktor",
             "ar": "طبيب",
@@ -4399,7 +4479,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0092",
+            "id": "v_0086",
             "word": "doğa",
             "tr": "doğa",
             "ar": "طبيعة",
@@ -4414,7 +4494,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0093",
+            "id": "v_0087",
             "word": "orman",
             "tr": "orman",
             "ar": "غابة",
@@ -4429,7 +4509,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0094",
+            "id": "v_0088",
             "word": "mutluluk",
             "tr": "mutluluk",
             "ar": "سعادة",
@@ -4444,7 +4524,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0095",
+            "id": "v_0089",
             "word": "cesaret",
             "tr": "cesaret",
             "ar": "شجاعة",
@@ -4459,7 +4539,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0115",
+            "id": "v_0113",
             "word": "güvenli",
             "tr": "güvenli",
             "ar": "آمن",
@@ -4474,7 +4554,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0116",
+            "id": "v_0114",
             "word": "güvensiz",
             "tr": "güvensiz",
             "ar": "غير آمن",
@@ -4621,7 +4701,7 @@ const learningDatabase = {
             }
           },
           {
-            "id": "v_0090",
+            "id": "v_0084",
             "word": "meslek",
             "tr": "meslek",
             "ar": "مهنة",
@@ -4636,7 +4716,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0091",
+            "id": "v_0085",
             "word": "doktor",
             "tr": "doktor",
             "ar": "طبيب",
@@ -4651,7 +4731,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0092",
+            "id": "v_0086",
             "word": "doğa",
             "tr": "doğa",
             "ar": "طبيعة",
@@ -4666,7 +4746,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0093",
+            "id": "v_0087",
             "word": "orman",
             "tr": "orman",
             "ar": "غابة",
@@ -4693,7 +4773,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'العطلة والسفر'.",
         "vocabulary": [
           {
-            "id": "v_0090",
+            "id": "v_0084",
             "word": "meslek",
             "tr": "meslek",
             "ar": "مهنة",
@@ -4708,7 +4788,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0091",
+            "id": "v_0085",
             "word": "doktor",
             "tr": "doktor",
             "ar": "طبيب",
@@ -4723,7 +4803,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0092",
+            "id": "v_0086",
             "word": "doğa",
             "tr": "doğa",
             "ar": "طبيعة",
@@ -4738,7 +4818,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0093",
+            "id": "v_0087",
             "word": "orman",
             "tr": "orman",
             "ar": "غابة",
@@ -4753,7 +4833,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0094",
+            "id": "v_0088",
             "word": "mutluluk",
             "tr": "mutluluk",
             "ar": "سعادة",
@@ -4768,7 +4848,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0095",
+            "id": "v_0089",
             "word": "cesaret",
             "tr": "cesaret",
             "ar": "شجاعة",
@@ -4783,7 +4863,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0115",
+            "id": "v_0113",
             "word": "güvenli",
             "tr": "güvenli",
             "ar": "آمن",
@@ -4798,7 +4878,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0116",
+            "id": "v_0114",
             "word": "güvensiz",
             "tr": "güvensiz",
             "ar": "غير آمن",
@@ -4945,7 +5025,7 @@ const learningDatabase = {
             }
           },
           {
-            "id": "v_0090",
+            "id": "v_0084",
             "word": "meslek",
             "tr": "meslek",
             "ar": "مهنة",
@@ -4960,7 +5040,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0091",
+            "id": "v_0085",
             "word": "doktor",
             "tr": "doktor",
             "ar": "طبيب",
@@ -4975,7 +5055,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0092",
+            "id": "v_0086",
             "word": "doğa",
             "tr": "doğa",
             "ar": "طبيعة",
@@ -4990,7 +5070,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0093",
+            "id": "v_0087",
             "word": "orman",
             "tr": "orman",
             "ar": "غابة",
@@ -5017,7 +5097,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الحياة الصحية والرياضة'.",
         "vocabulary": [
           {
-            "id": "v_0092",
+            "id": "v_0086",
             "word": "doğa",
             "tr": "doğa",
             "ar": "طبيعة",
@@ -5032,7 +5112,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0093",
+            "id": "v_0087",
             "word": "orman",
             "tr": "orman",
             "ar": "غابة",
@@ -5047,7 +5127,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0094",
+            "id": "v_0088",
             "word": "mutluluk",
             "tr": "mutluluk",
             "ar": "سعادة",
@@ -5062,7 +5142,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0095",
+            "id": "v_0089",
             "word": "cesaret",
             "tr": "cesaret",
             "ar": "شجاعة",
@@ -5077,7 +5157,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0115",
+            "id": "v_0113",
             "word": "güvenli",
             "tr": "güvenli",
             "ar": "آمن",
@@ -5092,7 +5172,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0116",
+            "id": "v_0114",
             "word": "güvensiz",
             "tr": "güvensiz",
             "ar": "غير آمن",
@@ -5199,7 +5279,7 @@ const learningDatabase = {
             }
           },
           {
-            "id": "v_0090",
+            "id": "v_0084",
             "word": "meslek",
             "tr": "meslek",
             "ar": "مهنة",
@@ -5214,7 +5294,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0091",
+            "id": "v_0085",
             "word": "doktor",
             "tr": "doktor",
             "ar": "طبيب",
@@ -5229,7 +5309,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0092",
+            "id": "v_0086",
             "word": "doğa",
             "tr": "doğa",
             "ar": "طبيعة",
@@ -5244,7 +5324,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0093",
+            "id": "v_0087",
             "word": "orman",
             "tr": "orman",
             "ar": "غابة",
@@ -5259,7 +5339,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0094",
+            "id": "v_0088",
             "word": "mutluluk",
             "tr": "mutluluk",
             "ar": "سعادة",
@@ -5274,7 +5354,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0095",
+            "id": "v_0089",
             "word": "cesaret",
             "tr": "cesaret",
             "ar": "شجاعة",
@@ -5294,7 +5374,7 @@ const learningDatabase = {
   },
   {
     "id": 4,
-    "title": "Level 4: Akıcı İfade",
+    "title": "Level 4: Akıcı İfade (B2)",
     "arabicTitle": "المستوى 4",
     "englishTitle": "Level 4",
     "lessons": [
@@ -5309,7 +5389,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'المجتمع والبنية الاجتماعية'.",
         "vocabulary": [
           {
-            "id": "v_0096",
+            "id": "v_0090",
             "word": "toplum",
             "tr": "toplum",
             "ar": "مجتمع",
@@ -5324,7 +5404,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0097",
+            "id": "v_0091",
             "word": "kültür",
             "tr": "kültür",
             "ar": "ثقافة",
@@ -5339,7 +5419,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0098",
+            "id": "v_0092",
             "word": "yasa",
             "tr": "yasa",
             "ar": "قانون",
@@ -5354,7 +5434,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0099",
+            "id": "v_0093",
             "word": "özgürlük",
             "tr": "özgürlük",
             "ar": "حرية",
@@ -5369,7 +5449,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0100",
+            "id": "v_0094",
             "word": "tiyatro",
             "tr": "tiyatro",
             "ar": "مسرح",
@@ -5384,7 +5464,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0125",
+            "id": "v_0123",
             "word": "toplumsal",
             "tr": "toplumsal",
             "ar": "مجتمعي",
@@ -5399,7 +5479,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0126",
+            "id": "v_0124",
             "word": "toplumcu",
             "tr": "toplumcu",
             "ar": "اجتماعي",
@@ -5426,7 +5506,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الدولة والإدارة'.",
         "vocabulary": [
           {
-            "id": "v_0097",
+            "id": "v_0091",
             "word": "kültür",
             "tr": "kültür",
             "ar": "ثقافة",
@@ -5441,7 +5521,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0098",
+            "id": "v_0092",
             "word": "yasa",
             "tr": "yasa",
             "ar": "قانون",
@@ -5456,7 +5536,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0099",
+            "id": "v_0093",
             "word": "özgürlük",
             "tr": "özgürlük",
             "ar": "حرية",
@@ -5471,7 +5551,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0100",
+            "id": "v_0094",
             "word": "tiyatro",
             "tr": "tiyatro",
             "ar": "مسرح",
@@ -5486,7 +5566,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0125",
+            "id": "v_0123",
             "word": "toplumsal",
             "tr": "toplumsal",
             "ar": "مجتمعي",
@@ -5501,7 +5581,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0126",
+            "id": "v_0124",
             "word": "toplumcu",
             "tr": "toplumcu",
             "ar": "اجتماعي",
@@ -5528,7 +5608,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الإعلام والصحافة'.",
         "vocabulary": [
           {
-            "id": "v_0096",
+            "id": "v_0090",
             "word": "toplum",
             "tr": "toplum",
             "ar": "مجتمع",
@@ -5543,7 +5623,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0097",
+            "id": "v_0091",
             "word": "kültür",
             "tr": "kültür",
             "ar": "ثقافة",
@@ -5558,7 +5638,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0098",
+            "id": "v_0092",
             "word": "yasa",
             "tr": "yasa",
             "ar": "قانون",
@@ -5573,7 +5653,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0099",
+            "id": "v_0093",
             "word": "özgürlük",
             "tr": "özgürlük",
             "ar": "حرية",
@@ -5588,7 +5668,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0100",
+            "id": "v_0094",
             "word": "tiyatro",
             "tr": "tiyatro",
             "ar": "مسرح",
@@ -5603,7 +5683,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0125",
+            "id": "v_0123",
             "word": "toplumsal",
             "tr": "toplumsal",
             "ar": "مجتمعي",
@@ -5618,7 +5698,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0126",
+            "id": "v_0124",
             "word": "toplumcu",
             "tr": "toplumcu",
             "ar": "اجتماعي",
@@ -5645,7 +5725,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الفن والأدب'.",
         "vocabulary": [
           {
-            "id": "v_0096",
+            "id": "v_0090",
             "word": "toplum",
             "tr": "toplum",
             "ar": "مجتمع",
@@ -5660,7 +5740,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0097",
+            "id": "v_0091",
             "word": "kültür",
             "tr": "kültür",
             "ar": "ثقافة",
@@ -5675,7 +5755,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0098",
+            "id": "v_0092",
             "word": "yasa",
             "tr": "yasa",
             "ar": "قانون",
@@ -5690,7 +5770,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0099",
+            "id": "v_0093",
             "word": "özgürlük",
             "tr": "özgürlük",
             "ar": "حرية",
@@ -5705,7 +5785,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0100",
+            "id": "v_0094",
             "word": "tiyatro",
             "tr": "tiyatro",
             "ar": "مسرح",
@@ -5720,7 +5800,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0125",
+            "id": "v_0123",
             "word": "toplumsal",
             "tr": "toplumsal",
             "ar": "مجتمعي",
@@ -5735,7 +5815,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0126",
+            "id": "v_0124",
             "word": "toplumcu",
             "tr": "toplumcu",
             "ar": "اجتماعي",
@@ -5762,7 +5842,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الاقتصاد والتجارة'.",
         "vocabulary": [
           {
-            "id": "v_0096",
+            "id": "v_0090",
             "word": "toplum",
             "tr": "toplum",
             "ar": "مجتمع",
@@ -5777,7 +5857,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0097",
+            "id": "v_0091",
             "word": "kültür",
             "tr": "kültür",
             "ar": "ثقافة",
@@ -5792,7 +5872,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0098",
+            "id": "v_0092",
             "word": "yasa",
             "tr": "yasa",
             "ar": "قانون",
@@ -5807,7 +5887,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0099",
+            "id": "v_0093",
             "word": "özgürlük",
             "tr": "özgürlük",
             "ar": "حرية",
@@ -5822,7 +5902,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0100",
+            "id": "v_0094",
             "word": "tiyatro",
             "tr": "tiyatro",
             "ar": "مسرح",
@@ -5837,7 +5917,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0125",
+            "id": "v_0123",
             "word": "toplumsal",
             "tr": "toplumsal",
             "ar": "مجتمعي",
@@ -5852,7 +5932,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0126",
+            "id": "v_0124",
             "word": "toplumcu",
             "tr": "toplumcu",
             "ar": "اجتماعي",
@@ -5879,7 +5959,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'فعل الاستطاعة'.",
         "vocabulary": [
           {
-            "id": "v_0096",
+            "id": "v_0090",
             "word": "toplum",
             "tr": "toplum",
             "ar": "مجتمع",
@@ -5894,7 +5974,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0097",
+            "id": "v_0091",
             "word": "kültür",
             "tr": "kültür",
             "ar": "ثقافة",
@@ -5909,7 +5989,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0098",
+            "id": "v_0092",
             "word": "yasa",
             "tr": "yasa",
             "ar": "قانون",
@@ -5924,7 +6004,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0099",
+            "id": "v_0093",
             "word": "özgürlük",
             "tr": "özgürlük",
             "ar": "حرية",
@@ -5939,7 +6019,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0100",
+            "id": "v_0094",
             "word": "tiyatro",
             "tr": "tiyatro",
             "ar": "مسرح",
@@ -5954,7 +6034,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0125",
+            "id": "v_0123",
             "word": "toplumsal",
             "tr": "toplumsal",
             "ar": "مجتمعي",
@@ -5969,7 +6049,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0126",
+            "id": "v_0124",
             "word": "toplumcu",
             "tr": "toplumcu",
             "ar": "اجتماعي",
@@ -5996,7 +6076,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'صيغة الشرط'.",
         "vocabulary": [
           {
-            "id": "v_0096",
+            "id": "v_0090",
             "word": "toplum",
             "tr": "toplum",
             "ar": "مجتمع",
@@ -6011,7 +6091,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0097",
+            "id": "v_0091",
             "word": "kültür",
             "tr": "kültür",
             "ar": "ثقافة",
@@ -6026,7 +6106,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0098",
+            "id": "v_0092",
             "word": "yasa",
             "tr": "yasa",
             "ar": "قانون",
@@ -6041,7 +6121,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0099",
+            "id": "v_0093",
             "word": "özgürlük",
             "tr": "özgürlük",
             "ar": "حرية",
@@ -6056,7 +6136,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0100",
+            "id": "v_0094",
             "word": "tiyatro",
             "tr": "tiyatro",
             "ar": "مسرح",
@@ -6071,7 +6151,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0125",
+            "id": "v_0123",
             "word": "toplumsal",
             "tr": "toplumsal",
             "ar": "مجتمعي",
@@ -6086,7 +6166,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0126",
+            "id": "v_0124",
             "word": "toplumcu",
             "tr": "toplumcu",
             "ar": "اجتماعي",
@@ -6113,7 +6193,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'العلم والابتكار'.",
         "vocabulary": [
           {
-            "id": "v_0096",
+            "id": "v_0090",
             "word": "toplum",
             "tr": "toplum",
             "ar": "مجتمع",
@@ -6128,7 +6208,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0097",
+            "id": "v_0091",
             "word": "kültür",
             "tr": "kültür",
             "ar": "ثقافة",
@@ -6143,7 +6223,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0098",
+            "id": "v_0092",
             "word": "yasa",
             "tr": "yasa",
             "ar": "قانون",
@@ -6158,7 +6238,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0099",
+            "id": "v_0093",
             "word": "özgürlük",
             "tr": "özgürlük",
             "ar": "حرية",
@@ -6173,7 +6253,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0100",
+            "id": "v_0094",
             "word": "tiyatro",
             "tr": "tiyatro",
             "ar": "مسرح",
@@ -6188,7 +6268,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0125",
+            "id": "v_0123",
             "word": "toplumsal",
             "tr": "toplumsal",
             "ar": "مجتمعي",
@@ -6203,7 +6283,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0126",
+            "id": "v_0124",
             "word": "toplumcu",
             "tr": "toplumcu",
             "ar": "اجتماعي",
@@ -6230,7 +6310,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'البيئة والتغير المناخي'.",
         "vocabulary": [
           {
-            "id": "v_0097",
+            "id": "v_0091",
             "word": "kültür",
             "tr": "kültür",
             "ar": "ثقافة",
@@ -6245,7 +6325,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0098",
+            "id": "v_0092",
             "word": "yasa",
             "tr": "yasa",
             "ar": "قانون",
@@ -6260,7 +6340,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0099",
+            "id": "v_0093",
             "word": "özgürlük",
             "tr": "özgürlük",
             "ar": "حرية",
@@ -6275,7 +6355,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0100",
+            "id": "v_0094",
             "word": "tiyatro",
             "tr": "tiyatro",
             "ar": "مسرح",
@@ -6290,7 +6370,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0125",
+            "id": "v_0123",
             "word": "toplumsal",
             "tr": "toplumsal",
             "ar": "مجتمعي",
@@ -6305,7 +6385,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0126",
+            "id": "v_0124",
             "word": "toplumcu",
             "tr": "toplumcu",
             "ar": "اجتماعي",
@@ -6332,7 +6412,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الكلمات المشتركة 4'.",
         "vocabulary": [
           {
-            "id": "v_0096",
+            "id": "v_0090",
             "word": "toplum",
             "tr": "toplum",
             "ar": "مجتمع",
@@ -6347,7 +6427,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0097",
+            "id": "v_0091",
             "word": "kültür",
             "tr": "kültür",
             "ar": "ثقافة",
@@ -6362,7 +6442,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0098",
+            "id": "v_0092",
             "word": "yasa",
             "tr": "yasa",
             "ar": "قانون",
@@ -6377,7 +6457,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0099",
+            "id": "v_0093",
             "word": "özgürlük",
             "tr": "özgürlük",
             "ar": "حرية",
@@ -6392,7 +6472,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0100",
+            "id": "v_0094",
             "word": "tiyatro",
             "tr": "tiyatro",
             "ar": "مسرح",
@@ -6407,7 +6487,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0125",
+            "id": "v_0123",
             "word": "toplumsal",
             "tr": "toplumsal",
             "ar": "مجتمعي",
@@ -6422,7 +6502,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0126",
+            "id": "v_0124",
             "word": "toplumcu",
             "tr": "toplumcu",
             "ar": "اجتماعي",
@@ -6442,7 +6522,7 @@ const learningDatabase = {
   },
   {
     "id": 5,
-    "title": "Level 5: Akademik Akıcılık",
+    "title": "Level 5: Akademik Akıcılık (C1)",
     "arabicTitle": "المستوى 5",
     "englishTitle": "Level 5",
     "lessons": [
@@ -6457,7 +6537,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الكتابة الأكاديمية والمنهجية'.",
         "vocabulary": [
           {
-            "id": "v_0101",
+            "id": "v_0095",
             "word": "akademik",
             "tr": "akademik",
             "ar": "أكاديمي",
@@ -6472,7 +6552,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0102",
+            "id": "v_0096",
             "word": "çağdaş",
             "tr": "çağdaş",
             "ar": "معاصر",
@@ -6487,7 +6567,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0103",
+            "id": "v_0097",
             "word": "soyut",
             "tr": "soyut",
             "ar": "مجرد",
@@ -6502,7 +6582,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0104",
+            "id": "v_0098",
             "word": "somut",
             "tr": "somut",
             "ar": "ملموس",
@@ -6517,7 +6597,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0105",
+            "id": "v_0099",
             "word": "deste",
             "tr": "deste",
             "ar": "باقة",
@@ -6528,6 +6608,66 @@ const learningDatabase = {
             "sentence_en": "She picked a petal from the daisy bouquet.",
             "sentence_ar": "اختارت بتلة من باقة الأقحوان.",
             "pronunciation": "[deste]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0101",
+            "word": "metodoloji",
+            "tr": "metodoloji",
+            "ar": "منهجية",
+            "en": "methodology",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Bilimsel araştırmalarda metodoloji esastır.",
+            "sentence_en": "Methodology is essential in scientific research.",
+            "sentence_ar": "المنهجية أساسية في البحوث العلمية.",
+            "pronunciation": "[metodoloji]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0102",
+            "word": "kavramsal",
+            "tr": "kavramsal",
+            "ar": "مفاهيمي",
+            "en": "conceptual",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Tezinde kavramsal çerçeveyi netleştirdi.",
+            "sentence_en": "He clarified the conceptual framework in his thesis.",
+            "sentence_ar": "أوضح الإطار المفاهيمي في أطروحته.",
+            "pronunciation": "[kavramsal]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0103",
+            "word": "analitik",
+            "tr": "analitik",
+            "ar": "تحليلي",
+            "en": "analytical",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Analitik düşünme yeteneği başarının anahtarıdır.",
+            "sentence_en": "Analytical thinking ability is the key to success.",
+            "sentence_ar": "قدرة التفكير التحليلي هي مفتاح النجاح.",
+            "pronunciation": "[analitik]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0104",
+            "word": "sentezlemek",
+            "tr": "sentezlemek",
+            "ar": "تجميع / تركيب",
+            "en": "to synthesize",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Farklı görüşleri sentezleyerek yeni bir teori geliştirdi.",
+            "sentence_en": "He developed a new theory by synthesizing different views.",
+            "sentence_ar": "طور نظرية جديدة من خلال تجميع الآراء المختلفة.",
+            "pronunciation": "[sentezlemek]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -6544,7 +6684,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الفلسفة والفكر الأخلاقي'.",
         "vocabulary": [
           {
-            "id": "v_0101",
+            "id": "v_0095",
             "word": "akademik",
             "tr": "akademik",
             "ar": "أكاديمي",
@@ -6559,7 +6699,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0102",
+            "id": "v_0096",
             "word": "çağdaş",
             "tr": "çağdaş",
             "ar": "معاصر",
@@ -6574,7 +6714,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0103",
+            "id": "v_0097",
             "word": "soyut",
             "tr": "soyut",
             "ar": "مجرد",
@@ -6589,7 +6729,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0104",
+            "id": "v_0098",
             "word": "somut",
             "tr": "somut",
             "ar": "ملموس",
@@ -6604,7 +6744,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0105",
+            "id": "v_0099",
             "word": "deste",
             "tr": "deste",
             "ar": "باقة",
@@ -6615,6 +6755,66 @@ const learningDatabase = {
             "sentence_en": "She picked a petal from the daisy bouquet.",
             "sentence_ar": "اختارت بتلة من باقة الأقحوان.",
             "pronunciation": "[deste]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0101",
+            "word": "metodoloji",
+            "tr": "metodoloji",
+            "ar": "منهجية",
+            "en": "methodology",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Bilimsel araştırmalarda metodoloji esastır.",
+            "sentence_en": "Methodology is essential in scientific research.",
+            "sentence_ar": "المنهجية أساسية في البحوث العلمية.",
+            "pronunciation": "[metodoloji]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0102",
+            "word": "kavramsal",
+            "tr": "kavramsal",
+            "ar": "مفاهيمي",
+            "en": "conceptual",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Tezinde kavramsal çerçeveyi netleştirdi.",
+            "sentence_en": "He clarified the conceptual framework in his thesis.",
+            "sentence_ar": "أوضح الإطار المفاهيمي في أطروحته.",
+            "pronunciation": "[kavramsal]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0103",
+            "word": "analitik",
+            "tr": "analitik",
+            "ar": "تحليلي",
+            "en": "analytical",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Analitik düşünme yeteneği başarının anahtarıdır.",
+            "sentence_en": "Analytical thinking ability is the key to success.",
+            "sentence_ar": "قدرة التفكير التحليلي هي مفتاح النجاح.",
+            "pronunciation": "[analitik]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0104",
+            "word": "sentezlemek",
+            "tr": "sentezlemek",
+            "ar": "تجميع / تركيب",
+            "en": "to synthesize",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Farklı görüşleri sentezleyerek yeni bir teori geliştirdi.",
+            "sentence_en": "He developed a new theory by synthesizing different views.",
+            "sentence_ar": "طور نظرية جديدة من خلال تجميع الآراء المختلفة.",
+            "pronunciation": "[sentezlemek]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -6631,7 +6831,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'العالم المعاصر وعلم الاجتماع'.",
         "vocabulary": [
           {
-            "id": "v_0101",
+            "id": "v_0095",
             "word": "akademik",
             "tr": "akademik",
             "ar": "أكاديمي",
@@ -6646,7 +6846,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0102",
+            "id": "v_0096",
             "word": "çağdaş",
             "tr": "çağdaş",
             "ar": "معاصر",
@@ -6661,7 +6861,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0103",
+            "id": "v_0097",
             "word": "soyut",
             "tr": "soyut",
             "ar": "مجرد",
@@ -6676,7 +6876,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0104",
+            "id": "v_0098",
             "word": "somut",
             "tr": "somut",
             "ar": "ملموس",
@@ -6691,7 +6891,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0105",
+            "id": "v_0099",
             "word": "deste",
             "tr": "deste",
             "ar": "باقة",
@@ -6702,6 +6902,66 @@ const learningDatabase = {
             "sentence_en": "She picked a petal from the daisy bouquet.",
             "sentence_ar": "اختارت بتلة من باقة الأقحوان.",
             "pronunciation": "[deste]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0101",
+            "word": "metodoloji",
+            "tr": "metodoloji",
+            "ar": "منهجية",
+            "en": "methodology",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Bilimsel araştırmalarda metodoloji esastır.",
+            "sentence_en": "Methodology is essential in scientific research.",
+            "sentence_ar": "المنهجية أساسية في البحوث العلمية.",
+            "pronunciation": "[metodoloji]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0102",
+            "word": "kavramsal",
+            "tr": "kavramsal",
+            "ar": "مفاهيمي",
+            "en": "conceptual",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Tezinde kavramsal çerçeveyi netleştirdi.",
+            "sentence_en": "He clarified the conceptual framework in his thesis.",
+            "sentence_ar": "أوضح الإطار المفاهيمي في أطروحته.",
+            "pronunciation": "[kavramsal]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0103",
+            "word": "analitik",
+            "tr": "analitik",
+            "ar": "تحليلي",
+            "en": "analytical",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Analitik düşünme yeteneği başarının anahtarıdır.",
+            "sentence_en": "Analytical thinking ability is the key to success.",
+            "sentence_ar": "قدرة التفكير التحليلي هي مفتاح النجاح.",
+            "pronunciation": "[analitik]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0104",
+            "word": "sentezlemek",
+            "tr": "sentezlemek",
+            "ar": "تجميع / تركيب",
+            "en": "to synthesize",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Farklı görüşleri sentezleyerek yeni bir teori geliştirdi.",
+            "sentence_en": "He developed a new theory by synthesizing different views.",
+            "sentence_ar": "طور نظرية جديدة من خلال تجميع الآراء المختلفة.",
+            "pronunciation": "[sentezlemek]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -6718,7 +6978,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'المبني للمجهول والتعدية'.",
         "vocabulary": [
           {
-            "id": "v_0101",
+            "id": "v_0095",
             "word": "akademik",
             "tr": "akademik",
             "ar": "أكاديمي",
@@ -6733,7 +6993,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0102",
+            "id": "v_0096",
             "word": "çağdaş",
             "tr": "çağdaş",
             "ar": "معاصر",
@@ -6748,7 +7008,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0103",
+            "id": "v_0097",
             "word": "soyut",
             "tr": "soyut",
             "ar": "مجرد",
@@ -6763,7 +7023,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0104",
+            "id": "v_0098",
             "word": "somut",
             "tr": "somut",
             "ar": "ملموس",
@@ -6778,7 +7038,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0105",
+            "id": "v_0099",
             "word": "deste",
             "tr": "deste",
             "ar": "باقة",
@@ -6789,6 +7049,66 @@ const learningDatabase = {
             "sentence_en": "She picked a petal from the daisy bouquet.",
             "sentence_ar": "اختارت بتلة من باقة الأقحوان.",
             "pronunciation": "[deste]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0101",
+            "word": "metodoloji",
+            "tr": "metodoloji",
+            "ar": "منهجية",
+            "en": "methodology",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Bilimsel araştırmalarda metodoloji esastır.",
+            "sentence_en": "Methodology is essential in scientific research.",
+            "sentence_ar": "المنهجية أساسية في البحوث العلمية.",
+            "pronunciation": "[metodoloji]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0102",
+            "word": "kavramsal",
+            "tr": "kavramsal",
+            "ar": "مفاهيمي",
+            "en": "conceptual",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Tezinde kavramsal çerçeveyi netleştirdi.",
+            "sentence_en": "He clarified the conceptual framework in his thesis.",
+            "sentence_ar": "أوضح الإطار المفاهيمي في أطروحته.",
+            "pronunciation": "[kavramsal]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0103",
+            "word": "analitik",
+            "tr": "analitik",
+            "ar": "تحليلي",
+            "en": "analytical",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Analitik düşünme yeteneği başarının anahtarıdır.",
+            "sentence_en": "Analytical thinking ability is the key to success.",
+            "sentence_ar": "قدرة التفكير التحليلي هي مفتاح النجاح.",
+            "pronunciation": "[analitik]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0104",
+            "word": "sentezlemek",
+            "tr": "sentezlemek",
+            "ar": "تجميع / تركيب",
+            "en": "to synthesize",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Farklı görüşleri sentezleyerek yeni bir teori geliştirdi.",
+            "sentence_en": "He developed a new theory by synthesizing different views.",
+            "sentence_ar": "طور نظرية جديدة من خلال تجميع الآراء المختلفة.",
+            "pronunciation": "[sentezlemek]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -6805,7 +7125,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الإرث الأدبي العثماني واللغة'.",
         "vocabulary": [
           {
-            "id": "v_0101",
+            "id": "v_0095",
             "word": "akademik",
             "tr": "akademik",
             "ar": "أكاديمي",
@@ -6820,7 +7140,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0102",
+            "id": "v_0096",
             "word": "çağdaş",
             "tr": "çağdaş",
             "ar": "معاصر",
@@ -6835,7 +7155,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0103",
+            "id": "v_0097",
             "word": "soyut",
             "tr": "soyut",
             "ar": "مجرد",
@@ -6850,7 +7170,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0104",
+            "id": "v_0098",
             "word": "somut",
             "tr": "somut",
             "ar": "ملموس",
@@ -6865,7 +7185,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0105",
+            "id": "v_0099",
             "word": "deste",
             "tr": "deste",
             "ar": "باقة",
@@ -6876,6 +7196,66 @@ const learningDatabase = {
             "sentence_en": "She picked a petal from the daisy bouquet.",
             "sentence_ar": "اختارت بتلة من باقة الأقحوان.",
             "pronunciation": "[deste]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0101",
+            "word": "metodoloji",
+            "tr": "metodoloji",
+            "ar": "منهجية",
+            "en": "methodology",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Bilimsel araştırmalarda metodoloji esastır.",
+            "sentence_en": "Methodology is essential in scientific research.",
+            "sentence_ar": "المنهجية أساسية في البحوث العلمية.",
+            "pronunciation": "[metodoloji]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0102",
+            "word": "kavramsal",
+            "tr": "kavramsal",
+            "ar": "مفاهيمي",
+            "en": "conceptual",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Tezinde kavramsal çerçeveyi netleştirdi.",
+            "sentence_en": "He clarified the conceptual framework in his thesis.",
+            "sentence_ar": "أوضح الإطار المفاهيمي في أطروحته.",
+            "pronunciation": "[kavramsal]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0103",
+            "word": "analitik",
+            "tr": "analitik",
+            "ar": "تحليلي",
+            "en": "analytical",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Analitik düşünme yeteneği başarının anahtarıdır.",
+            "sentence_en": "Analytical thinking ability is the key to success.",
+            "sentence_ar": "قدرة التفكير التحليلي هي مفتاح النجاح.",
+            "pronunciation": "[analitik]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0104",
+            "word": "sentezlemek",
+            "tr": "sentezlemek",
+            "ar": "تجميع / تركيب",
+            "en": "to synthesize",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Farklı görüşleri sentezleyerek yeni bir teori geliştirdi.",
+            "sentence_en": "He developed a new theory by synthesizing different views.",
+            "sentence_ar": "طور نظرية جديدة من خلال تجميع الآراء المختلفة.",
+            "pronunciation": "[sentezlemek]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -6892,7 +7272,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الأمثال والحكم التركية'.",
         "vocabulary": [
           {
-            "id": "v_0101",
+            "id": "v_0095",
             "word": "akademik",
             "tr": "akademik",
             "ar": "أكاديمي",
@@ -6907,7 +7287,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0102",
+            "id": "v_0096",
             "word": "çağdaş",
             "tr": "çağdaş",
             "ar": "معاصر",
@@ -6922,7 +7302,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0103",
+            "id": "v_0097",
             "word": "soyut",
             "tr": "soyut",
             "ar": "مجرد",
@@ -6937,7 +7317,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0104",
+            "id": "v_0098",
             "word": "somut",
             "tr": "somut",
             "ar": "ملموس",
@@ -6952,7 +7332,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0105",
+            "id": "v_0099",
             "word": "deste",
             "tr": "deste",
             "ar": "باقة",
@@ -6963,6 +7343,66 @@ const learningDatabase = {
             "sentence_en": "She picked a petal from the daisy bouquet.",
             "sentence_ar": "اختارت بتلة من باقة الأقحوان.",
             "pronunciation": "[deste]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0101",
+            "word": "metodoloji",
+            "tr": "metodoloji",
+            "ar": "منهجية",
+            "en": "methodology",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Bilimsel araştırmalarda metodoloji esastır.",
+            "sentence_en": "Methodology is essential in scientific research.",
+            "sentence_ar": "المنهجية أساسية في البحوث العلمية.",
+            "pronunciation": "[metodoloji]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0102",
+            "word": "kavramsal",
+            "tr": "kavramsal",
+            "ar": "مفاهيمي",
+            "en": "conceptual",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Tezinde kavramsal çerçeveyi netleştirdi.",
+            "sentence_en": "He clarified the conceptual framework in his thesis.",
+            "sentence_ar": "أوضح الإطار المفاهيمي في أطروحته.",
+            "pronunciation": "[kavramsal]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0103",
+            "word": "analitik",
+            "tr": "analitik",
+            "ar": "تحليلي",
+            "en": "analytical",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Analitik düşünme yeteneği başarının anahtarıdır.",
+            "sentence_en": "Analytical thinking ability is the key to success.",
+            "sentence_ar": "قدرة التفكير التحليلي هي مفتاح النجاح.",
+            "pronunciation": "[analitik]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0104",
+            "word": "sentezlemek",
+            "tr": "sentezlemek",
+            "ar": "تجميع / تركيب",
+            "en": "to synthesize",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Farklı görüşleri sentezleyerek yeni bir teori geliştirdi.",
+            "sentence_en": "He developed a new theory by synthesizing different views.",
+            "sentence_ar": "طور نظرية جديدة من خلال تجميع الآراء المختلفة.",
+            "pronunciation": "[sentezlemek]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -6979,52 +7419,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الدبلوماسية والعلاقات الدولية'.",
         "vocabulary": [
           {
-            "id": "v_0101",
-            "word": "akademik",
-            "tr": "akademik",
-            "ar": "أكاديمي",
-            "en": "academic",
-            "level": 5,
-            "category": "Akademik & Felsefe",
-            "sentence_tr": "Akademik araştırmalarda metodoloji çok önemlidir.",
-            "sentence_en": "Methodology is very important in academic research.",
-            "sentence_ar": "المنهجية مهمة جداً في البحوث الأكاديمية.",
-            "pronunciation": "[akademik]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0102",
-            "word": "çağdaş",
-            "tr": "çağdaş",
-            "ar": "معاصر",
-            "en": "contemporary",
-            "level": 5,
-            "category": "Akademik & Felsefe",
-            "sentence_tr": "Çağdaş medeniyet seviyesine ulaşmak ana hedeftir.",
-            "sentence_en": "Reaching contemporary civilization level is the goal.",
-            "sentence_ar": "الوصول إلى مستوى الحضارة المعاصرة هو الهدف.",
-            "pronunciation": "[çağdaş]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0103",
-            "word": "soyut",
-            "tr": "soyut",
-            "ar": "مجرد",
-            "en": "abstract",
-            "level": 5,
-            "category": "Akademik & Felsefe",
-            "sentence_tr": "Matematik soyut kavramları açıklar.",
-            "sentence_en": "Mathematics explains abstract concepts.",
-            "sentence_ar": "يشرح الرياضيات المفاهيم المجردة.",
-            "pronunciation": "[soyut]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0104",
+            "id": "v_0098",
             "word": "somut",
             "tr": "somut",
             "ar": "ملموس",
@@ -7039,7 +7434,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0105",
+            "id": "v_0099",
             "word": "deste",
             "tr": "deste",
             "ar": "باقة",
@@ -7050,6 +7445,66 @@ const learningDatabase = {
             "sentence_en": "She picked a petal from the daisy bouquet.",
             "sentence_ar": "اختارت بتلة من باقة الأقحوان.",
             "pronunciation": "[deste]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0101",
+            "word": "metodoloji",
+            "tr": "metodoloji",
+            "ar": "منهجية",
+            "en": "methodology",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Bilimsel araştırmalarda metodoloji esastır.",
+            "sentence_en": "Methodology is essential in scientific research.",
+            "sentence_ar": "المنهجية أساسية في البحوث العلمية.",
+            "pronunciation": "[metodoloji]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0102",
+            "word": "kavramsal",
+            "tr": "kavramsal",
+            "ar": "مفاهيمي",
+            "en": "conceptual",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Tezinde kavramsal çerçeveyi netleştirdi.",
+            "sentence_en": "He clarified the conceptual framework in his thesis.",
+            "sentence_ar": "أوضح الإطار المفاهيمي في أطروحته.",
+            "pronunciation": "[kavramsal]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0103",
+            "word": "analitik",
+            "tr": "analitik",
+            "ar": "تحليلي",
+            "en": "analytical",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Analitik düşünme yeteneği başarının anahtarıdır.",
+            "sentence_en": "Analytical thinking ability is the key to success.",
+            "sentence_ar": "قدرة التفكير التحليلي هي مفتاح النجاح.",
+            "pronunciation": "[analitik]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0104",
+            "word": "sentezlemek",
+            "tr": "sentezlemek",
+            "ar": "تجميع / تركيب",
+            "en": "to synthesize",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Farklı görüşleri sentezleyerek yeni bir teori geliştirdi.",
+            "sentence_en": "He developed a new theory by synthesizing different views.",
+            "sentence_ar": "طور نظرية جديدة من خلال تجميع الآراء المختلفة.",
+            "pronunciation": "[sentezlemek]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -7066,37 +7521,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'فلسفة القانون وحقوق الإنسان'.",
         "vocabulary": [
           {
-            "id": "v_0101",
-            "word": "akademik",
-            "tr": "akademik",
-            "ar": "أكاديمي",
-            "en": "academic",
-            "level": 5,
-            "category": "Akademik & Felsefe",
-            "sentence_tr": "Akademik araştırmalarda metodoloji çok önemlidir.",
-            "sentence_en": "Methodology is very important in academic research.",
-            "sentence_ar": "المنهجية مهمة جداً في البحوث الأكاديمية.",
-            "pronunciation": "[akademik]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0102",
-            "word": "çağdaş",
-            "tr": "çağdaş",
-            "ar": "معاصر",
-            "en": "contemporary",
-            "level": 5,
-            "category": "Akademik & Felsefe",
-            "sentence_tr": "Çağdaş medeniyet seviyesine ulaşmak ana hedeftir.",
-            "sentence_en": "Reaching contemporary civilization level is the goal.",
-            "sentence_ar": "الوصول إلى مستوى الحضارة المعاصرة هو الهدف.",
-            "pronunciation": "[çağdaş]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0103",
+            "id": "v_0097",
             "word": "soyut",
             "tr": "soyut",
             "ar": "مجرد",
@@ -7111,7 +7536,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0104",
+            "id": "v_0098",
             "word": "somut",
             "tr": "somut",
             "ar": "ملموس",
@@ -7126,7 +7551,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0105",
+            "id": "v_0099",
             "word": "deste",
             "tr": "deste",
             "ar": "باقة",
@@ -7137,6 +7562,66 @@ const learningDatabase = {
             "sentence_en": "She picked a petal from the daisy bouquet.",
             "sentence_ar": "اختارت بتلة من باقة الأقحوان.",
             "pronunciation": "[deste]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0101",
+            "word": "metodoloji",
+            "tr": "metodoloji",
+            "ar": "منهجية",
+            "en": "methodology",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Bilimsel araştırmalarda metodoloji esastır.",
+            "sentence_en": "Methodology is essential in scientific research.",
+            "sentence_ar": "المنهجية أساسية في البحوث العلمية.",
+            "pronunciation": "[metodoloji]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0102",
+            "word": "kavramsal",
+            "tr": "kavramsal",
+            "ar": "مفاهيمي",
+            "en": "conceptual",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Tezinde kavramsal çerçeveyi netleştirdi.",
+            "sentence_en": "He clarified the conceptual framework in his thesis.",
+            "sentence_ar": "أوضح الإطار المفاهيمي في أطروحته.",
+            "pronunciation": "[kavramsal]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0103",
+            "word": "analitik",
+            "tr": "analitik",
+            "ar": "تحليلي",
+            "en": "analytical",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Analitik düşünme yeteneği başarının anahtarıdır.",
+            "sentence_en": "Analytical thinking ability is the key to success.",
+            "sentence_ar": "قدرة التفكير التحليلي هي مفتاح النجاح.",
+            "pronunciation": "[analitik]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0104",
+            "word": "sentezlemek",
+            "tr": "sentezlemek",
+            "ar": "تجميع / تركيب",
+            "en": "to synthesize",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Farklı görüşleri sentezleyerek yeni bir teori geliştirdi.",
+            "sentence_en": "He developed a new theory by synthesizing different views.",
+            "sentence_ar": "طور نظرية جديدة من خلال تجميع الآراء المختلفة.",
+            "pronunciation": "[sentezlemek]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -7153,22 +7638,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'المفاهيم الأبدية والأزلية'.",
         "vocabulary": [
           {
-            "id": "v_0101",
-            "word": "akademik",
-            "tr": "akademik",
-            "ar": "أكاديمي",
-            "en": "academic",
-            "level": 5,
-            "category": "Akademik & Felsefe",
-            "sentence_tr": "Akademik araştırmalarda metodoloji çok önemlidir.",
-            "sentence_en": "Methodology is very important in academic research.",
-            "sentence_ar": "المنهجية مهمة جداً في البحوث الأكاديمية.",
-            "pronunciation": "[akademik]",
-            "is_cognate": false,
-            "cognate_info": null
-          },
-          {
-            "id": "v_0102",
+            "id": "v_0096",
             "word": "çağdaş",
             "tr": "çağdaş",
             "ar": "معاصر",
@@ -7183,7 +7653,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0103",
+            "id": "v_0097",
             "word": "soyut",
             "tr": "soyut",
             "ar": "مجرد",
@@ -7198,7 +7668,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0104",
+            "id": "v_0098",
             "word": "somut",
             "tr": "somut",
             "ar": "ملموس",
@@ -7213,7 +7683,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0105",
+            "id": "v_0099",
             "word": "deste",
             "tr": "deste",
             "ar": "باقة",
@@ -7224,6 +7694,66 @@ const learningDatabase = {
             "sentence_en": "She picked a petal from the daisy bouquet.",
             "sentence_ar": "اختارت بتلة من باقة الأقحوان.",
             "pronunciation": "[deste]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0101",
+            "word": "metodoloji",
+            "tr": "metodoloji",
+            "ar": "منهجية",
+            "en": "methodology",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Bilimsel araştırmalarda metodoloji esastır.",
+            "sentence_en": "Methodology is essential in scientific research.",
+            "sentence_ar": "المنهجية أساسية في البحوث العلمية.",
+            "pronunciation": "[metodoloji]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0102",
+            "word": "kavramsal",
+            "tr": "kavramsal",
+            "ar": "مفاهيمي",
+            "en": "conceptual",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Tezinde kavramsal çerçeveyi netleştirdi.",
+            "sentence_en": "He clarified the conceptual framework in his thesis.",
+            "sentence_ar": "أوضح الإطار المفاهيمي في أطروحته.",
+            "pronunciation": "[kavramsal]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0103",
+            "word": "analitik",
+            "tr": "analitik",
+            "ar": "تحليلي",
+            "en": "analytical",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Analitik düşünme yeteneği başarının anahtarıdır.",
+            "sentence_en": "Analytical thinking ability is the key to success.",
+            "sentence_ar": "قدرة التفكير التحليلي هي مفتاح النجاح.",
+            "pronunciation": "[analitik]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0104",
+            "word": "sentezlemek",
+            "tr": "sentezlemek",
+            "ar": "تجميع / تركيب",
+            "en": "to synthesize",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Farklı görüşleri sentezleyerek yeni bir teori geliştirdi.",
+            "sentence_en": "He developed a new theory by synthesizing different views.",
+            "sentence_ar": "طور نظرية جديدة من خلال تجميع الآراء المختلفة.",
+            "pronunciation": "[sentezlemek]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -7240,7 +7770,7 @@ const learningDatabase = {
         "intro_ar": "في هذا الدرس ستتعلم موضوع 'الكلمات المشتركة 5'.",
         "vocabulary": [
           {
-            "id": "v_0101",
+            "id": "v_0095",
             "word": "akademik",
             "tr": "akademik",
             "ar": "أكاديمي",
@@ -7255,7 +7785,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0102",
+            "id": "v_0096",
             "word": "çağdaş",
             "tr": "çağdaş",
             "ar": "معاصر",
@@ -7270,7 +7800,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0103",
+            "id": "v_0097",
             "word": "soyut",
             "tr": "soyut",
             "ar": "مجرد",
@@ -7285,7 +7815,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0104",
+            "id": "v_0098",
             "word": "somut",
             "tr": "somut",
             "ar": "ملموس",
@@ -7300,7 +7830,7 @@ const learningDatabase = {
             "cognate_info": null
           },
           {
-            "id": "v_0105",
+            "id": "v_0099",
             "word": "deste",
             "tr": "deste",
             "ar": "باقة",
@@ -7311,6 +7841,66 @@ const learningDatabase = {
             "sentence_en": "She picked a petal from the daisy bouquet.",
             "sentence_ar": "اختارت بتلة من باقة الأقحوان.",
             "pronunciation": "[deste]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0101",
+            "word": "metodoloji",
+            "tr": "metodoloji",
+            "ar": "منهجية",
+            "en": "methodology",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Bilimsel araştırmalarda metodoloji esastır.",
+            "sentence_en": "Methodology is essential in scientific research.",
+            "sentence_ar": "المنهجية أساسية في البحوث العلمية.",
+            "pronunciation": "[metodoloji]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0102",
+            "word": "kavramsal",
+            "tr": "kavramsal",
+            "ar": "مفاهيمي",
+            "en": "conceptual",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Tezinde kavramsal çerçeveyi netleştirdi.",
+            "sentence_en": "He clarified the conceptual framework in his thesis.",
+            "sentence_ar": "أوضح الإطار المفاهيمي في أطروحته.",
+            "pronunciation": "[kavramsal]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0103",
+            "word": "analitik",
+            "tr": "analitik",
+            "ar": "تحليلي",
+            "en": "analytical",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Analitik düşünme yeteneği başarının anahtarıdır.",
+            "sentence_en": "Analytical thinking ability is the key to success.",
+            "sentence_ar": "قدرة التفكير التحليلي هي مفتاح النجاح.",
+            "pronunciation": "[analitik]",
+            "is_cognate": false,
+            "cognate_info": null
+          },
+          {
+            "id": "v_0104",
+            "word": "sentezlemek",
+            "tr": "sentezlemek",
+            "ar": "تجميع / تركيب",
+            "en": "to synthesize",
+            "level": 5,
+            "category": "Akademik & Felsefe",
+            "sentence_tr": "Farklı görüşleri sentezleyerek yeni bir teori geliştirdi.",
+            "sentence_en": "He developed a new theory by synthesizing different views.",
+            "sentence_ar": "طور نظرية جديدة من خلال تجميع الآراء المختلفة.",
+            "pronunciation": "[sentezlemek]",
             "is_cognate": false,
             "cognate_info": null
           }
@@ -8246,7 +8836,7 @@ const learningDatabase = {
     "word": "rahmet",
     "tr": "rahmet",
     "ar": "رَحْمَة",
-    "en": "mercy / rain",
+    "en": "mercy",
     "level": 1,
     "category": "Ortak Kelimeler",
     "sentence_tr": "İnsanlara karşı her zaman rahmetle yaklaşmalıdır.",
@@ -8573,21 +9163,6 @@ const learningDatabase = {
   },
   {
     "id": "v_0064",
-    "word": "iyi akşamlar",
-    "tr": "iyi akşamlar",
-    "ar": "مساء الخير",
-    "en": "good evening",
-    "level": 1,
-    "category": "Tanışma & Selamlaşma",
-    "sentence_tr": "İyi akşamlar sevgili arkadaşlar.",
-    "sentence_en": "Good evening dear friends.",
-    "sentence_ar": "مساء الخير أيها الأصدقاء الأعزاء.",
-    "pronunciation": "[iyi akşamlar]",
-    "is_cognate": false,
-    "cognate_info": null
-  },
-  {
-    "id": "v_0065",
     "word": "lütfen",
     "tr": "lütfen",
     "ar": "رجاءً",
@@ -8602,7 +9177,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0066",
+    "id": "v_0065",
     "word": "teşekkürler",
     "tr": "teşekkürler",
     "ar": "شكراً",
@@ -8617,7 +9192,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0067",
+    "id": "v_0066",
     "word": "evet",
     "tr": "evet",
     "ar": "نعم",
@@ -8632,22 +9207,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0068",
-    "word": "hayır",
-    "tr": "hayır",
-    "ar": "لا",
-    "en": "no",
-    "level": 1,
-    "category": "Tanışma & Selamlaşma",
-    "sentence_tr": "Hayır, henüz işim bitmedi.",
-    "sentence_en": "No, my work is not finished yet.",
-    "sentence_ar": "لا، لم ينتهِ عملي بعد.",
-    "pronunciation": "[hayır]",
-    "is_cognate": false,
-    "cognate_info": null
-  },
-  {
-    "id": "v_0069",
+    "id": "v_0067",
     "word": "anne",
     "tr": "anne",
     "ar": "أم",
@@ -8662,7 +9222,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0070",
+    "id": "v_0068",
     "word": "baba",
     "tr": "baba",
     "ar": "أب",
@@ -8677,7 +9237,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0071",
+    "id": "v_0069",
     "word": "çocuk",
     "tr": "çocuk",
     "ar": "طفل",
@@ -8692,7 +9252,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0072",
+    "id": "v_0070",
     "word": "ev",
     "tr": "ev",
     "ar": "بيت",
@@ -8707,22 +9267,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0073",
-    "word": "oda",
-    "tr": "oda",
-    "ar": "غرفة",
-    "en": "room",
-    "level": 1,
-    "category": "Günlük Yaşam",
-    "sentence_tr": "Odama yeni bir çalışma masası aldım.",
-    "sentence_en": "I bought a new study desk for my room.",
-    "sentence_ar": "اشتريت مكتب دراسة جديداً لغرفتي.",
-    "pronunciation": "[oda]",
-    "is_cognate": false,
-    "cognate_info": null
-  },
-  {
-    "id": "v_0074",
+    "id": "v_0071",
     "word": "su",
     "tr": "su",
     "ar": "ماء",
@@ -8737,52 +9282,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0075",
-    "word": "ekmek",
-    "tr": "ekmek",
-    "ar": "خبز",
-    "en": "bread",
-    "level": 1,
-    "category": "Günlük Yaşam",
-    "sentence_tr": "Fırından taze ve sıcak bir ekmek aldım.",
-    "sentence_en": "I bought fresh and hot bread from the bakery.",
-    "sentence_ar": "اشتريت خبزاً طازجاً وساخناً من المخبز.",
-    "pronunciation": "[ekmek]",
-    "is_cognate": false,
-    "cognate_info": null
-  },
-  {
-    "id": "v_0076",
-    "word": "göz",
-    "tr": "göz",
-    "ar": "عين",
-    "en": "eye",
-    "level": 1,
-    "category": "Sağlık & Vücut",
-    "sentence_tr": "Göz sağlığı için bilgisayara çok bakmamalıyız.",
-    "sentence_en": "We shouldn't look at the computer too much for eye health.",
-    "sentence_ar": "يجب ألا ننظر إلى الكمبيوتر كثيراً من أجل صحة العين.",
-    "pronunciation": "[göz]",
-    "is_cognate": false,
-    "cognate_info": null
-  },
-  {
-    "id": "v_0077",
-    "word": "el",
-    "tr": "el",
-    "ar": "يد",
-    "en": "hand",
-    "level": 1,
-    "category": "Sağlık & Vücut",
-    "sentence_tr": "Yemekten önce ellerimizi yıkamalıyız.",
-    "sentence_en": "We should wash our hands before eating.",
-    "sentence_ar": "يجب أن نغسل أيدينا قبل الأكل.",
-    "pronunciation": "[el]",
-    "is_cognate": false,
-    "cognate_info": null
-  },
-  {
-    "id": "v_0078",
+    "id": "v_0072",
     "word": "bahçe",
     "tr": "bahçe",
     "ar": "حديقة",
@@ -8797,7 +9297,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0079",
+    "id": "v_0073",
     "word": "çiçek",
     "tr": "çiçek",
     "ar": "زهرة",
@@ -8812,7 +9312,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0080",
+    "id": "v_0074",
     "word": "yaprak",
     "tr": "yaprak",
     "ar": "بتلة / ورقة",
@@ -8827,7 +9327,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0081",
+    "id": "v_0075",
     "word": "güneş",
     "tr": "güneş",
     "ar": "شمس",
@@ -8842,7 +9342,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0082",
+    "id": "v_0076",
     "word": "okul",
     "tr": "okul",
     "ar": "مدرسة",
@@ -8857,7 +9357,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0083",
+    "id": "v_0077",
     "word": "öğretmen",
     "tr": "öğretmen",
     "ar": "معلم",
@@ -8872,7 +9372,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0084",
+    "id": "v_0078",
     "word": "öğrenci",
     "tr": "öğrenci",
     "ar": "طالب",
@@ -8887,7 +9387,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0085",
+    "id": "v_0079",
     "word": "şehir",
     "tr": "şehir",
     "ar": "مدينة",
@@ -8902,7 +9402,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0086",
+    "id": "v_0080",
     "word": "otobüs",
     "tr": "otobüs",
     "ar": "حافلة",
@@ -8917,7 +9417,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0087",
+    "id": "v_0081",
     "word": "elma",
     "tr": "elma",
     "ar": "تفاح",
@@ -8932,7 +9432,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0088",
+    "id": "v_0082",
     "word": "peynir",
     "tr": "peynir",
     "ar": "جبن",
@@ -8947,7 +9447,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0089",
+    "id": "v_0083",
     "word": "alışveriş",
     "tr": "alışveriş",
     "ar": "تسوق",
@@ -8962,7 +9462,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0090",
+    "id": "v_0084",
     "word": "meslek",
     "tr": "meslek",
     "ar": "مهنة",
@@ -8977,7 +9477,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0091",
+    "id": "v_0085",
     "word": "doktor",
     "tr": "doktor",
     "ar": "طبيب",
@@ -8992,7 +9492,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0092",
+    "id": "v_0086",
     "word": "doğa",
     "tr": "doğa",
     "ar": "طبيعة",
@@ -9007,7 +9507,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0093",
+    "id": "v_0087",
     "word": "orman",
     "tr": "orman",
     "ar": "غابة",
@@ -9022,7 +9522,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0094",
+    "id": "v_0088",
     "word": "mutluluk",
     "tr": "mutluluk",
     "ar": "سعادة",
@@ -9037,7 +9537,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0095",
+    "id": "v_0089",
     "word": "cesaret",
     "tr": "cesaret",
     "ar": "شجاعة",
@@ -9052,7 +9552,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0096",
+    "id": "v_0090",
     "word": "toplum",
     "tr": "toplum",
     "ar": "مجتمع",
@@ -9067,7 +9567,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0097",
+    "id": "v_0091",
     "word": "kültür",
     "tr": "kültür",
     "ar": "ثقافة",
@@ -9082,7 +9582,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0098",
+    "id": "v_0092",
     "word": "yasa",
     "tr": "yasa",
     "ar": "قانون",
@@ -9097,7 +9597,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0099",
+    "id": "v_0093",
     "word": "özgürlük",
     "tr": "özgürlük",
     "ar": "حرية",
@@ -9112,7 +9612,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0100",
+    "id": "v_0094",
     "word": "tiyatro",
     "tr": "tiyatro",
     "ar": "مسرح",
@@ -9127,7 +9627,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0101",
+    "id": "v_0095",
     "word": "akademik",
     "tr": "akademik",
     "ar": "أكاديمي",
@@ -9142,7 +9642,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0102",
+    "id": "v_0096",
     "word": "çağdaş",
     "tr": "çağdaş",
     "ar": "معاصر",
@@ -9157,7 +9657,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0103",
+    "id": "v_0097",
     "word": "soyut",
     "tr": "soyut",
     "ar": "مجرد",
@@ -9172,7 +9672,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0104",
+    "id": "v_0098",
     "word": "somut",
     "tr": "somut",
     "ar": "ملموس",
@@ -9187,7 +9687,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0105",
+    "id": "v_0099",
     "word": "deste",
     "tr": "deste",
     "ar": "باقة",
@@ -9202,7 +9702,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0106",
+    "id": "v_0100",
     "word": "papatya",
     "tr": "papatya",
     "ar": "أقحوان",
@@ -9217,7 +9717,67 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0107",
+    "id": "v_0101",
+    "word": "metodoloji",
+    "tr": "metodoloji",
+    "ar": "منهجية",
+    "en": "methodology",
+    "level": 5,
+    "category": "Akademik & Felsefe",
+    "sentence_tr": "Bilimsel araştırmalarda metodoloji esastır.",
+    "sentence_en": "Methodology is essential in scientific research.",
+    "sentence_ar": "المنهجية أساسية في البحوث العلمية.",
+    "pronunciation": "[metodoloji]",
+    "is_cognate": false,
+    "cognate_info": null
+  },
+  {
+    "id": "v_0102",
+    "word": "kavramsal",
+    "tr": "kavramsal",
+    "ar": "مفاهيمي",
+    "en": "conceptual",
+    "level": 5,
+    "category": "Akademik & Felsefe",
+    "sentence_tr": "Tezinde kavramsal çerçeveyi netleştirdi.",
+    "sentence_en": "He clarified the conceptual framework in his thesis.",
+    "sentence_ar": "أوضح الإطار المفاهيمي في أطروحته.",
+    "pronunciation": "[kavramsal]",
+    "is_cognate": false,
+    "cognate_info": null
+  },
+  {
+    "id": "v_0103",
+    "word": "analitik",
+    "tr": "analitik",
+    "ar": "تحليلي",
+    "en": "analytical",
+    "level": 5,
+    "category": "Akademik & Felsefe",
+    "sentence_tr": "Analitik düşünme yeteneği başarının anahtarıdır.",
+    "sentence_en": "Analytical thinking ability is the key to success.",
+    "sentence_ar": "قدرة التفكير التحليلي هي مفتاح النجاح.",
+    "pronunciation": "[analitik]",
+    "is_cognate": false,
+    "cognate_info": null
+  },
+  {
+    "id": "v_0104",
+    "word": "sentezlemek",
+    "tr": "sentezlemek",
+    "ar": "تجميع / تركيب",
+    "en": "to synthesize",
+    "level": 5,
+    "category": "Akademik & Felsefe",
+    "sentence_tr": "Farklı görüşleri sentezleyerek yeni bir teori geliştirdi.",
+    "sentence_en": "He developed a new theory by synthesizing different views.",
+    "sentence_ar": "طور نظرية جديدة من خلال تجميع الآراء المختلفة.",
+    "pronunciation": "[sentezlemek]",
+    "is_cognate": false,
+    "cognate_info": null
+  },
+  {
+    "id": "v_0105",
     "word": "gözlük",
     "tr": "gözlük",
     "ar": "نظارات",
@@ -9232,7 +9792,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0108",
+    "id": "v_0106",
     "word": "gözcü",
     "tr": "gözcü",
     "ar": "fenni gözlükçü",
@@ -9247,7 +9807,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0109",
+    "id": "v_0107",
     "word": "bilgili",
     "tr": "bilgili",
     "ar": "ذو معرفة",
@@ -9262,7 +9822,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0110",
+    "id": "v_0108",
     "word": "bilgisayar",
     "tr": "bilgisayar",
     "ar": "حاسوب",
@@ -9277,7 +9837,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0111",
+    "id": "v_0109",
     "word": "sevgili",
     "tr": "sevgili",
     "ar": "محبوب",
@@ -9292,7 +9852,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0112",
+    "id": "v_0110",
     "word": "sevgisiz",
     "tr": "sevgisiz",
     "ar": "خالي من الحب",
@@ -9307,7 +9867,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0113",
+    "id": "v_0111",
     "word": "saygılı",
     "tr": "saygılı",
     "ar": "محترم",
@@ -9322,7 +9882,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0114",
+    "id": "v_0112",
     "word": "saygısız",
     "tr": "saygısız",
     "ar": "غير محترم",
@@ -9337,7 +9897,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0115",
+    "id": "v_0113",
     "word": "güvenli",
     "tr": "güvenli",
     "ar": "آمن",
@@ -9352,7 +9912,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0116",
+    "id": "v_0114",
     "word": "güvensiz",
     "tr": "güvensiz",
     "ar": "غير آمن",
@@ -9367,7 +9927,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0117",
+    "id": "v_0115",
     "word": "başarılı",
     "tr": "başarılı",
     "ar": "ناجح",
@@ -9382,7 +9942,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0118",
+    "id": "v_0116",
     "word": "başarısız",
     "tr": "başarısız",
     "ar": "فاشل",
@@ -9397,7 +9957,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0119",
+    "id": "v_0117",
     "word": "sağlıklı",
     "tr": "sağlıklı",
     "ar": "صحي",
@@ -9412,7 +9972,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0120",
+    "id": "v_0118",
     "word": "sağlıksız",
     "tr": "sağlıksız",
     "ar": "غير صحي",
@@ -9427,7 +9987,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0121",
+    "id": "v_0119",
     "word": "dostluk",
     "tr": "dostluk",
     "ar": "صداقة",
@@ -9442,7 +10002,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0122",
+    "id": "v_0120",
     "word": "dostça",
     "tr": "dostça",
     "ar": "بشكل ودي",
@@ -9457,7 +10017,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0123",
+    "id": "v_0121",
     "word": "bilimsel",
     "tr": "bilimsel",
     "ar": "علمي",
@@ -9472,7 +10032,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0124",
+    "id": "v_0122",
     "word": "biliminsanı",
     "tr": "biliminsanı",
     "ar": "عالم",
@@ -9487,7 +10047,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0125",
+    "id": "v_0123",
     "word": "toplumsal",
     "tr": "toplumsal",
     "ar": "مجتمعي",
@@ -9502,7 +10062,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0126",
+    "id": "v_0124",
     "word": "toplumcu",
     "tr": "toplumcu",
     "ar": "اجتماعي",
@@ -9517,7 +10077,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0127",
+    "id": "v_0125",
     "word": "akıllı",
     "tr": "akıllı",
     "ar": "عاقل",
@@ -9532,7 +10092,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0128",
+    "id": "v_0126",
     "word": "akılsız",
     "tr": "akılsız",
     "ar": "عديم العقل",
@@ -9547,7 +10107,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0129",
+    "id": "v_0127",
     "word": "şekerli",
     "tr": "şekerli",
     "ar": "محلى",
@@ -9562,7 +10122,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0130",
+    "id": "v_0128",
     "word": "şekersiz",
     "tr": "şekersiz",
     "ar": "بدون سكر",
@@ -9577,7 +10137,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0131",
+    "id": "v_0129",
     "word": "tuzlu",
     "tr": "tuzlu",
     "ar": "مالح",
@@ -9592,7 +10152,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0132",
+    "id": "v_0130",
     "word": "tuzsuz",
     "tr": "tuzsuz",
     "ar": "بدون ملح",
@@ -9607,7 +10167,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0133",
+    "id": "v_0131",
     "word": "evli",
     "tr": "evli",
     "ar": "متزوج",
@@ -9622,7 +10182,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0134",
+    "id": "v_0132",
     "word": "evsiz",
     "tr": "evsiz",
     "ar": "أعزب",
@@ -9637,7 +10197,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0135",
+    "id": "v_0133",
     "word": "işçi",
     "tr": "işçi",
     "ar": "عامل",
@@ -9652,7 +10212,7 @@ const learningDatabase = {
     "cognate_info": null
   },
   {
-    "id": "v_0136",
+    "id": "v_0134",
     "word": "işsiz",
     "tr": "işsiz",
     "ar": "عاطل عن العمل",

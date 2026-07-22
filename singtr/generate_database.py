@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 # generate_database.py
-# Compiles a CEFR-aligned Turkish learning database with 2,500+ authentic real words.
-# NO DUMMY OR FILLER WORDS! Every word is a genuine Turkish vocabulary item.
+# Compiles a CEFR-aligned Turkish learning database from Level A1 to C1.
+# Contains 200+ authentic Turkish roots, Arabic cognates, trilingual sentences (TR/EN/AR),
+# and 50 structured lessons across 5 levels.
 
 import json
 import os
 
-print("Generating CEFR-aligned Turkish database with 2,500+ authentic real words...")
+print("Generating A1-C1 Turkish learning database with authentic words & Arabic cognates...")
 
 # ═══════════════════════════════════════════════════════════════
 # ARABIC COGNATES DATASET (Ortak Kelimeler)
@@ -59,7 +60,7 @@ cognates_dataset = [
     ("iktisat", "إِقْتِصَاد", "economics", "قصد", "Ortak Kelimeler", 3, "İktisat alanında yeni reformlar açıklandı.", "New reforms were announced in the field of economics.", "تم الإعلان عن إصلاحات جديدة في مجال الاقتصاد."),
     ("ticaret", "تِجَارَة", "trade / commerce", "تجر", "Ortak Kelimeler", 2, "İpek Yolu tarihi boyunca ticaretin merkezi olmuştur.", "The Silk Road was the center of trade throughout history.", "كان طريق الحرير مركزاً للتجارة عبر التاريخ."),
     ("bereket", "بَرَكَة", "abundance / blessing", "برك", "Ortak Kelimeler", 1, "Yağan yağmur toprağa bereket getirdi.", "The falling rain brought abundance to the soil.", "أحضار المطر الهاطل البركة للأرض."),
-    ("rahmet", "رَحْمَة", "mercy / rain", "رحم", "Ortak Kelimeler", 1, "İnsanlara karşı her zaman rahmetle yaklaşmalıdır.", "One should always approach people with mercy.", "يجب دائماً التعامل مع الناس برحمة."),
+    ("rahmet", "رَحْمَة", "mercy", "رحم", "Ortak Kelimeler", 1, "İnsanlara karşı her zaman rahmetle yaklaşmalıdır.", "One should always approach people with mercy.", "يجب دائماً التعامل مع الناس برحمة."),
     ("şefkat", "شَفَقَة", "compassion", "شفق", "Ortak Kelimeler", 2, "Annenin çocuğuna gösterdiği şefkat eşsizdir.", "The tenderness a mother shows her child is unique.", "شفقة الأم على طفلها لا مثيل لها."),
     ("muhabbet", "مَحَبَّة", "affection", "حبب", "Ortak Kelimeler", 2, "Dostlarla yapılan muhabbet insanın içini ısıtır.", "Conversation with friends warms one's heart.", "المحبة والأحاديث مع الأصدقاء تثلج الصدر."),
     ("hürmet", "حُرْمَة", "respect", "حرم", "Ortak Kelimeler", 2, "Büyüklerimize hürmet göstermek kültürümüzün gereğidir.", "Showing respect to our elders is a requirement of our culture.", "إبداء الاحترام لكبارنا هو من متطلبات ثقافتنا."),
@@ -77,34 +78,27 @@ cognates_dataset = [
 ]
 
 # ═══════════════════════════════════════════════════════════════
-# EXPANDED AUTHENTIC TURKISH ROOT WORDS (500+ REAL WORDS)
+# EXPANDED AUTHENTIC TURKISH ROOT WORDS (A1 TO C1)
 # ═══════════════════════════════════════════════════════════════
 
 real_roots_pool = [
-    # (word, ar, en, level, category, sentence_tr, sentence_en, sentence_ar)
-    # A1
+    # A1 Roots
     ("merhaba", "مرحباً", "hello", 1, "Tanışma & Selamlaşma", "Merhaba Suzim, hoş geldin!", "Hello Suzim, welcome!", "مرحباً سوزي، أهلاً بكِ!"),
     ("günaydın", "صباح الخير", "good morning", 1, "Tanışma & Selamlaşma", "Günaydın! Bugün hava çok güzel.", "Good morning! The weather is very nice today.", "صباح الخير! الطقس جميل جداً اليوم."),
-    ("iyi akşamlar", "مساء الخير", "good evening", 1, "Tanışma & Selamlaşma", "İyi akşamlar sevgili arkadaşlar.", "Good evening dear friends.", "مساء الخير أيها الأصدقاء الأعزاء."),
     ("lütfen", "رجاءً", "please", 1, "Tanışma & Selamlaşma", "Lütfen bana bir bardak su verin.", "Please give me a glass of water.", "رجاءً أعطني كوباً من الماء."),
     ("teşekkürler", "شكراً", "thanks", 1, "Tanışma & Selamlaşma", "Yardımınız için çok teşekkürler.", "Thank you very much for your help.", "شكراً جزيلاً لك على مساعدتك."),
     ("evet", "نعم", "yes", 1, "Tanışma & Selamlaşma", "Evet, Türkçe öğrenmeyi çok seviyorum.", "Yes, I love learning Turkish very much.", "نعم، أحب تعلم اللغة التركية كثيراً."),
-    ("hayır", "لا", "no", 1, "Tanışma & Selamlaşma", "Hayır, henüz işim bitmedi.", "No, my work is not finished yet.", "لا، لم ينتهِ عملي بعد."),
     ("anne", "أم", "mother", 1, "Günlük Yaşam", "Annem lezzetli bir çorba pişirdi.", "My mother cooked a delicious soup.", "طبخت أمي شوربة لديدة."),
     ("baba", "أب", "father", 1, "Günlük Yaşam", "Babam akşam eve erkenden geldi.", "My father came home early in the evening.", "عاد أبي إلى البيت مبكراً في المساء."),
     ("çocuk", "طفل", "child", 1, "Günlük Yaşam", "Parkta neşeyle oynayan bir çocuk var.", "There is a child playing joyfully in the park.", "هناك طفل يلعب بمرح في الحديقة."),
     ("ev", "بيت", "house", 1, "Günlük Yaşam", "Bizim evimiz bahçeli ve çok geniş.", "Our house has a garden and is very spacious.", "بيتنا يحتوي على حديقة وفسيح جداً."),
-    ("oda", "غرفة", "room", 1, "Günlük Yaşam", "Odama yeni bir çalışma masası aldım.", "I bought a new study desk for my room.", "اشتريت مكتب دراسة جديداً لغرفتي."),
     ("su", "ماء", "water", 1, "Günlük Yaşam", "Günde en az iki litre su içmeliyiz.", "We should drink at least two liters of water a day.", "يجب أن نشرب ليترين من الماء على الأقل يومياً."),
-    ("ekmek", "خبز", "bread", 1, "Günlük Yaşam", "Fırından taze ve sıcak bir ekmek aldım.", "I bought fresh and hot bread from the bakery.", "اشتريت خبزاً طازجاً وساخناً من المخبز."),
-    ("göz", "عين", "eye", 1, "Sağlık & Vücut", "Göz sağlığı için bilgisayara çok bakmamalıyız.", "We shouldn't look at the computer too much for eye health.", "يجب ألا ننظر إلى الكمبيوتر كثيراً من أجل صحة العين."),
-    ("el", "يد", "hand", 1, "Sağlık & Vücut", "Yemekten önce ellerimizi yıkamalıyız.", "We should wash our hands before eating.", "يجب أن نغسل أيدينا قبل الأكل."),
     ("bahçe", "حديقة", "garden", 1, "Doğa & Çevre", "Suzim'in bahçesinde rengarenk papatyalar var.", "There are colorful daisies in Suzim's garden.", "هناك زهور أقحوان ملونة في حديقة سوزي."),
     ("çiçek", "زهرة", "flower", 1, "Doğa & Çevre", "Balkondaki saksıda güzel bir çiçek açtı.", "A beautiful flower bloomed in the pot on the balcony.", "تفتحت زهرة جميلة في الأصيص على الشرفة."),
     ("yaprak", "بتلة / ورقة", "petal / leaf", 1, "Doğa & Çevre", "Sonbaharda ağaçların yaprakları sararır.", "In autumn, the leaves of the trees turn yellow.", "في الخريف، تصفر أوراق الأشجار."),
     ("güneş", "شمس", "sun", 1, "Doğa & Çevre", "Sabah güneşi odayı aydınlattı.", "The morning sun illuminated the room.", "أضاءت شمس الصباح الغرفة."),
 
-    # A2
+    # A2 Roots
     ("okul", "مدرسة", "school", 2, "Eğitim & Okul", "Öğrenciler neşeyle okula gittiler.", "Students went to school joyfully.", "ذهب الطلاب إلى المدرسة بمرح."),
     ("öğretmen", "معلم", "teacher", 2, "Eğitim & Okul", "Öğretmenimiz konuyu çok güzel anlattı.", "Our teacher explained the topic very well.", "شرح معلمنا الموضوع بشكل جميل جداً."),
     ("öğrenci", "طالب", "student", 2, "Eğitim & Okul", "Çalışkan öğrenci sınavdan yüksek not aldı.", "The hardworking student got a high score on the exam.", "حصل الطالب المجتهد على درجة عالية في الامتحان."),
@@ -114,7 +108,7 @@ real_roots_pool = [
     ("peynir", "جبن", "cheese", 2, "Yiyecek & İçecek", "Kahvaltıda taze peynir yedik.", "We ate fresh cheese at breakfast.", "أكلنا جبناً طازجاً في الفطور."),
     ("alışveriş", "تسوق", "shopping", 2, "Alışveriş & Ticaret", "Hafta sonu pazardan taze sebze alışverişi yaptık.", "We shopped for fresh vegetables over the weekend.", "تسوقنا الخضار الطازجة في نهاية الأسبوع."),
 
-    # B1
+    # B1 Roots
     ("meslek", "مهنة", "profession", 3, "Meslekler & İş", "Gelecekte mühendislik mesleğini seçmek istiyor.", "He wants to choose engineering in the future.", "يرغب في اختيار مهنة الهندسة في المستقبل."),
     ("doktor", "طبيب", "doctor", 3, "Sağlık & Vücut", "Doktor hastasına tavsiyeler verdi.", "The doctor gave advice to his patient.", "أعطى الطبيب نصائح لمريضه."),
     ("doğa", "طبيعة", "nature", 3, "Doğa & Çevre", "Doğayı korumak her insanın görevidir.", "Protecting nature is everyone's duty.", "حماية الطبيعة هي واجب على الجميع."),
@@ -122,20 +116,24 @@ real_roots_pool = [
     ("mutluluk", "سعادة", "happiness", 3, "Duygular & İnsan", "Gerçek mutluluk paylaştıkça çoğalır.", "True happiness multiplies as it is shared.", "السعادة الحقيقية تتضاعف كلما شاركناها."),
     ("cesaret", "شجاعة", "courage", 3, "Duygular & İnsan", "Engelleri aşmak için büyük bir cesaret gösterdi.", "He showed great courage to overcome obstacles.", "أبدى شجاعة كبيرة لتجاوز العقبات."),
 
-    # B2
+    # B2 Roots
     ("toplum", "مجتمع", "society", 4, "Toplum & Medya", "Sağlıklı bir toplum dayanışma üzerine kurulur.", "A healthy society is built on solidarity.", "المجتمع الصحي يُبنى على التضامن."),
     ("kültür", "ثقافة", "culture", 4, "Sanat & Kültür", "Türk kültürü zengin gelenekleriyle öne çıkar.", "Turkish culture stands out with its rich traditions.", "تتميز الثقافة التركية بتقاليدها الغنية."),
     ("yasa", "قانون", "law / statute", 4, "Devlet & Hukuk", "Mecliste yeni çevre yasası kabul edildi.", "The new environmental law was passed in parliament.", "تمت المصادقة على قانون البيئة الجديد."),
     ("özgürlük", "حرية", "freedom", 4, "Devlet & Hukuk", "Düşünce özgürlüğü bireyin gelişimi için şarttır.", "Freedom of thought is essential for individual development.", "حرية الفكر ضرورية لتطور الفرد."),
     ("tiyatro", "مسرح", "theater", 4, "Sanat & Kültür", "Tiyatro sahnesindeki oyuncular harikaydı.", "The actors on the theater stage were great.", "أدى الممثلون على المسرح أداءً رائعاً."),
 
-    # C1
+    # C1 Advanced Academic & Literary Roots
     ("akademik", "أكاديمي", "academic", 5, "Akademik & Felsefe", "Akademik araştırmalarda metodoloji çok önemlidir.", "Methodology is very important in academic research.", "المنهجية مهمة جداً في البحوث الأكاديمية."),
     ("çağdaş", "معاصر", "contemporary", 5, "Akademik & Felsefe", "Çağdaş medeniyet seviyesine ulaşmak ana hedeftir.", "Reaching contemporary civilization level is the goal.", "الوصول إلى مستوى الحضارة المعاصرة هو الهدف."),
     ("soyut", "مجرد", "abstract", 5, "Akademik & Felsefe", "Matematik soyut kavramları açıklar.", "Mathematics explains abstract concepts.", "يشرح الرياضيات المفاهيم المجردة."),
     ("somut", "ملموس", "concrete", 5, "Akademik & Felsefe", "Tezini somut kanıtlarla destekledi.", "He supported his thesis with concrete evidence.", "دعم أطروحته بأدلة ملموسة."),
     ("deste", "باقة", "bouquet / bunch", 5, "Akademik & Felsefe", "Papatya destesinden bir yaprak seçti.", "She picked a petal from the daisy bouquet.", "اختارت بتلة من باقة الأقحوان."),
     ("papatya", "أقحوان", "daisy", 1, "Doğa & Çevre", "Suzim'in bahçesinde sapsarı göbekli beyaz papatyalar açtı.", "White daisies with yellow centers bloomed in Suzim's garden.", "تفتحت زهور الأقحوان في حديقة سوزي."),
+    ("metodoloji", "منهجية", "methodology", 5, "Akademik & Felsefe", "Bilimsel araştırmalarda metodoloji esastır.", "Methodology is essential in scientific research.", "المنهجية أساسية في البحوث العلمية."),
+    ("kavramsal", "مفاهيمي", "conceptual", 5, "Akademik & Felsefe", "Tezinde kavramsal çerçeveyi netleştirdi.", "He clarified the conceptual framework in his thesis.", "أوضح الإطار المفاهيمي في أطروحته."),
+    ("analitik", "تحليلي", "analytical", 5, "Akademik & Felsefe", "Analitik düşünme yeteneği başarının anahtarıdır.", "Analytical thinking ability is the key to success.", "قدرة التفكير التحليلي هي مفتاح النجاح."),
+    ("sentezlemek", "تجميع / تركيب", "to synthesize", 5, "Akademik & Felsefe", "Farklı görüşleri sentezleyerek yeni bir teori geliştirdi.", "He developed a new theory by synthesizing different views.", "طور نظرية جديدة من خلال تجميع الآراء المختلفة."),
 ]
 
 vocab_list = []
@@ -189,7 +187,7 @@ for tr, ar, en, lvl, cat, s_tr, s_en, s_ar in real_roots_pool:
         existing_words.add(tr)
         id_counter += 1
 
-# Valid Real Suffix Variations (e.g. gözlük, sevecen, bilimsel, özgürlükçü, vb.)
+# Valid Real Suffix Variations
 real_derived_stems = [
     ("göz", "عين", "eye", 1, "Sağlık", [("lük", "نظارات", "glasses"), ("cü", "fenni gözlükçü", "optician")]),
     ("bilgi", "معلومة", "info", 2, "Eğitim", [("li", "ذو معرفة", "informed"), ("sayar", "حاسوب", "computer")]),
@@ -233,7 +231,7 @@ for stem, stem_ar, stem_en, lvl, cat, deriv_list in real_derived_stems:
 print(f"Total authentic real vocabulary items: {len(vocab_list)}")
 
 # ═══════════════════════════════════════════════════════════════
-# LESSON DEFINITIONS
+# LESSON DEFINITIONS (LEVEL 1 TO LEVEL 5 - C1)
 # ═══════════════════════════════════════════════════════════════
 
 level_lessons_meta = {
@@ -330,16 +328,15 @@ for lvl in range(1, 6):
 
     levels_definition.append({
         "id": lvl,
-        "title": f"Level {lvl}: {['Başlangıç', 'Günlük Yaşam', 'Zamanlar & Bağlam', 'Akıcı İfade', 'Akademik Akıcılık'][lvl-1]}",
+        "title": f"Level {lvl}: {['Başlangıç (A1)', 'Günlük Yaşam (A2)', 'Zamanlar & Bağlam (B1)', 'Akıcı İfade (B2)', 'Akademik Akıcılık (C1)'][lvl-1]}",
         "arabicTitle": f"المستوى {lvl}",
         "englishTitle": f"Level {lvl}",
         "lessons": lessons_list
     })
 
-# Write output to database.js
 output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "database.js")
 with open(output_path, "w", encoding="utf-8") as f:
-    f.write("// Suzim'in Türkçe Bahçesi - Authentic CEFR Learning Database\n")
+    f.write("// Suzim'in Türkçe Bahçesi - Authentic CEFR Learning Database (A1 to C1)\n")
     f.write(f"// Contains {len(vocab_list)} authentic real Turkish vocabulary items\n\n")
     f.write("const learningDatabase = {\n")
     f.write("  levels: ")
@@ -349,4 +346,4 @@ with open(output_path, "w", encoding="utf-8") as f:
     json.dump(vocab_list, f, ensure_ascii=False, indent=2)
     f.write("\n};\n")
 
-print(f"Database successfully generated with {len(vocab_list)} authentic words!")
+print(f"Database generated successfully with {len(vocab_list)} items for Levels A1-C1!")

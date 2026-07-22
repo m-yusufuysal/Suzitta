@@ -413,7 +413,7 @@ body {
 }
 
 .stat-value {
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--color-primary);
 }
@@ -685,6 +685,47 @@ main {
   font-size: 13px;
   font-weight: 600;
   color: var(--color-primary);
+}
+
+/* Lesson Quiz Button */
+.lesson-quiz-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  border-radius: var(--radius-pill);
+  border: 1.5px solid var(--color-accent);
+  background: var(--color-accent-light);
+  color: var(--color-primary-dark);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(242, 187, 5, 0.25);
+  transition: var(--transition-fluid);
+}
+
+.lesson-quiz-btn:hover {
+  transform: scale(1.05);
+  background: var(--color-accent);
+}
+
+.quiz-opt-btn {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid var(--color-border-subtle);
+  border-radius: var(--radius-zh-sm);
+  background: rgba(255, 255, 255, 0.9);
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  cursor: pointer;
+  transition: var(--transition-fluid);
+}
+
+.quiz-opt-btn:hover {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border-color: var(--color-primary);
 }
 
 /* Daisy Workspace Grid */

@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════
 // Suzim'in Türkçe Bahçesi - Core Application Logic
-// Trilingual (TR / EN / AR / ZH), Arabic Cognates, Mind Palace & Daisy Gamification
+// Trilingual (TR / EN / AR / ZH), Arabic Cognates, Mind Palace & Gamification
 // ═══════════════════════════════════════════════════════════════
 
 // Global App State
@@ -12,7 +12,8 @@ const appState = {
   selectedWord: null,
   bloomedWords: new Set(JSON.parse(localStorage.getItem("suzitta_bloomed_words") || "[]")),
   isMuted: false,
-  voiceSpeed: 0.85
+  voiceSpeed: 0.85,
+  yusufPoints: parseInt(localStorage.getItem("suzitta_yusuf_points") || "0")
 };
 
 // Interface Internationalization Dictionary (TR / EN / AR)
@@ -33,7 +34,7 @@ const i18n = {
     daisyHint: "Her kelime bir yapraktır. Yaprağa dokun, Zihin Sarayı görünümüyle öğren ve çiçeğini açtır!",
     inspectorEmptyTitle: "Bir Yaprak Seçin",
     inspectorEmptyDesc: "Papatyadan bir yaprağa dokunarak kelimenin anlamını, Zihin Sarayı tekniğini ve Arapça kökenini inceleyin.",
-    bloomBtnAction: "Yaprağı Açtır 🌼 (+5 XP)",
+    bloomBtnAction: "Yaprağı Açtır 🌼 (+5 Yusuf Puanı)",
     bloomedStateBtn: "Yaprak Çiçek Açtı 🌸",
     cognateTitle: "💡 Arapça - Türkçe Ortak Kelimeler (الكلمات المشتركة)",
     cognateDesc: "Suzim'in ana dili Arapça olduğu için Türkçe öğrenmek çok kolay! Türkçe'de Arapça ile ortak yüzlerce köklü kelime bulunur.",
@@ -43,7 +44,11 @@ const i18n = {
     wbTitle: "🗂️ Öğrendiğin Yapraklar & Kelimeler",
     wbSubtitle: "Papatya bahçende suladığın ve tamamen açan kelimeleriniz.",
     wbEmptyText: "Henüz kelime öğrenilmedi. Papatya yapraklarına dokunarak öğrenmeye başla!",
-    yusufWelcome: "Hoş geldin Suzim! 🌼 Zihin Sarayı tekniğiyle 3,500'den fazla kelimeyi kolayca öğren!"
+    yusufWelcome: "Hoş geldin Suzim! 🌼 Zihin Sarayı tekniğiyle 3,500'den fazla kelimeyi kolayca öğren!",
+    quizBtnLabel: "📝 Ders Testi & Quiz",
+    quizSuccessTitle: "Tebrikler Suzim! 🎉",
+    quizSuccessDesc: "Yusuf seninle gurur duyuyor! 🌟 Ders sınavını harika bir başarıyla geçtin!",
+    quizPointsEarned: "+25 Yusuf Puanı Kazandın! 🏅"
   },
   en: {
     brandTitle: "Suzim's Turkish Garden",
@@ -61,7 +66,7 @@ const i18n = {
     daisyHint: "Every word is a petal. Touch a petal to learn with Mind Palace visual scenes and bloom your flower!",
     inspectorEmptyTitle: "Select a Petal",
     inspectorEmptyDesc: "Touch a petal on the daisy to inspect meanings, Mind Palace visual mnemonics, and Arabic root notes.",
-    bloomBtnAction: "Bloom This Petal 🌼",
+    bloomBtnAction: "Bloom This Petal 🌼 (+5 Yusuf Points)",
     bloomedStateBtn: "Petal Bloomed 🌸",
     cognateTitle: "💡 Arabic - Turkish Shared Cognates",
     cognateDesc: "Since Suzim's native language is Arabic, learning Turkish is natural! Turkish shares hundreds of rooted words with Arabic.",
@@ -71,7 +76,11 @@ const i18n = {
     wbTitle: "🗂️ Mastered Words & Petals",
     wbSubtitle: "Words and petals you have bloomed in your garden.",
     wbEmptyText: "No petals bloomed yet. Touch daisy petals to start learning!",
-    yusufWelcome: "Welcome Suzim! 🌼 Master 3,500+ words easily using rich Mind Palace visual mnemonics!"
+    yusufWelcome: "Welcome Suzim! 🌼 Master 3,500+ words easily using rich Mind Palace visual mnemonics!",
+    quizBtnLabel: "📝 Lesson Quiz & Test",
+    quizSuccessTitle: "Congratulations Suzim! 🎉",
+    quizSuccessDesc: "Yusuf is so proud of you! 🌟 You passed the lesson quiz with flying colors!",
+    quizPointsEarned: "+25 Yusuf Points Earned! 🏅"
   },
   ar: {
     brandTitle: "بستان سوزي للغة التركية",
@@ -89,7 +98,7 @@ const i18n = {
     daisyHint: "كل كلمة هي بتلة. إلمس البتلة لتعلمها باستخدام تقنية قصر الذاكرة المصورة!",
     inspectorEmptyTitle: "اختر بتلة",
     inspectorEmptyDesc: "إلمس بتلة في الأقحوان لاستعراض المعنى وتقنية قصر الذاكرة وأصل الكلمة.",
-    bloomBtnAction: "افتح البتلة 🌼",
+    bloomBtnAction: "افتح البتلة 🌼 (+5 نقاط يوسف)",
     bloomedStateBtn: "تفتحت البتلة 🌸",
     cognateTitle: "💡 الكلمات المشتركة بين العربية والتركية",
     cognateDesc: "بما أن لغة سوزي الأم هي العربية، فتعلم التركية سهل للغاية! هناك مئات الكلمات المشتركة مع العربية.",
@@ -99,7 +108,11 @@ const i18n = {
     wbTitle: "🗂️ الكلمات والبتلات المكتسبة",
     wbSubtitle: "الكلمات والبتلات التي قمت بسقايتها وتفتيحها في بستانك.",
     wbEmptyText: "لم يتم تفتيح أي بتلات بعد. إلمس بتلات الأقحوان للبدء بالتعلم!",
-    yusufWelcome: "أهلاً بكِ يا سوزي! 🌼 احفظي أكثر من 3500 كلمة بسهولة باستخدام تقنية قصر الذاكرة المصورة!"
+    yusufWelcome: "أهلاً بكِ يا سوزي! 🌼 احفظي أكثر من 3500 كلمة بسهولة باستخدام تقنية قصر الذاكرة المصورة!",
+    quizBtnLabel: "📝 اختبار الدرس والتقييم",
+    quizSuccessTitle: "ألف مبروك يا سوزي! 🎉",
+    quizSuccessDesc: "يوسف فخور بكِ جداً! 🌟 لقد اجتزتِ اختبار الدرس بنجاح باهر!",
+    quizPointsEarned: "اكسبتِ +25 من نقاط يوسف! 🏅"
   }
 };
 
@@ -264,7 +277,7 @@ function renderCurrentView() {
   }
 }
 
-// Sidebar Level Selector (Explicit CEFR Labels: Level A1, Level A2, Level B1, Level B2, Level C1)
+// Sidebar Level Selector
 function initLevelSelector() {
   const levelsListContainer = document.getElementById("levels-list");
   levelsListContainer.innerHTML = "";
@@ -332,6 +345,19 @@ function openLessonWorkspace(lesson) {
   document.getElementById("ws-lesson-title").textContent = lesson.title;
   document.getElementById("ws-lesson-ar-title").textContent = lesson.arabicTitle;
 
+  // Add Lesson Quiz Button in Workspace Nav if not existing
+  const wsNav = document.querySelector(".workspace-nav-bar");
+  let quizBtn = document.getElementById("btn-lesson-quiz");
+  if (!quizBtn) {
+    quizBtn = document.createElement("button");
+    quizBtn.id = "btn-lesson-quiz";
+    quizBtn.className = "lesson-quiz-btn";
+    wsNav.appendChild(quizBtn);
+  }
+  const t = i18n[appState.currentLang] || i18n.tr;
+  quizBtn.innerHTML = `<span>📝</span> <span>${t.quizBtnLabel}</span>`;
+  quizBtn.onclick = () => launchLessonQuiz(lesson);
+
   renderDaisyFlower(lesson);
 
   document.getElementById("word-empty-view").style.display = "flex";
@@ -370,8 +396,6 @@ function renderDaisyFlower(lesson) {
     if (appState.bloomedWords.has(wordObj.word)) petal.classList.add("bloomed");
     if (wordObj.is_cognate) petal.classList.add("is-cognate");
 
-    // Pure Absolute Position calculation: left and top from canvas center (50% = 220px)
-    // Width is 110px (half 55px), Height is 44px (half 22px)
     petal.style.left = `calc(50% + ${x}px - 55px)`;
     petal.style.top = `calc(50% + ${y}px - 22px)`;
     petal.textContent = wordObj.word;
@@ -460,16 +484,93 @@ function renderWordInspector(wordObj, petalElement) {
   document.getElementById("btn-bloom-petal").addEventListener("click", () => {
     if (!appState.bloomedWords.has(wordObj.word)) {
       appState.bloomedWords.add(wordObj.word);
+      appState.yusufPoints += 5;
       localStorage.setItem("suzitta_bloomed_words", JSON.stringify(Array.from(appState.bloomedWords)));
+      localStorage.setItem("suzitta_yusuf_points", appState.yusufPoints.toString());
 
       if (petalElement) petalElement.classList.add("bloomed");
-      speakText(`Tebrikler Suzim! ${wordObj.word} kelimesini öğrendin.`);
+      speakText(`Tebrikler Suzim! ${wordObj.word} kelimesini öğrendin. 5 Yusuf Puanı kazandın.`);
 
       renderDaisyFlower(appState.activeLesson);
       updateGlobalStats();
       renderWordInspector(wordObj, petalElement);
     }
   });
+}
+
+// Interactive Lesson Quiz System with Yusuf Pride Celebration Modal
+function launchLessonQuiz(lesson) {
+  const t = i18n[appState.currentLang] || i18n.tr;
+  const questions = lesson.vocabulary.slice(0, 3).map(wordObj => {
+    const wrong1 = learningDatabase.vocabularyBank[(Math.floor(Math.random() * learningDatabase.vocabularyBank.length))].en;
+    const wrong2 = learningDatabase.vocabularyBank[(Math.floor(Math.random() * learningDatabase.vocabularyBank.length))].en;
+    const options = [wordObj.en, wrong1, wrong2].sort(() => Math.random() - 0.5);
+
+    return {
+      word: wordObj.word,
+      correct: wordObj.en,
+      options: options
+    };
+  });
+
+  let currentQ = 0;
+  let score = 0;
+
+  const quizBackdrop = document.createElement("div");
+  quizBackdrop.className = "welcome-modal-backdrop";
+  quizBackdrop.id = "quiz-modal-backdrop";
+
+  const quizCard = document.createElement("div");
+  quizCard.className = "welcome-glass-card";
+
+  const renderQuestion = () => {
+    if (currentQ >= questions.length) {
+      // Quiz Finished! Trigger Yusuf Pride Celebration
+      appState.yusufPoints += 25;
+      localStorage.setItem("suzitta_yusuf_points", appState.yusufPoints.toString());
+      updateGlobalStats();
+
+      speakText(`Tebrikler Suzim! Yusuf seninle gurur duyuyor!`);
+
+      quizCard.innerHTML = `
+        <div class="welcome-flower-icon">🎉</div>
+        <h2>${t.quizSuccessTitle}</h2>
+        <p style="font-size: 16px; font-weight: 600; color: var(--color-primary); margin: 12px 0;">${t.quizSuccessDesc}</p>
+        <div class="welcome-intro-box" style="background: var(--color-accent-light); border-color: var(--color-accent);">
+          <strong style="font-size: 18px; color: var(--color-primary-dark);">${t.quizPointsEarned}</strong>
+        </div>
+        <button class="welcome-start-btn" id="btn-close-quiz">Tamam & Bahçeye Dön 🌼</button>
+      `;
+
+      document.getElementById("btn-close-quiz").onclick = () => {
+        quizBackdrop.remove();
+      };
+      return;
+    }
+
+    const qData = questions[currentQ];
+    quizCard.innerHTML = `
+      <div style="font-size: 13px; font-weight: 700; color: var(--color-secondary);">Soru ${currentQ + 1} / ${questions.length}</div>
+      <h3 style="font-size: 24px; color: var(--color-primary); margin: 10px 0;">"${qData.word}" kelimesinin İngilizce karşılığı nedir?</h3>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin: 20px 0;">
+        ${qData.options.map(opt => `
+          <button class="quiz-opt-btn" data-val="${opt}">${opt}</button>
+        `).join('')}
+      </div>
+    `;
+
+    quizCard.querySelectorAll(".quiz-opt-btn").forEach(btn => {
+      btn.onclick = () => {
+        if (btn.dataset.val === qData.correct) score++;
+        currentQ++;
+        renderQuestion();
+      };
+    });
+  };
+
+  quizBackdrop.appendChild(quizCard);
+  document.body.appendChild(quizBackdrop);
+  renderQuestion();
 }
 
 function renderCognatesView() {
@@ -569,7 +670,7 @@ function updateGlobalStats() {
   const totalBloomed = appState.bloomedWords.size;
   const totalVocab = learningDatabase.vocabularyBank.length;
 
-  document.getElementById("bloomed-petals-count").textContent = `${totalBloomed} Yaprak`;
+  document.getElementById("bloomed-petals-count").textContent = `${totalBloomed} Yaprak (${appState.yusufPoints} Yusuf Puanı)`;
 
   const percent = Math.min(100, Math.round((totalBloomed / totalVocab) * 100));
   document.getElementById("progress-percent").textContent = `${percent}%`;

@@ -338,7 +338,7 @@ function openLessonWorkspace(lesson) {
   document.getElementById("word-card-detail").style.display = "none";
 }
 
-// Render Daisy Flower Radial Canvas
+// Render Daisy Flower Radial Canvas with fixed --x, --y coordinates
 function renderDaisyFlower(lesson) {
   const canvas = document.getElementById("daisy-flower-canvas");
   canvas.innerHTML = "";
@@ -361,18 +361,22 @@ function renderDaisyFlower(lesson) {
   const radius = 150;
   lesson.vocabulary.forEach((wordObj, idx) => {
     const angle = (idx / total) * (2 * Math.PI) - (Math.PI / 2);
-    const x = Math.cos(angle) * radius;
-    const y = Math.sin(angle) * radius;
+    const x = Math.round(Math.cos(angle) * radius);
+    const y = Math.round(Math.sin(angle) * radius);
 
     const petal = document.createElement("div");
     petal.className = "daisy-petal-item";
     if (appState.bloomedWords.has(wordObj.word)) petal.classList.add("bloomed");
     if (wordObj.is_cognate) petal.classList.add("is-cognate");
 
+    // Pass coordinates to CSS custom variables to prevent translation jumps on click
+    petal.style.setProperty("--x", `${x}px`);
+    petal.style.setProperty("--y", `${y}px`);
     petal.style.transform = `translate(${x}px, ${y}px)`;
     petal.textContent = wordObj.word;
 
-    petal.addEventListener("click", () => {
+    petal.addEventListener("click", (e) => {
+      e.stopPropagation();
       document.querySelectorAll(".daisy-petal-item").forEach(p => p.classList.remove("selected"));
       petal.classList.add("selected");
       appState.selectedWord = wordObj;

@@ -746,12 +746,13 @@ main {
   color: #FFFFFF;
   text-align: center;
   padding: 8px;
+  user-select: none;
 }
 
 .flower-center-core span.icon { font-size: 28px; }
 .flower-center-core span.lbl { font-size: 11px; font-weight: 700; line-height: 1.1; }
 
-/* Organic Teardrop Daisy Petal Component */
+/* Organic Teardrop Daisy Petal Component - Fixed Radial Position Rules */
 .daisy-petal-item {
   position: absolute;
   width: 110px;
@@ -765,7 +766,7 @@ main {
   justify-content: center;
   padding: 4px 10px;
   cursor: pointer;
-  transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s, border-color 0.3s, box-shadow 0.3s;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
   z-index: 2;
   font-size: 13px;
@@ -773,23 +774,21 @@ main {
   color: var(--color-text-main);
   text-align: center;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  user-select: none;
 }
 
+/* Hover, Selected and Bloomed States maintaining --x and --y radial coordinates */
 .daisy-petal-item:hover {
-  transform: scale(1.16) !important;
+  transform: translate(var(--x), var(--y)) scale(1.15) !important;
   border-color: var(--color-primary);
   background: #FFFFFF;
   z-index: 10;
 }
 
-/* Pluck & Bloom Animations */
 .daisy-petal-item.selected {
   border-color: var(--color-primary);
   box-shadow: 0 0 22px rgba(45, 90, 39, 0.45);
-  transform: scale(1.22) rotate(-6deg) !important;
-  animation: leafPluck 0.5s ease-out;
+  transform: translate(var(--x), var(--y)) scale(1.22) rotate(-6deg) !important;
   z-index: 10;
 }
 
@@ -798,19 +797,6 @@ main {
   border-color: var(--color-accent);
   color: var(--color-primary-dark);
   box-shadow: 0 0 26px rgba(242, 187, 5, 0.75);
-  animation: leafBloomSparkle 0.6s ease-out;
-}
-
-@keyframes leafPluck {
-  0% { transform: scale(1) rotate(0deg); }
-  50% { transform: scale(1.28) rotate(-12deg) translateY(-8px); }
-  100% { transform: scale(1.22) rotate(-6deg) translateY(-4px); }
-}
-
-@keyframes leafBloomSparkle {
-  0% { transform: scale(1); filter: brightness(1); }
-  50% { transform: scale(1.32) rotate(8deg); filter: brightness(1.4) drop-shadow(0 0 28px rgba(242, 187, 5, 0.95)); }
-  100% { transform: scale(1.15); filter: brightness(1) drop-shadow(0 0 20px rgba(242, 187, 5, 0.75)); }
 }
 
 .daisy-petal-item.is-cognate::after {
@@ -821,7 +807,7 @@ main {
   font-size: 12px;
 }
 
-/* Word Inspector Card & Mind Palace Card */
+/* Word Inspector Card */
 .daisy-word-inspector {
   border-radius: var(--radius-zh-lg);
   padding: 28px;

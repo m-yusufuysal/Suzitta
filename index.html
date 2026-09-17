@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Suzim'in Türkçe Bahçesi - Learn Turkish (TR / EN / AR / ZH)</title>
-  <link rel="stylesheet" href="styles.css?v=3518_v5">
+  <link rel="stylesheet" href="styles.css?v=3518_v6">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
@@ -201,8 +201,21 @@
             <!-- Left: Interactive Daisy Flower Canvas -->
             <div class="daisy-flower-card liquid-glass-card">
               <div class="daisy-flower-header">
-                <h4 id="ui-daisy-canvas-title">🌸 Papatya Çiçeği & Yapraklar</h4>
-                <p id="ui-daisy-canvas-hint">Her kelime bir yapraktır. Yaprağa dokun, öğren ve çiçeğini açtır!</p>
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%; flex-wrap: wrap; gap: 8px;">
+                  <div>
+                    <h4 id="ui-daisy-canvas-title">🌸 Papatya Çiçeği & Yapraklar</h4>
+                    <p id="ui-daisy-canvas-hint">Her kelime bir yapraktır. Yaprağa dokun, öğren ve çiçeğini açtır!</p>
+                  </div>
+                  
+                  <div class="daisy-view-controls" id="daisy-view-controls">
+                    <div class="daisy-mode-toggle-group">
+                      <button class="daisy-mode-btn active" id="btn-mode-flower" title="Papatya Çiçeği Görünümü">🌸 Çiçek</button>
+                      <button class="daisy-mode-btn" id="btn-mode-grid" title="Izgara Liste Görünümü">📋 Liste</button>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="daisy-pagination-bar" id="daisy-pagination-bar" style="display: none;"></div>
               </div>
 
               <!-- Central Daisy Flower SVG Visualizer -->
@@ -391,7 +404,7 @@
     </button>
   </nav>
 
-  <script src="database.js?v=3518_v5"></script>
-  <script src="app.js?v=3518_v5"></script>
+  <script src="database.js?v=3518_v6"></script>
+  <script src="app.js?v=3518_v6"></script>
 </body>
 </html>

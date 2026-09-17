@@ -382,10 +382,14 @@ function openLessonWorkspace(lesson) {
   document.getElementById("word-card-detail").style.display = "none";
 }
 
-// Render Daisy Flower Radial Canvas using Responsive Dual-Ring Calc Positioning
+// Render Daisy Flower Canvas (Multi-Ring Staggered Engine + Grid Mode + Pagination)
+appState.daisyViewMode = appState.daisyViewMode || "flower";
+appState.daisyPage = 1;
+
 function renderDaisyFlower(lesson) {
   const canvas = document.getElementById("daisy-flower-canvas");
   canvas.innerHTML = "";
+  canvas.className = `daisy-flower-canvas mode-${appState.daisyViewMode}`;
 
   const total = lesson.vocabulary.length;
   const bloomedCount = lesson.vocabulary.filter(w => appState.bloomedWords.has(w.word)).length;
@@ -393,7 +397,133 @@ function renderDaisyFlower(lesson) {
   document.getElementById("ws-bloomed-count").textContent = bloomedCount;
   document.getElementById("ws-total-count").textContent = total;
 
-  // Center Flower Core
+  // View Mode Switcher buttons
+  const btnFlower = document.getElementById("btn-mode-flower");
+  const btnGrid = document.getElementById("btn-mode-grid");
+
+  if (btnFlower && btnGrid) {
+    btnFlower.classList.toggle("active", appState.daisyViewMode === "flower");
+    btnGrid.classList.toggle("active", appState.daisyViewMode === "grid");
+
+    btnFlower.onclick = () => {
+      appState.daisyViewMode = "flower";
+      renderDaisyFlower(lesson);
+    };
+    btnGrid.onclick = () => {
+      appState.daisyViewMode = "grid";
+      renderDaisyFlower(lesson);
+    };
+  }
+
+  // Handle Pagination for large lessons (> 18 words)
+  const pageSize = 16;
+  const totalPages = Math.ceil(total / pageSize);
+  const paginationBar = document.getElementById("daisy-pagination-bar");
+
+  if (totalPages > 1) {
+    paginationBar.style.display = "flex";
+    paginationBar.innerHTML = "";
+
+    const prevBtn = document.createElement("button");
+    prevBtn.className = "page-num-btn";
+    prevBtn.textContent = "◀";
+    prevBtn.disabled = appState.daisyPage === 1;
+    prevBtn.onclick = () => {
+      if (appState.daisyPage > 1) {
+        appState.daisyPage--;
+        renderDaisyFlower(lesson);
+      }
+    };
+    paginationBar.appendChild(prevBtn);
+
+    for (let p = 1; p <= totalPages; p++) {
+      const pageBtn = document.createElement("button");
+      pageBtn.className = `page-num-btn ${p === appState.daisyPage ? "active" : ""}`;
+      const startNum = (p - 1) * pageSize + 1;
+      const endNum = Math.min(total, p * pageSize);
+      pageBtn.textContent = `${startNum}-${endNum}`;
+      pageBtn.onclick = () => {
+        appState.daisyPage = p;
+        renderDaisyFlower(lesson);
+      };
+      paginationBar.appendChild(pageBtn);
+    }
+
+    const allBtn = document.createElement("button");
+    allBtn.className = `page-num-btn ${appState.daisyPage === 0 ? "active" : ""}`;
+    allBtn.textContent = `Tümü (${total})`;
+    allBtn.onclick = () => {
+      appState.daisyPage = 0;
+      renderDaisyFlower(lesson);
+    };
+    paginationBar.appendChild(allBtn);
+
+    const nextBtn = document.createElement("button");
+    nextBtn.className = "page-num-btn";
+    nextBtn.textContent = "▶";
+    nextBtn.disabled = appState.daisyPage === totalPages || appState.daisyPage === 0;
+    nextBtn.onclick = () => {
+      if (appState.daisyPage < totalPages && appState.daisyPage !== 0) {
+        appState.daisyPage++;
+        renderDaisyFlower(lesson);
+      }
+    };
+    paginationBar.appendChild(nextBtn);
+  } else {
+    paginationBar.style.display = "none";
+    appState.daisyPage = 1;
+  }
+
+  let currentSlice = lesson.vocabulary;
+  if (appState.daisyPage > 0 && totalPages > 1 && appState.daisyViewMode === "flower") {
+    const startIndex = (appState.daisyPage - 1) * pageSize;
+    currentSlice = lesson.vocabulary.slice(startIndex, startIndex + pageSize);
+  }
+
+  // MODE A: GRID / LIST VIEW (100% Non-overlapping clean list)
+  if (appState.daisyViewMode === "grid") {
+    canvas.style.minHeight = "360px";
+    canvas.style.height = "auto";
+    canvas.style.display = "grid";
+    canvas.style.gridTemplateColumns = "repeat(auto-fill, minmax(130px, 1fr))";
+    canvas.style.gap = "10px";
+    canvas.style.padding = "16px";
+    canvas.style.alignContent = "start";
+
+    currentSlice.forEach((wordObj) => {
+      const petal = document.createElement("div");
+      petal.className = "daisy-petal-item grid-style";
+      if (appState.bloomedWords.has(wordObj.word)) petal.classList.add("bloomed");
+      if (wordObj.is_cognate) petal.classList.add("is-cognate");
+
+      petal.innerHTML = `
+        <span class="petal-icon">${appState.bloomedWords.has(wordObj.word) ? '🌸' : (wordObj.is_cognate ? '💡' : '🌼')}</span>
+        <span class="petal-label" title="${wordObj.word}">${wordObj.word}</span>
+      `;
+
+      petal.addEventListener("click", (e) => {
+        e.stopPropagation();
+        document.querySelectorAll(".daisy-petal-item").forEach(p => p.classList.remove("selected"));
+        petal.classList.add("selected");
+        appState.selectedWord = wordObj;
+        renderWordInspector(wordObj, petal);
+
+        if (window.innerWidth <= 768) {
+          const detailCard = document.getElementById("word-card-detail");
+          if (detailCard) detailCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+
+      canvas.appendChild(petal);
+    });
+    return;
+  }
+
+  // MODE B: RADIAL FLOWER VIEW (Concentric Multi-Ring Positioning Engine)
+  canvas.style.minHeight = "";
+  canvas.style.height = "";
+  canvas.style.display = "block";
+
   const core = document.createElement("div");
   core.className = "flower-center-core";
   core.innerHTML = `
@@ -402,48 +532,96 @@ function renderDaisyFlower(lesson) {
   `;
   canvas.appendChild(core);
 
-  // Responsive radius & dual-ring layout calculation
   const isMobile = window.innerWidth <= 600;
-  const baseOuterRadius = isMobile ? 125 : (total > 16 ? 175 : 155);
-  const baseInnerRadius = isMobile ? 75 : 110;
+  const sliceCount = currentSlice.length;
 
-  lesson.vocabulary.forEach((wordObj, idx) => {
-    let radius = baseOuterRadius;
-    if (total > 14) {
-      radius = (idx % 2 === 0) ? baseOuterRadius : baseInnerRadius;
-    }
+  let rings = [];
+  if (sliceCount <= 12) {
+    rings = [
+      { count: sliceCount, radius: isMobile ? 125 : 155, startAngle: -Math.PI / 2 }
+    ];
+  } else if (sliceCount <= 20) {
+    rings = [
+      { count: Math.ceil(sliceCount * 0.45), radius: isMobile ? 80 : 105, startAngle: -Math.PI / 2 },
+      { count: Math.floor(sliceCount * 0.55), radius: isMobile ? 135 : 175, startAngle: -Math.PI / 2 + 0.2 }
+    ];
+  } else if (sliceCount <= 36) {
+    const r1 = Math.ceil(sliceCount * 0.25);
+    const r2 = Math.ceil(sliceCount * 0.35);
+    const r3 = sliceCount - r1 - r2;
+    rings = [
+      { count: r1, radius: isMobile ? 70 : 90, startAngle: -Math.PI / 2 },
+      { count: r2, radius: isMobile ? 115 : 145, startAngle: -Math.PI / 2 + 0.15 },
+      { count: r3, radius: isMobile ? 160 : 205, startAngle: -Math.PI / 2 + 0.3 }
+    ];
+  } else {
+    const r1 = 8;
+    const r2 = 14;
+    const r3 = 18;
+    const r4 = sliceCount - r1 - r2 - r3;
+    rings = [
+      { count: r1, radius: isMobile ? 65 : 85, startAngle: -Math.PI / 2 },
+      { count: r2, radius: isMobile ? 105 : 135, startAngle: -Math.PI / 2 + 0.1 },
+      { count: r3, radius: isMobile ? 145 : 185, startAngle: -Math.PI / 2 + 0.2 },
+      { count: r4, radius: isMobile ? 185 : 235, startAngle: -Math.PI / 2 + 0.3 }
+    ];
+  }
 
-    const angle = (idx / total) * (2 * Math.PI) - (Math.PI / 2);
-    const x = Math.round(Math.cos(angle) * radius);
-    const y = Math.round(Math.sin(angle) * radius);
+  if (sliceCount > 24) {
+    canvas.style.width = isMobile ? "340px" : "500px";
+    canvas.style.height = isMobile ? "340px" : "500px";
+  } else {
+    canvas.style.width = "";
+    canvas.style.height = "";
+  }
 
-    const petal = document.createElement("div");
-    petal.className = "daisy-petal-item";
-    if (appState.bloomedWords.has(wordObj.word)) petal.classList.add("bloomed");
-    if (wordObj.is_cognate) petal.classList.add("is-cognate");
+  let itemIdx = 0;
+  rings.forEach(ring => {
+    const count = ring.count;
+    const radius = ring.radius;
+    const startAngle = ring.startAngle;
 
-    const offsetW = isMobile ? 42 : 55;
-    const offsetH = isMobile ? 18 : 22;
+    for (let i = 0; i < count; i++) {
+      if (itemIdx >= sliceCount) break;
+      const wordObj = currentSlice[itemIdx];
+      itemIdx++;
 
-    petal.style.left = `calc(50% + ${x}px - ${offsetW}px)`;
-    petal.style.top = `calc(50% + ${y}px - ${offsetH}px)`;
-    petal.textContent = wordObj.word;
+      const angle = startAngle + (i / count) * (2 * Math.PI);
+      const x = Math.round(Math.cos(angle) * radius);
+      const y = Math.round(Math.sin(angle) * radius);
 
-    petal.addEventListener("click", (e) => {
-      e.stopPropagation();
-      document.querySelectorAll(".daisy-petal-item").forEach(p => p.classList.remove("selected"));
-      petal.classList.add("selected");
-      appState.selectedWord = wordObj;
-      renderWordInspector(wordObj, petal);
+      const petal = document.createElement("div");
+      petal.className = "daisy-petal-item";
+      if (appState.bloomedWords.has(wordObj.word)) petal.classList.add("bloomed");
+      if (wordObj.is_cognate) petal.classList.add("is-cognate");
 
-      // On mobile screens, scroll down smoothly to word inspector detail card
-      if (window.innerWidth <= 768) {
-        const detailCard = document.getElementById("word-card-detail");
-        if (detailCard) detailCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      if (sliceCount > 20) {
+        petal.classList.add("compact-petal");
       }
-    });
 
-    canvas.appendChild(petal);
+      const offsetW = isMobile ? 38 : 50;
+      const offsetH = isMobile ? 16 : 20;
+
+      petal.style.left = `calc(50% + ${x}px - ${offsetW}px)`;
+      petal.style.top = `calc(50% + ${y}px - ${offsetH}px)`;
+      petal.textContent = wordObj.word;
+      petal.title = wordObj.word;
+
+      petal.addEventListener("click", (e) => {
+        e.stopPropagation();
+        document.querySelectorAll(".daisy-petal-item").forEach(p => p.classList.remove("selected"));
+        petal.classList.add("selected");
+        appState.selectedWord = wordObj;
+        renderWordInspector(wordObj, petal);
+
+        if (window.innerWidth <= 768) {
+          const detailCard = document.getElementById("word-card-detail");
+          if (detailCard) detailCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      });
+
+      canvas.appendChild(petal);
+    }
   });
 }
 

@@ -24,6 +24,7 @@ const i18n = {
     navGarden: "Papatya Bahçem",
     navCognates: "Ortak Kelimeler",
     navDictionary: "Sözlük",
+    navQuiz: "Test & Quiz",
     navBank: "Kelime Bankam",
     levelsHeader: "SEVİYELER (LEVELS)",
     statPetalsLbl: "Açan Yapraklar",
@@ -31,20 +32,22 @@ const i18n = {
     langLbl: "Dil:",
     backGarden: "Bahçeye Dön",
     daisyTitle: "🌸 Papatya Çiçeği & Yapraklar",
-    daisyHint: "Her kelime bir yapraktır. Yaprağa dokun, Zihin Sarayı görünümüyle öğren ve çiçeğini açtır!",
+    daisyHint: "Her kelime bir yapraktır. Yaprağa dokun, anlamını ve örnek cümlesini öğrenerek çiçeğini açtır!",
     inspectorEmptyTitle: "Bir Yaprak Seçin",
-    inspectorEmptyDesc: "Papatyadan bir yaprağa dokunarak kelimenin anlamını, Zihin Sarayı tekniğini ve Arapça kökenini inceleyin.",
+    inspectorEmptyDesc: "Papatyadan bir yaprağa dokunarak kelimenin anlamını, örnek cümlesini ve Arapça/İngilizce kökenini inceleyin.",
     bloomBtnAction: "Yaprağı Açtır 🌼 (+5 Yusuf Puanı)",
     bloomedStateBtn: "Yaprak Çiçek Açtı 🌸",
-    cognateTitle: "💡 Arapça - Türkçe Ortak Kelimeler (الكلمات المشتركة)",
-    cognateDesc: "Suzim'in ana dili Arapça olduğu için Türkçe öğrenmek çok kolay! Türkçe'de Arapça ile ortak yüzlerce köklü kelime bulunur.",
+    cognateTitle: "💡 Ortak Kelimeler Rehberi (Shared Cognates)",
+    cognateDesc: "Türkçe'deki Arapça kökenli ve uluslararası İngilizce ortak kelimelerle Türkçe öğrenmeyi 10 kat hızlandırın!",
     dictTitle: "📚 Büyük Türkçe - İngilizce - Arapça Sözlük",
-    dictSubtitle: "3,500'den fazla doğrulanmış kelime, 75 ders ve Zihin Sarayı görselleştirme tekniği.",
+    dictSubtitle: "3,500'den fazla doğrulanmış kelime, 75 ders ve örnek cümle rehberi.",
     dictSearchPlaceholder: "Kelime ara... (Türkçe, English, العربية)",
     wbTitle: "🗂️ Öğrendiğin Yapraklar & Kelimeler",
     wbSubtitle: "Papatya bahçende suladığın ve tamamen açan kelimeleriniz.",
     wbEmptyText: "Henüz kelime öğrenilmedi. Papatya yapraklarına dokunarak öğrenmeye başla!",
-    yusufWelcome: "Hoş geldin Suzim! 🌼 Zihin Sarayı tekniğiyle 3,500'den fazla kelimeyi kolayca öğren!",
+    quizHubTitle: "📝 Suzim'in Türkçe Test & Quiz Merkezi",
+    quizHubDesc: "Öğrendiğin kelimeleri, Arapça ortak kökleri ve örnek cümleleri interaktif sınavlarla pekiştir!",
+    yusufWelcome: "Hoş geldin Suzim! 🌼 3,500'den fazla kelimeyi ve örnek cümleleri kolayca öğren!",
     quizBtnLabel: "📝 Ders Testi & Quiz",
     quizSuccessTitle: "Tebrikler Suzim! 🎉",
     quizSuccessDesc: "Yusuf seninle gurur duyuyor! 🌟 Ders sınavını harika bir başarıyla geçtin!",
@@ -54,8 +57,9 @@ const i18n = {
     brandTitle: "Suzim's Turkish Garden",
     brandSub: "Suzim's Turkish Learning Garden",
     navGarden: "Daisy Garden",
-    navCognates: "Arabic Cognates",
+    navCognates: "Shared Cognates",
     navDictionary: "Dictionary",
+    navQuiz: "Tests & Quizzes",
     navBank: "Word Bank",
     levelsHeader: "LEVELS",
     statPetalsLbl: "Bloomed Petals",
@@ -63,20 +67,22 @@ const i18n = {
     langLbl: "Language:",
     backGarden: "Back to Garden",
     daisyTitle: "🌸 Daisy Flower & Petals",
-    daisyHint: "Every word is a petal. Touch a petal to learn with Mind Palace visual scenes and bloom your flower!",
+    daisyHint: "Every word is a petal. Touch a petal to learn meanings and sample sentences, then bloom your flower!",
     inspectorEmptyTitle: "Select a Petal",
-    inspectorEmptyDesc: "Touch a petal on the daisy to inspect meanings, Mind Palace visual mnemonics, and Arabic root notes.",
+    inspectorEmptyDesc: "Touch a petal on the daisy to inspect meanings, sample sentences, and shared cognate roots.",
     bloomBtnAction: "Bloom This Petal 🌼 (+5 Yusuf Points)",
     bloomedStateBtn: "Petal Bloomed 🌸",
-    cognateTitle: "💡 Arabic - Turkish Shared Cognates",
-    cognateDesc: "Since Suzim's native language is Arabic, learning Turkish is natural! Turkish shares hundreds of rooted words with Arabic.",
+    cognateTitle: "💡 Shared Cognates Guide (Arabic & English)",
+    cognateDesc: "Accelerate your Turkish 10x with authentic Arabic cognates and international English loanwords!",
     dictTitle: "📚 Turkish - English - Arabic Dictionary",
-    dictSubtitle: "Over 3,500 verified words, 75 lessons, and Mind Palace visual memory mnemonics.",
+    dictSubtitle: "Over 3,500 verified words, 75 lessons, and example sentences.",
     dictSearchPlaceholder: "Search word... (Turkish, English, Arabic)",
     wbTitle: "🗂️ Mastered Words & Petals",
     wbSubtitle: "Words and petals you have bloomed in your garden.",
     wbEmptyText: "No petals bloomed yet. Touch daisy petals to start learning!",
-    yusufWelcome: "Welcome Suzim! 🌼 Master 3,500+ words easily using rich Mind Palace visual mnemonics!",
+    quizHubTitle: "📝 Suzim's Turkish Test & Quiz Center",
+    quizHubDesc: "Master vocabulary, Arabic shared roots, and sentences with interactive quizzes!",
+    yusufWelcome: "Welcome Suzim! 🌼 Master 3,500+ Turkish words and sentences with ease!",
     quizBtnLabel: "📝 Lesson Quiz & Test",
     quizSuccessTitle: "Congratulations Suzim! 🎉",
     quizSuccessDesc: "Yusuf is so proud of you! 🌟 You passed the lesson quiz with flying colors!",
@@ -88,6 +94,7 @@ const i18n = {
     navGarden: "بستان الأقحوان",
     navCognates: "الكلمات المشتركة",
     navDictionary: "المعجم",
+    navQuiz: "الاختبارات والتقييم",
     navBank: "بنك الكلمات",
     levelsHeader: "المستويات",
     statPetalsLbl: "البتلات المتفتحة",
@@ -95,24 +102,61 @@ const i18n = {
     langLbl: "اللغة:",
     backGarden: "العودة إلى البستان",
     daisyTitle: "🌸 زهرة الأقحوان والبتلات",
-    daisyHint: "كل كلمة هي بتلة. إلمس البتلة لتعلمها باستخدام تقنية قصر الذاكرة المصورة!",
+    daisyHint: "كل كلمة هي بتلة. إلمس البتلة لتعلم معناها وجملتها التوضيحية وتفتيح زهرتك!",
     inspectorEmptyTitle: "اختر بتلة",
-    inspectorEmptyDesc: "إلمس بتلة في الأقحوان لاستعراض المعنى وتقنية قصر الذاكرة وأصل الكلمة.",
+    inspectorEmptyDesc: "إلمس بتلة في الأقحوان لاستعراض المعنى والجملة التوضيحية والأصل العربي.",
     bloomBtnAction: "افتح البتلة 🌼 (+5 نقاط يوسف)",
     bloomedStateBtn: "تفتحت البتلة 🌸",
-    cognateTitle: "💡 الكلمات المشتركة بين العربية والتركية",
-    cognateDesc: "بما أن لغة سوزي الأم هي العربية، فتعلم التركية سهل للغاية! هناك مئات الكلمات المشتركة مع العربية.",
+    cognateTitle: "💡 دليل الكلمات المشتركة (عربي وإنجليزي)",
+    cognateDesc: "سرّعي تعلم اللغة التركية 10 أضعاف باستخدام الكلمات المشتركة مع العربية والإنجليزي!",
     dictTitle: "📚 المعجم الكبير: تركي - إنجليزي - عربي",
-    dictSubtitle: "أكثر من 3500 كلمة موثقة، 75 درساً وتقنية قصر الذاكرة التخيلية.",
+    dictSubtitle: "أكثر من 3500 كلمة موثقة، 75 درساً وجمل توضيحية.",
     dictSearchPlaceholder: "ابحث عن كلمة... (تركي، إنجليزي، عربي)",
     wbTitle: "🗂️ الكلمات والبتلات المكتسبة",
     wbSubtitle: "الكلمات والبتلات التي قمت بسقايتها وتفتيحها في بستانك.",
     wbEmptyText: "لم يتم تفتيح أي بتلات بعد. إلمس بتلات الأقحوان للبدء بالتعلم!",
-    yusufWelcome: "أهلاً بكِ يا سوزي! 🌼 احفظي أكثر من 3500 كلمة بسهولة باستخدام تقنية قصر الذاكرة المصورة!",
+    quizHubTitle: "📝 مركز سوزي للاختبارات والتقييم",
+    quizHubDesc: "أتقني الكلمات والجذور المشتركة والجمل من خلال اختبارات تفاعلية!",
+    yusufWelcome: "أهلاً بكِ يا سوزي! 🌼 احفظي أكثر من 3500 كلمة وجملة بسهولة!",
     quizBtnLabel: "📝 اختبار الدرس والتقييم",
     quizSuccessTitle: "ألف مبروك يا سوزي! 🎉",
     quizSuccessDesc: "يوسف فخور بكِ جداً! 🌟 لقد اجتزتِ اختبار الدرس بنجاح باهر!",
     quizPointsEarned: "اكسبتِ +25 من نقاط يوسف! 🏅"
+  },
+  zh: {
+    brandTitle: "Suzim的土耳其语花园",
+    brandSub: "Suzim土耳其语学习花园",
+    navGarden: "雏菊花园",
+    navCognates: "同源同义词",
+    navDictionary: "词典",
+    navQuiz: "测试与测验",
+    navBank: "词汇库",
+    levelsHeader: "等级 (LEVELS)",
+    statPetalsLbl: "已绽放花瓣",
+    statProgressLbl: "总体进度",
+    langLbl: "语言:",
+    backGarden: "返回花园",
+    daisyTitle: "🌸 雏菊花与花瓣",
+    daisyHint: "每个单词都是一片花瓣。点击花瓣学习含义与例句，让花朵绽放！",
+    inspectorEmptyTitle: "请选择花瓣",
+    inspectorEmptyDesc: "点击雏菊上的花瓣，查看释义、例句与同源词。",
+    bloomBtnAction: "让花瓣绽放 🌼 (+5 Yusuf积分)",
+    bloomedStateBtn: "花瓣已绽放 🌸",
+    cognateTitle: "💡 同源词指南 (阿拉伯语与英语)",
+    cognateDesc: "利用阿拉伯语与国际英语同源词，10倍加速土耳其语学习！",
+    dictTitle: "📚 土耳其语 - 英语 - 阿拉伯语大词典",
+    dictSubtitle: "超过3,500个核实词汇，75堂课程及例句。",
+    dictSearchPlaceholder: "搜索单词... (土耳其语, English, 阿拉伯语)",
+    wbTitle: "🗂️ 已掌握单词与花瓣",
+    wbSubtitle: "在花园中已灌溉并绽放的单词与花瓣。",
+    wbEmptyText: "尚未绽放花瓣。点击雏菊花瓣开始学习！",
+    quizHubTitle: "📝 Suzim土耳其语测试中心",
+    quizHubDesc: "通过互动测试，掌握词汇、阿拉伯语同源词与例句！",
+    yusufWelcome: "欢迎Suzim！🌼 轻松掌握3,500+个土耳其语单词与例句！",
+    quizBtnLabel: "📝 课程测试与测验",
+    quizSuccessTitle: "恭喜Suzim！🎉",
+    quizSuccessDesc: "Yusuf为你感到非常自豪！🌟 你以优异成绩通过了课程测试！",
+    quizPointsEarned: "获得 +25 Yusuf积分！🏅"
   }
 };
 
@@ -192,31 +236,51 @@ function initLanguageSelector() {
 function applyTrilingualText() {
   const t = i18n[appState.currentLang] || i18n.tr;
 
-  document.getElementById("ui-brand-title").textContent = t.brandTitle;
-  document.getElementById("ui-nav-garden").textContent = t.navGarden;
-  document.getElementById("ui-nav-cognates").textContent = t.navCognates;
-  document.getElementById("ui-nav-dictionary").textContent = t.navDictionary;
-  document.getElementById("ui-nav-bank").textContent = t.navBank;
-  document.getElementById("ui-levels-header").textContent = t.levelsHeader;
-  document.getElementById("ui-stat-petals-lbl").textContent = t.statPetalsLbl;
-  document.getElementById("ui-stat-progress-lbl").textContent = t.statProgressLbl;
-  document.getElementById("ui-lang-lbl").textContent = t.langLbl;
-  document.getElementById("ui-back-garden-lbl").textContent = t.backGarden;
+  const setTex = (id, txt) => {
+    const el = document.getElementById(id);
+    if (el && txt) el.textContent = txt;
+  };
 
-  document.getElementById("ui-daisy-canvas-title").textContent = t.daisyTitle;
-  document.getElementById("ui-daisy-canvas-hint").textContent = t.daisyHint;
-  document.getElementById("ui-inspector-empty-title").textContent = t.inspectorEmptyTitle;
-  document.getElementById("ui-inspector-empty-desc").textContent = t.inspectorEmptyDesc;
+  setTex("ui-brand-title", t.brandTitle);
+  setTex("ui-nav-garden", t.navGarden);
+  setTex("ui-nav-cognates", t.navCognates);
+  setTex("ui-nav-dictionary", t.navDictionary);
+  setTex("ui-nav-quiz", t.navQuiz);
+  setTex("ui-nav-bank", t.navBank);
+  setTex("ui-levels-header", t.levelsHeader);
+  setTex("ui-stat-petals-lbl", t.statPetalsLbl);
+  setTex("ui-stat-progress-lbl", t.statProgressLbl);
+  setTex("ui-lang-lbl", t.langLbl);
+  setTex("ui-back-garden-lbl", t.backGarden);
 
-  document.getElementById("ui-dict-title").textContent = t.dictTitle;
-  document.getElementById("ui-dict-subtitle").textContent = t.dictSubtitle;
-  document.getElementById("dict-search-input").placeholder = t.dictSearchPlaceholder;
+  setTex("mob-lbl-garden", t.navGarden);
+  setTex("mob-lbl-cognates", t.navCognates);
+  setTex("mob-lbl-dictionary", t.navDictionary);
+  setTex("mob-lbl-quiz", t.navQuiz);
+  setTex("mob-lbl-bank", t.navBank);
 
-  document.getElementById("ui-wb-title").textContent = t.wbTitle;
-  document.getElementById("ui-wb-subtitle").textContent = t.wbSubtitle;
-  document.getElementById("ui-wb-empty-text").textContent = t.wbEmptyText;
+  setTex("ui-daisy-canvas-title", t.daisyTitle);
+  setTex("ui-daisy-canvas-hint", t.daisyHint);
+  setTex("ui-inspector-empty-title", t.inspectorEmptyTitle);
+  setTex("ui-inspector-empty-desc", t.inspectorEmptyDesc);
 
-  document.getElementById("yusuf-text").textContent = t.yusufWelcome;
+  setTex("ui-cognate-title", t.cognateTitle);
+  setTex("ui-cognate-desc", t.cognateDesc);
+
+  setTex("ui-dict-title", t.dictTitle);
+  setTex("ui-dict-subtitle", t.dictSubtitle);
+  if (document.getElementById("dict-search-input")) {
+    document.getElementById("dict-search-input").placeholder = t.dictSearchPlaceholder;
+  }
+
+  setTex("ui-wb-title", t.wbTitle);
+  setTex("ui-wb-subtitle", t.wbSubtitle);
+  setTex("ui-wb-empty-text", t.wbEmptyText);
+
+  setTex("ui-quiz-hub-title", t.quizHubTitle);
+  setTex("ui-quiz-hub-desc", t.quizHubDesc);
+
+  setTex("yusuf-text", t.yusufWelcome);
 }
 
 // Main View Navigation
@@ -666,16 +730,6 @@ function renderWordInspector(wordObj, petalElement) {
         <div>
           <strong>Arapça Ortak Kelime (Cognate): ${wordObj.ar}</strong>
           <p>${wordObj.cognate_info ? wordObj.cognate_info.note_tr : 'Türkçe ve Arapça ortak kökenli kelime.'}</p>
-        </div>
-      </div>
-    ` : ''}
-
-    ${mpTip ? `
-      <div class="mind-palace-note-card">
-        <span class="mp-icon">🧠</span>
-        <div>
-          <strong>${mpTitle}</strong>
-          <p style="font-size: 13px; line-height: 1.4; margin-top: 4px;">${mpTip}</p>
         </div>
       </div>
     ` : ''}
@@ -1135,27 +1189,81 @@ function escapeHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
+appState.cognateFilter = appState.cognateFilter || "all";
+
 function renderCognatesView() {
   const container = document.getElementById("cognates-grid-container");
+  if (!container) return;
   container.innerHTML = "";
 
-  const cognates = learningDatabase.vocabularyBank.filter(w => w.is_cognate);
+  // Set filter button state
+  const filterBtns = document.querySelectorAll(".cognate-filter-btn");
+  filterBtns.forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.filter === appState.cognateFilter);
+    btn.onclick = () => {
+      appState.cognateFilter = btn.dataset.filter;
+      renderCognatesView();
+    };
+  });
+
+  // Strict Cognates Filter: ONLY authentic cognates (is_cognate === true OR valid cognate_info)
+  let cognates = learningDatabase.vocabularyBank.filter(w => w.is_cognate === true || (w.cognate_info && w.cognate_info.note_ar));
+
+  if (appState.cognateFilter === "ar") {
+    cognates = cognates.filter(w => w.is_cognate === true || w.arabic_word || w.ar);
+  } else if (appState.cognateFilter === "en") {
+    cognates = cognates.filter(w => {
+      const wLower = (w.word || "").toLowerCase();
+      return w.is_cognate && (
+        wLower.includes("biyo") || wLower.includes("tekno") || wLower.includes("tele") ||
+        wLower.includes("oto") || wLower.includes("sistem") || wLower.includes("kamera") ||
+        wLower.includes("doktor") || wLower.includes("hastane") || wLower.includes("banka") ||
+        wLower.includes("otobüs") || wLower.includes("radyo") || wLower.includes("müze")
+      );
+    });
+    // Fallback if strict English filter returns < 5 items
+    if (cognates.length < 5) {
+      cognates = learningDatabase.vocabularyBank.filter(w => w.is_cognate === true).slice(0, 15);
+    }
+  }
+
+  if (cognates.length === 0) {
+    container.innerHTML = `<div class="dict-no-results"><span>💡</span> <span>Seçilen filtrede ortak kelime bulunamadı.</span></div>`;
+    return;
+  }
 
   cognates.forEach(c => {
     const card = document.createElement("div");
-    card.className = "cognate-card";
+    card.className = "cognate-card liquid-glass-card";
+    const enMeaning = getEnglishMeaning(c);
+    const arMeaning = getArabicMeaning(c);
+
     card.innerHTML = `
-      <div class="cognate-card-top">
-        <h4>${c.word}</h4>
-        <span class="ar-root">${c.ar}</span>
+      <div class="cognate-card-top" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <div>
+          <h4 style="font-size: 18px; font-weight: 800; color: var(--color-primary-dark); margin: 0;">${c.word}</h4>
+          <span style="font-size: 12px; color: var(--color-text-sub);">${c.pronunciation || ''}</span>
+        </div>
+        <button class="fc-audio-btn cog-audio-btn" title="Telaffuzu Dinle">🔊</button>
       </div>
-      <div class="cognate-meanings">
-        <p><strong>EN:</strong> ${c.en}</p>
+      <div class="cognate-meanings" style="margin: 8px 0; display: flex; flex-direction: column; gap: 4px;">
+        ${enMeaning ? `<p style="font-size: 13.5px; font-weight: 600; color: var(--color-text-main); margin: 0;">🇬🇧 <strong>EN:</strong> ${enMeaning}</p>` : ''}
+        ${arMeaning ? `<p style="font-size: 15px; font-family: 'Amiri', serif; color: var(--color-accent-dark); margin: 0;" dir="rtl">🇸🇦 <strong>AR:</strong> ${arMeaning}</p>` : ''}
       </div>
-      <div style="font-size: 12px; color: var(--color-primary); background: rgba(255,255,255,0.7); padding: 8px; border-radius: 8px; border: 1px solid var(--color-border-subtle);">
-        "${c.sentence_tr}"
-      </div>
+      ${c.sentence_tr ? `
+        <div style="font-size: 12.5px; color: var(--color-primary-dark); background: rgba(45,90,39,0.06); padding: 8px 10px; border-radius: 8px; border-left: 3px solid var(--color-primary); line-height: 1.35;">
+          💬 "${c.sentence_tr}"
+        </div>
+      ` : ''}
     `;
+
+    const audioBtn = card.querySelector(".cog-audio-btn");
+    if (audioBtn) {
+      audioBtn.onclick = (e) => {
+        e.stopPropagation();
+        speakText(c.word);
+      };
+    }
 
     card.addEventListener("click", () => speakText(c.word));
     container.appendChild(card);

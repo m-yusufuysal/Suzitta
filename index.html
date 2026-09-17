@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Suzim'in Türkçe Bahçesi - Learn Turkish (TR / EN / AR / ZH)</title>
-  <link rel="stylesheet" href="styles.css?v=3518_v9">
+  <link rel="stylesheet" href="styles.css?v=3518_v10">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
@@ -244,15 +244,20 @@
         </section>
 
       </div>
-
-      <!-- VIEW 2: Arabic-Turkish Cognates (💡 Ortak Kelimeler) -->
       <div class="main-view-panel" id="view-cognates" style="display: none;">
         <div class="cognates-hero-card liquid-glass-card">
           <div class="cognate-hero-header">
-            <h3>💡 Arapça - Türkçe Ortak Kelimeler (الكلمات المشتركة)</h3>
-            <p>Suzim'in ana dili Arapça olduğu için Türkçe öğrenmek çok kolay! Türkçe'de Arapça ile ortak yüzlerce köklü kelime bulunur.</p>
+            <h3 id="ui-cognate-title">💡 Ortak Kelimeler Rehberi (Shared Cognates)</h3>
+            <p id="ui-cognate-desc">Arapça ve Uluslararası (İngilizce) ortak kelimelerle Türkçe öğrenmeyi 10 kat hızlandırın!</p>
           </div>
           
+          <!-- Cognates Filter Tabs -->
+          <div class="wb-view-toggle-bar" style="margin-bottom: 20px;">
+            <button class="cognate-filter-btn active" data-filter="all">🌟 Tüm Ortak Kelimeler</button>
+            <button class="cognate-filter-btn" data-filter="ar">🇸🇦 Arapça Ortak Kökler</button>
+            <button class="cognate-filter-btn" data-filter="en">🌐 Uluslararası / İngilizce</button>
+          </div>
+
           <div class="cognates-grid" id="cognates-grid-container">
             <!-- Dynamically rendered cognate cards -->
           </div>
@@ -264,7 +269,7 @@
         <div class="search-dictionary-card liquid-glass-card">
           <div class="dict-search-header">
             <h3 id="ui-dict-title">📚 Büyük Türkçe - İngilizce - Arapça Sözlük</h3>
-            <p id="ui-dict-subtitle">2,500'den fazla doğrulanmış kelime, örnek cümle ve telaffuz rehberi.</p>
+            <p id="ui-dict-subtitle">3,500'den fazla doğrulanmış kelime, örnek cümle ve telaffuz rehberi.</p>
           </div>
           
           <!-- Search tools -->
@@ -349,13 +354,13 @@
                     <div class="fc-sentence-label">🌸 Örnek Cümle (Türkçe):</div>
                     <div class="fc-sentence-text" id="fc-sentence-tr">Kütüphaneden aldığım bu sürükleyici kitabı bir solukta okudum.</div>
                   </div>
-                  <div class="fc-flip-hint">🔄 Kartın arkasını (Çeviri & Zihin Sarayı) görmek için tıkla</div>
+                  <div class="fc-flip-hint">🔄 Kartın arkasını (Çeviriler & Detaylar) görmek için tıkla</div>
                 </div>
 
                 <!-- Back Side -->
                 <div class="flashcard-face flashcard-back">
                   <div class="fc-top-badge">
-                    <span class="fc-back-tag">🧠 Zihin Sarayı & Çeviri</span>
+                    <span class="fc-back-tag">🌐 Çeviriler & Örnekler</span>
                     <button class="fc-audio-btn" id="btn-fc-audio-back" title="Cümleyi Dinle">🔊</button>
                   </div>
                   <div class="fc-back-word-row">
@@ -364,10 +369,6 @@
                   <div class="fc-back-sentences">
                     <div class="fc-back-sentence-item ar" id="fc-sentence-ar">قرأت هذا الكتاب...</div>
                     <div class="fc-back-sentence-item en" id="fc-sentence-en">I read this gripping book from the library in one breath.</div>
-                  </div>
-                  <div class="fc-mind-palace-box">
-                    <div class="fc-mp-title">💡 Zihin Sarayı Anımsatıcı İpucu:</div>
-                    <div class="fc-mp-desc" id="fc-mind-palace">Kütüphane masasında dev bir kitap açılıyor ve içinden harfler uçuşuyor.</div>
                   </div>
                   <div class="fc-flip-hint">🔄 Ön yüze dönmek için tıkla</div>
                 </div>
@@ -408,7 +409,7 @@
         <div class="quiz-hub-hero-card liquid-glass-card">
           <div class="quiz-hub-header">
             <h3 id="ui-quiz-hub-title">📝 Suzim'in Türkçe Test & Quiz Merkezi</h3>
-            <p id="ui-quiz-hub-desc">Öğrendiğin kelimeleri, Arapça ortak kökleri ve Zihin Sarayı hafıza tekniklerini interaktif sınavlarla pekiştir!</p>
+            <p id="ui-quiz-hub-desc">Öğrendiğin kelimeleri, Arapça ortak kökleri ve örnek cümleleri interaktif sınavlarla pekiştir!</p>
           </div>
 
           <!-- Quiz Performance Stats Bar -->
@@ -465,13 +466,13 @@
               <button class="quiz-start-hub-btn" id="btn-start-level-exam">Seviye Sınavını Başlat 🏆</button>
             </div>
 
-            <!-- Mode 4: Mind Palace Visual Memory Quiz -->
+            <!-- Mode 4: Sentence Context Quiz -->
             <div class="quiz-cat-card liquid-glass-card">
-              <div class="quiz-cat-badge">Görsel Hafıza</div>
-              <div class="quiz-cat-icon">🧠</div>
-              <h4>Zihin Sarayı Görsel Hafıza Testi</h4>
-              <p>Zihin Sarayı sahneleri ve maskelenmiş hafıza ipuçları ile kelimeleri canlandırın.</p>
-              <button class="quiz-start-hub-btn" id="btn-start-mind-palace-quiz">Hafıza Testini Başlat ⚡</button>
+              <div class="quiz-cat-badge">Cümle & Bağlam</div>
+              <div class="quiz-cat-icon">💬</div>
+              <h4>Cümle & Bağlam Sınavı</h4>
+              <p>Örnek cümlelerdeki kalıplar ve kelime kullanımı ile pratik yapın.</p>
+              <button class="quiz-start-hub-btn" id="btn-start-sentence-quiz">Cümle Testini Başlat 💬</button>
             </div>
 
             <!-- Mode 5: Speed Challenge Mixed Quiz -->
@@ -504,6 +505,26 @@
   <nav class="mobile-bottom-bar liquid-glass-bar">
     <button class="mobile-nav-item active" id="mob-nav-garden">
       <span class="icon">🌸</span>
+      <span class="lbl" id="mob-lbl-garden">Bahçem</span>
+    </button>
+    <button class="mobile-nav-item" id="mob-nav-cognates">
+      <span class="icon">💡</span>
+      <span class="lbl" id="mob-lbl-cognates">Ortak</span>
+    </button>
+    <button class="mobile-nav-item" id="mob-nav-dictionary">
+      <span class="icon">📚</span>
+      <span class="lbl" id="mob-lbl-dictionary">Sözlük</span>
+    </button>
+    <button class="mobile-nav-item" id="mob-nav-quiz">
+      <span class="icon">📝</span>
+      <span class="lbl" id="mob-lbl-quiz">Testler</span>
+    </button>
+    <button class="mobile-nav-item" id="mob-nav-bank">
+      <span class="icon">🗂️</span>
+      <span class="lbl" id="mob-lbl-bank">Bankam</span>
+    </button>
+  </nav>
+      <span class="icon">🌸</span>
       <span class="lbl">Bahçem</span>
     </button>
     <button class="mobile-nav-item" id="mob-nav-cognates">
@@ -524,7 +545,7 @@
     </button>
   </nav>
 
-  <script src="database.js?v=3518_v9"></script>
-  <script src="app.js?v=3518_v9"></script>
+  <script src="database.js?v=3518_v10"></script>
+  <script src="app.js?v=3518_v10"></script>
 </body>
 </html>

@@ -169,6 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initLevelSelector();
   renderCurrentView();
   updateGlobalStats();
+  initQuizHubGlobalListeners();
 });
 
 // Welcome Modal Handler
@@ -796,6 +797,54 @@ function updateQuizStatsDisplay() {
   if (elPoints) elPoints.textContent = points.toString();
 }
 
+function initQuizHubGlobalListeners() {
+  const attach = (id, fn) => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    btn.onclick = (e) => {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      fn();
+    };
+  };
+
+  const getActiveLesson = () => {
+    const currentLvlObj = learningDatabase.levels.find(l => l.id === appState.currentLevelId) || learningDatabase.levels[0];
+    return appState.activeLesson || currentLvlObj.lessons[0];
+  };
+
+  const getCurrentLevelObj = () => {
+    return learningDatabase.levels.find(l => l.id === appState.currentLevelId) || learningDatabase.levels[0];
+  };
+
+  attach("btn-start-current-lesson-quiz", () => {
+    const lesson = getActiveLesson();
+    startInteractiveQuizEngine(`Ders Sınavı: ${lesson.title}`, lesson.vocabulary, 8);
+  });
+
+  attach("btn-start-cognates-quiz", () => {
+    const cognates = learningDatabase.vocabularyBank.filter(w => w.is_cognate);
+    startInteractiveQuizEngine("💡 Arapça Ortak Kelimeler Testi", cognates, 10);
+  });
+
+  attach("btn-start-level-exam", () => {
+    const lvl = getCurrentLevelObj();
+    const allWordsInLevel = lvl.lessons.flatMap(l => l.vocabulary);
+    startInteractiveQuizEngine(`🏆 Seviye Bitirme Sınavı (${lvl.cefrCode})`, allWordsInLevel, 10);
+  });
+
+  attach("btn-start-sentence-quiz", () => {
+    const sentenceWords = learningDatabase.vocabularyBank.filter(w => w.sentence_tr);
+    startInteractiveQuizEngine("💬 Cümle & Bağlam Sınavı", sentenceWords, 10);
+  });
+
+  attach("btn-start-speed-quiz", () => {
+    startInteractiveQuizEngine("⚡ Karma Hızlı Pekiştirme Sınavı", learningDatabase.vocabularyBank, 10);
+  });
+}
+
 function renderQuizHubView() {
   const currentLvlObj = learningDatabase.levels.find(l => l.id === appState.currentLevelId) || learningDatabase.levels[0];
   const activeLesson = appState.activeLesson || currentLvlObj.lessons[0];
@@ -813,47 +862,14 @@ function renderQuizHubView() {
   if (badgeLevel && currentLvlObj) badgeLevel.textContent = `${currentLvlObj.cefrCode} Seviye Sınavı`;
   if (descLevel && currentLvlObj) descLevel.textContent = `${currentLvlObj.cefrCode} seviyesindeki 10 derse ait tüm konulardan oluşan seviye bitirme sınavı.`;
 
-  // Button Listeners
-  const btnLesson = document.getElementById("btn-start-current-lesson-quiz");
-  if (btnLesson) {
-    btnLesson.onclick = () => {
-      startInteractiveQuizEngine(`Ders Sınavı: ${activeLesson.title}`, activeLesson.vocabulary, 8);
-    };
-  }
-
-  const btnCognates = document.getElementById("btn-start-cognates-quiz");
-  if (btnCognates) {
-    btnCognates.onclick = () => {
-      const cognates = learningDatabase.vocabularyBank.filter(w => w.is_cognate);
-      startInteractiveQuizEngine("💡 Arapça Ortak Kelimeler Testi", cognates, 10);
-    };
-  }
-
-  const btnLevel = document.getElementById("btn-start-level-exam");
-  if (btnLevel) {
-    btnLevel.onclick = () => {
-      const allWordsInLevel = currentLvlObj.lessons.flatMap(l => l.vocabulary);
-      startInteractiveQuizEngine(`🏆 Seviye Bitirme Sınavı (${currentLvlObj.cefrCode})`, allWordsInLevel, 10);
-    };
-  }
-
-  const btnSentence = document.getElementById("btn-start-sentence-quiz");
-  if (btnSentence) {
-    btnSentence.onclick = () => {
-      const sentenceWords = learningDatabase.vocabularyBank.filter(w => w.sentence_tr);
-      startInteractiveQuizEngine("💬 Cümle & Bağlam Sınavı", sentenceWords, 10);
-    };
-  }
-
-  const btnSpeed = document.getElementById("btn-start-speed-quiz");
-  if (btnSpeed) {
-    btnSpeed.onclick = () => {
-      startInteractiveQuizEngine("⚡ Karma Hızlı Pekiştirme Sınavı", learningDatabase.vocabularyBank, 10);
-    };
-  }
+  initQuizHubGlobalListeners();
 }
 
 function launchLessonQuiz(lesson) {
+  if (!lesson) {
+    const currentLvlObj = learningDatabase.levels.find(l => l.id === appState.currentLevelId) || learningDatabase.levels[0];
+    lesson = appState.activeLesson || currentLvlObj.lessons[0];
+  }
   startInteractiveQuizEngine(`Ders Testi: ${lesson.title}`, lesson.vocabulary, 8);
 }
 

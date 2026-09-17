@@ -225,6 +225,7 @@ function initNavigation() {
     { btnId: "nav-btn-garden", mobId: "mob-nav-garden", viewId: "garden" },
     { btnId: "nav-btn-cognates", mobId: "mob-nav-cognates", viewId: "cognates" },
     { btnId: "nav-btn-dictionary", mobId: "mob-nav-dictionary", viewId: "dictionary" },
+    { btnId: "nav-btn-quiz", mobId: "mob-nav-quiz", viewId: "quiz" },
     { btnId: "nav-btn-bank", mobId: "mob-nav-bank", viewId: "bank" }
   ];
 
@@ -271,6 +272,9 @@ function renderCurrentView() {
   } else if (appState.activeView === "dictionary") {
     document.getElementById("view-dictionary").style.display = "block";
     renderDictionaryView();
+  } else if (appState.activeView === "quiz") {
+    document.getElementById("view-quiz").style.display = "block";
+    renderQuizHubView();
   } else if (appState.activeView === "bank") {
     document.getElementById("view-wordbank").style.display = "block";
     renderWordBankView();
@@ -515,79 +519,281 @@ function renderWordInspector(wordObj, petalElement) {
   });
 }
 
-// Interactive Lesson Quiz System with Yusuf Pride Celebration Modal
+// ═══════════════════════════════════════════════════════════════
+// Interactive Quiz & Test Suite (Multi-Type Questions, Audio TTS, Zihin Sarayı Box)
+// ═══════════════════════════════════════════════════════════════
+
+function renderQuizHubView() {
+  const currentLvlObj = learningDatabase.levels.find(l => l.id === appState.currentLevelId) || learningDatabase.levels[0];
+
+  const btnLesson = document.getElementById("btn-start-current-lesson-quiz");
+  if (btnLesson) {
+    btnLesson.onclick = () => {
+      const lesson = appState.activeLesson || currentLvlObj.lessons[0];
+      startInteractiveQuizEngine(`Ders Sınavı: ${lesson.title}`, lesson.vocabulary, 8);
+    };
+  }
+
+  const btnCognates = document.getElementById("btn-start-cognates-quiz");
+  if (btnCognates) {
+    btnCognates.onclick = () => {
+      const cognates = learningDatabase.vocabularyBank.filter(w => w.is_cognate);
+      startInteractiveQuizEngine("💡 Arapça Ortak Kelimeler Testi", cognates, 10);
+    };
+  }
+
+  const btnLevel = document.getElementById("btn-start-level-exam");
+  if (btnLevel) {
+    btnLevel.onclick = () => {
+      const allWordsInLevel = currentLvlObj.lessons.flatMap(l => l.vocabulary);
+      startInteractiveQuizEngine(`🏆 Seviye Bitirme Sınavı (${currentLvlObj.cefrCode})`, allWordsInLevel, 10);
+    };
+  }
+
+  const btnMP = document.getElementById("btn-start-mind-palace-quiz");
+  if (btnMP) {
+    btnMP.onclick = () => {
+      const mpWords = learningDatabase.vocabularyBank.filter(w => w.mind_palace_tr || w.mind_palace_en);
+      startInteractiveQuizEngine("🧠 Zihin Sarayı Görsel Hafıza Testi", mpWords, 8);
+    };
+  }
+}
+
 function launchLessonQuiz(lesson) {
-  const t = i18n[appState.currentLang] || i18n.tr;
-  const questions = lesson.vocabulary.slice(0, 3).map(wordObj => {
-    const wrong1 = learningDatabase.vocabularyBank[(Math.floor(Math.random() * learningDatabase.vocabularyBank.length))].en;
-    const wrong2 = learningDatabase.vocabularyBank[(Math.floor(Math.random() * learningDatabase.vocabularyBank.length))].en;
-    const options = [wordObj.en, wrong1, wrong2].sort(() => Math.random() - 0.5);
+  startInteractiveQuizEngine(`Ders Testi: ${lesson.title}`, lesson.vocabulary, 8);
+}
+
+function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
+  if (!vocabList || vocabList.length === 0) {
+    vocabList = learningDatabase.vocabularyBank;
+  }
+
+  const shuffled = [...vocabList].sort(() => Math.random() - 0.5);
+  const selectedWords = shuffled.slice(0, Math.min(questionCount, shuffled.length));
+
+  const questions = selectedWords.map(wordObj => {
+    let possibleTypes = ['translate', 'sentence', 'audio'];
+    if (wordObj.is_cognate) possibleTypes.push('cognate');
+    if (wordObj.mind_palace_tr || wordObj.mind_palace_en) possibleTypes.push('mind_palace');
+
+    const qType = possibleTypes[Math.floor(Math.random() * possibleTypes.length)];
+
+    const distractors = [];
+    const pool = learningDatabase.vocabularyBank.filter(w => w.word !== wordObj.word);
+    while (distractors.length < 3 && pool.length > 0) {
+      const randIndex = Math.floor(Math.random() * pool.length);
+      const item = pool.splice(randIndex, 1)[0];
+      if (qType === 'translate') {
+        const val = appState.currentLang === 'ar' ? item.ar : item.en;
+        if (val && !distractors.includes(val)) distractors.push(val);
+      } else {
+        if (item.word && !distractors.includes(item.word)) distractors.push(item.word);
+      }
+    }
+
+    let prompt = "";
+    let correctVal = "";
+    let typeBadge = "";
+
+    if (qType === 'translate') {
+      typeBadge = "🌐 Anlam Testi";
+      const targetLangName = appState.currentLang === 'ar' ? 'Arapça' : 'İngilizce';
+      prompt = `"${wordObj.word}" kelimesinin ${targetLangName} karşılığı nedir?`;
+      correctVal = appState.currentLang === 'ar' ? wordObj.ar : wordObj.en;
+    } else if (qType === 'sentence') {
+      typeBadge = "💬 Cümle Tamamlama";
+      const sentenceClean = wordObj.sentence_tr ? wordObj.sentence_tr.replace(new RegExp(wordObj.word, 'gi'), '_____') : `... ${wordObj.en}`;
+      prompt = `Cümlede boş bırakılan yere hangi kelime gelmelidir?\n"${sentenceClean}"`;
+      correctVal = wordObj.word;
+    } else if (qType === 'audio') {
+      typeBadge = "🔊 Sesli Telaffuz Testi";
+      prompt = `Dinlediğiniz Türkçe kelime hangisidir? (Ses açılmadıysa ses butonuna basın)`;
+      correctVal = wordObj.word;
+    } else if (qType === 'cognate') {
+      typeBadge = "💡 Arapça Ortak Kök Testi";
+      const rootNote = wordObj.cognate_info ? (wordObj.cognate_info.note_ar || wordObj.ar) : wordObj.ar;
+      prompt = `"${rootNote}" (Arapça) kelimesi ile aynı kökten gelen Türkçe kelime hangisidir?`;
+      correctVal = wordObj.word;
+    } else if (qType === 'mind_palace') {
+      typeBadge = "🧠 Zihin Sarayı Hafıza Testi";
+      const mpText = appState.currentLang === 'en' ? (wordObj.mind_palace_en || wordObj.mind_palace_tr) : (wordObj.mind_palace_tr || wordObj.mind_palace_en);
+      prompt = `Zihin Sarayı Görsel Sahnesi:\n"${mpText}"\nBu görsel sahne hangi kelimeye aittir?`;
+      correctVal = wordObj.word;
+    }
+
+    const options = [correctVal, ...distractors].sort(() => Math.random() - 0.5);
 
     return {
-      word: wordObj.word,
-      correct: wordObj.en,
-      options: options
+      wordObj,
+      qType,
+      typeBadge,
+      prompt,
+      correctVal,
+      options
     };
   });
 
-  let currentQ = 0;
+  let currentIdx = 0;
   let score = 0;
+  let answered = false;
 
-  const quizBackdrop = document.createElement("div");
-  quizBackdrop.className = "welcome-modal-backdrop";
-  quizBackdrop.id = "quiz-modal-backdrop";
+  const backdrop = document.createElement("div");
+  backdrop.className = "welcome-modal-backdrop quiz-interactive-backdrop";
+  backdrop.id = "quiz-modal-backdrop";
 
-  const quizCard = document.createElement("div");
-  quizCard.className = "welcome-glass-card";
+  const card = document.createElement("div");
+  card.className = "welcome-glass-card quiz-runner-card";
 
-  const renderQuestion = () => {
-    if (currentQ >= questions.length) {
-      // Quiz Finished! Trigger Yusuf Pride Celebration
-      appState.yusufPoints += 25;
+  const renderCurrentQuestion = () => {
+    answered = false;
+    if (currentIdx >= questions.length) {
+      const percent = Math.round((score / questions.length) * 100);
+      const pointsEarned = score * 5 + 15;
+      appState.yusufPoints += pointsEarned;
       localStorage.setItem("suzitta_yusuf_points", appState.yusufPoints.toString());
       updateGlobalStats();
 
-      speakText(`Tebrikler Suzim! Yusuf seninle gurur duyuyor!`);
+      let praiseMsg = "Harika bir çalışma Suzim!";
+      if (percent === 100) praiseMsg = "Tebrikler Suzim! %100 Mükemmel Başarı! Yusuf seninle gurur duyuyor! 🌟";
+      else if (percent >= 70) praiseMsg = "Tebrikler Suzim! Harika bir performans gösterdin! 🌸";
 
-      quizCard.innerHTML = `
-        <div class="welcome-flower-icon">🎉</div>
-        <h2>${t.quizSuccessTitle}</h2>
-        <p style="font-size: 16px; font-weight: 600; color: var(--color-primary); margin: 12px 0;">${t.quizSuccessDesc}</p>
-        <div class="welcome-intro-box" style="background: var(--color-accent-light); border-color: var(--color-accent);">
-          <strong style="font-size: 18px; color: var(--color-primary-dark);">${t.quizPointsEarned}</strong>
+      speakText(praiseMsg);
+
+      card.innerHTML = `
+        <div class="welcome-flower-icon">🏆</div>
+        <h2>Sınav Tamamlandı! 🎉</h2>
+        <div style="font-size: 32px; font-weight: 800; color: var(--color-primary); margin: 10px 0;">%${percent} Başarı</div>
+        <p style="font-size: 15px; color: var(--color-text-muted);">${score} / ${questions.length} Soru Doğru Cevaplandı</p>
+
+        <div class="welcome-intro-box" style="background: var(--color-accent-light); border-color: var(--color-accent); margin: 16px 0;">
+          <strong style="font-size: 18px; color: var(--color-primary-dark);">+${pointsEarned} Yusuf Puanı Kazandın! 🏅</strong>
         </div>
-        <button class="welcome-start-btn" id="btn-close-quiz">Tamam & Bahçeye Dön 🌼</button>
+
+        <div style="display: flex; gap: 12px; justify-content: center; width: 100%; margin-top: 10px;">
+          <button class="welcome-start-btn" id="btn-quiz-retry" style="background: var(--color-secondary);">Yeniden Çöz 🔄</button>
+          <button class="welcome-start-btn" id="btn-quiz-close">Tamam & Bahçeye Dön 🌼</button>
+        </div>
       `;
 
-      document.getElementById("btn-close-quiz").onclick = () => {
-        quizBackdrop.remove();
+      document.getElementById("btn-quiz-retry").onclick = () => {
+        backdrop.remove();
+        startInteractiveQuizEngine(quizTitle, vocabList, questionCount);
+      };
+      document.getElementById("btn-quiz-close").onclick = () => {
+        backdrop.remove();
       };
       return;
     }
 
-    const qData = questions[currentQ];
-    quizCard.innerHTML = `
-      <div style="font-size: 13px; font-weight: 700; color: var(--color-secondary);">Soru ${currentQ + 1} / ${questions.length}</div>
-      <h3 style="font-size: 24px; color: var(--color-primary); margin: 10px 0;">"${qData.word}" kelimesinin İngilizce karşılığı nedir?</h3>
-      <div style="display: flex; flex-direction: column; gap: 10px; margin: 20px 0;">
-        ${qData.options.map(opt => `
-          <button class="quiz-opt-btn" data-val="${opt}">${opt}</button>
+    const q = questions[currentIdx];
+    const progressPercent = Math.round(((currentIdx) / questions.length) * 100);
+
+    if (q.qType === 'audio') {
+      setTimeout(() => speakText(q.wordObj.word), 300);
+    }
+
+    card.innerHTML = `
+      <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <span style="font-size: 12px; font-weight: 700; color: var(--color-secondary);">${escapeHtml(quizTitle)}</span>
+        <span style="font-size: 12px; font-weight: 700; color: var(--color-primary);">Soru ${currentIdx + 1} / ${questions.length}</span>
+      </div>
+
+      <div class="quiz-progress-track">
+        <div class="quiz-progress-bar" style="width: ${progressPercent}%;"></div>
+      </div>
+
+      <div style="display: inline-block; padding: 4px 12px; border-radius: var(--radius-pill); background: var(--color-accent-light); border: 1px solid var(--color-accent); font-size: 12px; font-weight: 700; color: var(--color-primary-dark); margin: 8px 0;">
+        ${q.typeBadge}
+      </div>
+
+      <div style="font-size: 17px; font-weight: 700; color: var(--color-text-main); margin: 10px 0; text-align: center; line-height: 1.4;">
+        ${q.prompt.replace(/\n/g, '<br>')}
+      </div>
+
+      ${q.qType === 'audio' ? `
+        <button class="quiz-listen-btn" id="btn-quiz-tts-listen">
+          <span>🔊</span> <span>Telaffuzu Dinle</span>
+        </button>
+      ` : ''}
+
+      <div class="quiz-options-grid" style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin: 14px 0;">
+        ${q.options.map((opt, i) => `
+          <button class="quiz-opt-btn" data-val="${escapeHtml(opt)}">
+            <span class="opt-letter">${String.fromCharCode(65 + i)}</span>
+            <span class="opt-text">${escapeHtml(opt)}</span>
+          </button>
         `).join('')}
       </div>
+
+      <div class="quiz-memory-box" id="quiz-memory-box" style="display: none;"></div>
+
+      <button class="welcome-start-btn" id="btn-quiz-next" style="display: none; margin-top: 12px;">Devam Et ➡️</button>
     `;
 
-    quizCard.querySelectorAll(".quiz-opt-btn").forEach(btn => {
+    if (document.getElementById("btn-quiz-tts-listen")) {
+      document.getElementById("btn-quiz-tts-listen").onclick = () => speakText(q.wordObj.word);
+    }
+
+    const optBtns = card.querySelectorAll(".quiz-opt-btn");
+    optBtns.forEach(btn => {
       btn.onclick = () => {
-        if (btn.dataset.val === qData.correct) score++;
-        currentQ++;
-        renderQuestion();
+        if (answered) return;
+        answered = true;
+
+        const val = btn.getAttribute("data-val");
+        const isCorrect = val === q.correctVal;
+
+        if (isCorrect) {
+          btn.classList.add("correct");
+          score++;
+          speakText("Harika!");
+          setTimeout(() => {
+            currentIdx++;
+            renderCurrentQuestion();
+          }, 1100);
+        } else {
+          btn.classList.add("incorrect");
+          speakText("Yanlış cevap!");
+
+          optBtns.forEach(b => {
+            if (b.getAttribute("data-val") === q.correctVal) {
+              b.classList.add("correct");
+            }
+          });
+
+          const memBox = document.getElementById("quiz-memory-box");
+          memBox.style.display = "block";
+          memBox.innerHTML = `
+            <div style="font-size: 13px; font-weight: 700; color: #D32F2F; margin-bottom: 4px;">❌ Yanlış Cevap - Doğruyu Öğrenelim:</div>
+            <div style="font-size: 15px; font-weight: 700; color: var(--color-primary);">✅ Doğru Cevap: ${escapeHtml(q.wordObj.word)} (${escapeHtml(q.wordObj.en)} / ${escapeHtml(q.wordObj.ar)})</div>
+            ${q.wordObj.mind_palace_tr ? `<div style="font-size: 12px; color: var(--color-text-main); margin-top: 6px;">🧠 <strong>Zihin Sarayı İpucu:</strong> ${escapeHtml(q.wordObj.mind_palace_tr)}</div>` : ''}
+            ${q.wordObj.sentence_tr ? `<div style="font-size: 12px; color: var(--color-text-muted); margin-top: 4px;">💬 <strong>Örnek Cümle:</strong> ${escapeHtml(q.wordObj.sentence_tr)}</div>` : ''}
+          `;
+
+          const nextBtn = document.getElementById("btn-quiz-next");
+          nextBtn.style.display = "block";
+          nextBtn.onclick = () => {
+            currentIdx++;
+            renderCurrentQuestion();
+          };
+        }
       };
     });
   };
 
-  quizBackdrop.appendChild(quizCard);
-  document.body.appendChild(quizBackdrop);
-  renderQuestion();
+  backdrop.appendChild(card);
+  document.body.appendChild(backdrop);
+  renderCurrentQuestion();
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
 
 function renderCognatesView() {

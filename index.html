@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Suzim'in Türkçe Bahçesi - Learn Turkish (TR / EN / AR / ZH)</title>
-  <link rel="stylesheet" href="styles.css?v=3518_v3">
+  <link rel="stylesheet" href="styles.css?v=3518_v4">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
@@ -72,6 +72,12 @@
         <button class="sidebar-nav-btn" id="nav-btn-dictionary">
           <span class="nav-icon">📚</span>
           <span class="nav-text" id="ui-nav-dictionary">Sözlük</span>
+        </button>
+
+        <button class="sidebar-nav-btn" id="nav-btn-quiz">
+          <span class="nav-icon">📝</span>
+          <span class="nav-text" id="ui-nav-quiz">Test & Quiz</span>
+          <span class="badge-cognate-count" style="background: var(--color-accent); color: #000;">YENİ</span>
         </button>
 
         <button class="sidebar-nav-btn" id="nav-btn-bank">
@@ -300,6 +306,47 @@
         </div>
       </div>
 
+      <!-- VIEW 5: Interactive Quiz & Test Hub (📝 Test & Quiz Merkezi) -->
+      <div class="main-view-panel" id="view-quiz" style="display: none;">
+        <div class="quiz-hub-hero-card liquid-glass-card">
+          <div class="quiz-hub-header">
+            <h3 id="ui-quiz-hub-title">📝 Suzim'in Türkçe Test & Quiz Merkezi</h3>
+            <p id="ui-quiz-hub-desc">Öğrendiğin tüm kelimeleri, Arapça ortak kökleri ve Zihin Sarayı tekniklerini interaktif sınavlarla pekiştir!</p>
+          </div>
+
+          <!-- Quiz Categories Grid -->
+          <div class="quiz-categories-grid">
+            <div class="quiz-cat-card liquid-glass-card">
+              <div class="quiz-cat-icon">🌸</div>
+              <h4>Aktif Ders Testi</h4>
+              <p>Mevcut dersteki kelimeler, cümleler ve telaffuz ile interaktif pratik yapın.</p>
+              <button class="quiz-start-hub-btn" id="btn-start-current-lesson-quiz">Ders Testini Başlat 🚀</button>
+            </div>
+
+            <div class="quiz-cat-card liquid-glass-card">
+              <div class="quiz-cat-icon">💡</div>
+              <h4>Arapça Ortak Kelimeler Testi</h4>
+              <p>Türkçe ile Arapça arasındaki kök eşleştirmelerini ve ortak kelimeleri sınayın.</p>
+              <button class="quiz-start-hub-btn" id="btn-start-cognates-quiz">Ortak Kelimeler Testi 💡</button>
+            </div>
+
+            <div class="quiz-cat-card liquid-glass-card">
+              <div class="quiz-cat-icon">🏆</div>
+              <h4>Seviye Bitirme Sınavı</h4>
+              <p>Seçili CEFR seviyesindeki (A1..C1) konulardan oluşan 10 soruluk büyük seviye sınavı.</p>
+              <button class="quiz-start-hub-btn" id="btn-start-level-exam">Seviye Sınavını Başlat 🏆</button>
+            </div>
+
+            <div class="quiz-cat-card liquid-glass-card">
+              <div class="quiz-cat-icon">🧠</div>
+              <h4>Zihin Sarayı Görsel Hafıza Testi</h4>
+              <p>Zihin Sarayı sahneleri ve görsel ipuçları ile kelimelerin hafızadaki yerini sınayın.</p>
+              <button class="quiz-start-hub-btn" id="btn-start-mind-palace-quiz">Hafıza Testini Başlat ⚡</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </main>
 
     <!-- Yusuf's Mascot -->
@@ -328,13 +375,17 @@
       <span class="icon">📚</span>
       <span class="lbl">Sözlük</span>
     </button>
+    <button class="mobile-nav-item" id="mob-nav-quiz">
+      <span class="icon">📝</span>
+      <span class="lbl">Testler</span>
+    </button>
     <button class="mobile-nav-item" id="mob-nav-bank">
       <span class="icon">🗂️</span>
       <span class="lbl">Bankam</span>
     </button>
   </nav>
 
-  <script src="database.js?v=3518_v3"></script>
-  <script src="app.js?v=3518_v3"></script>
+  <script src="database.js?v=3518_v4"></script>
+  <script src="app.js?v=3518_v4"></script>
 </body>
 </html>

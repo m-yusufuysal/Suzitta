@@ -888,6 +888,10 @@ main {
 }
 
 .flower-center-core {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 104px;
   height: 104px;
   border-radius: 50%;
@@ -910,6 +914,7 @@ main {
 /* Organic Teardrop Daisy Petal Component - Fixed Absolute Position Rules */
 .daisy-petal-item {
   position: absolute;
+  transform: translate(-50%, -50%);
   width: 110px;
   height: 44px;
   background: rgba(255, 255, 255, 0.92);
@@ -921,7 +926,6 @@ main {
   justify-content: center;
   padding: 4px 10px;
   cursor: pointer;
-  transform: scale(1);
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s, border-color 0.3s, box-shadow 0.3s;
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
   z-index: 2;
@@ -934,7 +938,7 @@ main {
 }
 
 .daisy-petal-item:hover {
-  transform: scale(1.15);
+  transform: translate(-50%, -50%) scale(1.15);
   border-color: var(--color-primary);
   background: #FFFFFF;
   z-index: 10;
@@ -943,7 +947,7 @@ main {
 .daisy-petal-item.selected {
   border-color: var(--color-primary);
   box-shadow: 0 0 24px rgba(45, 90, 39, 0.45);
-  transform: scale(1.22) rotate(-6deg);
+  transform: translate(-50%, -50%) scale(1.22) rotate(-6deg);
   z-index: 10;
 }
 
@@ -1314,9 +1318,16 @@ main {
     position: fixed;
     top: 0;
     left: -290px;
+    width: 280px;
     height: 100vh;
-    transition: left 0.35s ease;
+    z-index: 1001 !important;
+    background: rgba(255, 255, 255, 0.98) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    box-shadow: 10px 0 30px rgba(0, 0, 0, 0.25);
+    transition: left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 0;
+    overflow-y: auto;
   }
 
   .liquid-glass-sidebar.open { left: 0; }
@@ -1660,6 +1671,397 @@ main {
   border: 1.5px solid var(--color-accent);
   text-align: left;
   box-shadow: 0 4px 16px rgba(242, 187, 5, 0.2);
+}
+
+/* ==========================================================================
+   WORD BANK & 3D MEMORY FLASHCARDS STYLING
+   ========================================================================== */
+
+.wb-header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (min-width: 768px) {
+  .wb-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.wb-view-toggle-bar {
+  display: flex;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.05);
+  padding: 4px;
+  border-radius: var(--radius-pill);
+  flex-wrap: wrap;
+}
+
+.wb-mode-btn {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-pill);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-sub);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.wb-mode-btn.active {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(45, 90, 39, 0.3);
+}
+
+/* 3D Flashcards Perspective Container */
+.flashcards-perspective-wrapper {
+  perspective: 1200px;
+  width: 100%;
+  max-width: 540px;
+  margin: 16px auto 24px auto;
+  min-height: 340px;
+}
+
+.flashcard-3d-card {
+  width: 100%;
+  height: 340px;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.flashcard-3d-card.flipped {
+  transform: rotateY(180deg);
+}
+
+.flashcard-face {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 24px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.flashcard-front {
+  background: linear-gradient(145deg, #FFFFFF 0%, #F5FAF5 100%);
+  color: var(--color-text-main);
+}
+
+.flashcard-back {
+  background: linear-gradient(145deg, #1B381D 0%, #2D5A27 100%);
+  color: #FFFFFF;
+  transform: rotateY(180deg);
+}
+
+/* Flashcard Front Elements */
+.fc-top-badge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.fc-level-badge {
+  background: rgba(45, 90, 39, 0.12);
+  color: var(--color-primary-dark);
+  font-weight: 800;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.fc-back-tag {
+  background: rgba(255, 255, 255, 0.2);
+  color: #F2BB05;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.fc-cognate-badge {
+  background: rgba(242, 187, 5, 0.2);
+  color: #B37D00;
+  font-weight: 700;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.fc-audio-btn {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s;
+}
+
+.fc-audio-btn:hover {
+  transform: scale(1.15);
+}
+
+.fc-word-body {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.fc-word-title {
+  font-size: 32px;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  letter-spacing: -0.5px;
+}
+
+.fc-arabic-script {
+  font-family: 'Amiri', 'Traditional Arabic', serif;
+  font-size: 26px;
+  color: var(--color-accent-dark);
+  direction: rtl;
+  margin-top: 4px;
+}
+
+.fc-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(45, 90, 39, 0.2), transparent);
+  width: 100%;
+}
+
+.fc-sentence-box {
+  background: rgba(45, 90, 39, 0.04);
+  border-left: 4px solid var(--color-primary);
+  border-radius: 8px;
+  padding: 10px 14px;
+  text-align: left;
+}
+
+.fc-sentence-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-sub);
+  margin-bottom: 4px;
+}
+
+.fc-sentence-text {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--color-text-main);
+}
+
+.fc-flip-hint {
+  font-size: 11.5px;
+  color: rgba(0, 0, 0, 0.45);
+  text-align: center;
+  font-weight: 600;
+}
+
+.flashcard-back .fc-flip-hint {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Flashcard Back Elements */
+.fc-back-word-row {
+  text-align: center;
+}
+
+.fc-back-meaning {
+  font-size: 22px;
+  font-weight: 800;
+  color: #F2BB05;
+}
+
+.fc-back-sentences {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px 14px;
+  border-radius: 12px;
+}
+
+.fc-back-sentence-item.ar {
+  font-family: 'Amiri', serif;
+  font-size: 16px;
+  direction: rtl;
+  color: #FFE082;
+}
+
+.fc-back-sentence-item.en {
+  font-size: 13.5px;
+  font-style: italic;
+  color: #E8F5E9;
+}
+
+.fc-mind-palace-box {
+  background: rgba(242, 187, 5, 0.15);
+  border: 1px solid rgba(242, 187, 5, 0.4);
+  border-radius: 10px;
+  padding: 10px;
+  text-align: left;
+}
+
+.fc-mp-title {
+  font-size: 11px;
+  font-weight: 800;
+  color: #FFE082;
+  margin-bottom: 2px;
+}
+
+.fc-mp-desc {
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: #FFFFFF;
+}
+
+/* Flashcard Navigation Bar */
+.flashcard-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.fc-nav-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.fc-nav-btn:hover {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  border-color: var(--color-primary);
+}
+
+.fc-nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.fc-flip-action-btn {
+  background: linear-gradient(135deg, var(--color-accent), #D4A304);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #FFFFFF;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(242, 187, 5, 0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.fc-flip-action-btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 22px rgba(242, 187, 5, 0.5);
+}
+
+.fc-counter-badge {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-sub);
+  padding: 4px 12px;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: var(--radius-pill);
+}
+
+/* Sentences List View Styling */
+.wb-sentences-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.wb-sentence-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius-zh-sm);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.wb-sentence-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 6px 18px rgba(45, 90, 39, 0.12);
+}
+
+.wb-sc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wb-sc-word {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+}
+
+.wb-sc-tr {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-main);
+  line-height: 1.4;
+}
+
+.wb-sc-en {
+  font-size: 13.5px;
+  font-style: italic;
+  color: var(--color-text-sub);
+}
+
+.wb-sc-ar {
+  font-family: 'Amiri', serif;
+  font-size: 16px;
+  direction: rtl;
+  color: var(--color-accent-dark);
+}
+
+.wb-sc-mp {
+  background: rgba(242, 187, 5, 0.1);
+  border-left: 3.5px solid var(--color-accent);
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  color: #6E5000;
 }
 
 @keyframes shake {

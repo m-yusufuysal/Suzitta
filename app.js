@@ -599,11 +599,8 @@ function renderDaisyFlower(lesson) {
         petal.classList.add("compact-petal");
       }
 
-      const offsetW = isMobile ? 38 : 50;
-      const offsetH = isMobile ? 16 : 20;
-
-      petal.style.left = `calc(50% + ${x}px - ${offsetW}px)`;
-      petal.style.top = `calc(50% + ${y}px - ${offsetH}px)`;
+      petal.style.left = `calc(50% + ${x}px)`;
+      petal.style.top = `calc(50% + ${y}px)`;
       petal.textContent = wordObj.word;
       petal.title = wordObj.word;
 
@@ -1138,19 +1135,212 @@ function renderDictionaryView() {
   renderTable();
 }
 
+// ==========================================================================
+// WORD BANK & 3D FLASHCARD ENGINE
+// ==========================================================================
+
+appState.wbMode = appState.wbMode || "cards";
+appState.flashcardIndex = appState.flashcardIndex || 0;
+appState.flashcardFlipped = false;
+
 function renderWordBankView() {
-  const container = document.getElementById("wb-learned-tags-cloud");
+  // 1. View Mode Button Listeners
+  const modeBtns = document.querySelectorAll(".wb-mode-btn");
+  modeBtns.forEach(btn => {
+    btn.classList.toggle("active", btn.dataset.mode === appState.wbMode);
+    btn.onclick = () => {
+      appState.wbMode = btn.dataset.mode;
+      renderWordBankView();
+    };
+  });
+
+  const sectionCards = document.getElementById("wb-container-cards");
+  const sectionSentences = document.getElementById("wb-container-sentences");
+  const sectionTags = document.getElementById("wb-container-tags");
   const emptyMsg = document.getElementById("wb-empty-msg");
+
+  if (sectionCards) sectionCards.style.display = appState.wbMode === "cards" ? "block" : "none";
+  if (sectionSentences) sectionSentences.style.display = appState.wbMode === "sentences" ? "block" : "none";
+  if (sectionTags) sectionTags.style.display = appState.wbMode === "tags" ? "block" : "none";
+
+  // 2. Gather dataset for Word Bank
+  let learnedItems = [];
+  if (appState.bloomedWords && appState.bloomedWords.size > 0) {
+    const bloomedSet = appState.bloomedWords;
+    if (learningDatabase && learningDatabase.vocabularyBank) {
+      learnedItems = learningDatabase.vocabularyBank.filter(w => bloomedSet.has(w.word));
+    }
+  }
+
+  // Fallback: If no words bloomed yet, show active lesson items or top 10 vocab items so user can experience flashcards!
+  if (learnedItems.length === 0) {
+    if (appState.activeLesson && appState.activeLesson.vocabulary) {
+      learnedItems = appState.activeLesson.vocabulary;
+    } else if (learningDatabase && learningDatabase.vocabularyBank) {
+      learnedItems = learningDatabase.vocabularyBank.slice(0, 10);
+    }
+  }
+
+  if (emptyMsg) {
+    emptyMsg.style.display = (appState.bloomedWords.size === 0 && learnedItems.length === 0) ? "block" : "none";
+  }
+
+  if (appState.wbMode === "cards") {
+    renderFlashcardSection(learnedItems);
+  } else if (appState.wbMode === "sentences") {
+    renderSentencesSection(learnedItems);
+  } else if (appState.wbMode === "tags") {
+    renderTagsSection();
+  }
+}
+
+function renderFlashcardSection(items) {
+  if (!items || items.length === 0) return;
+
+  if (appState.flashcardIndex >= items.length) {
+    appState.flashcardIndex = 0;
+  }
+
+  const activeCard = document.getElementById("active-flashcard");
+  const currentItem = items[appState.flashcardIndex];
+
+  // Element references
+  const badgeLevel = document.getElementById("fc-badge-level");
+  const badgeCognate = document.getElementById("fc-badge-cognate");
+  const wordTr = document.getElementById("fc-word-tr");
+  const wordAr = document.getElementById("fc-word-ar");
+  const sentenceTr = document.getElementById("fc-sentence-tr");
+
+  const meaningEn = document.getElementById("fc-meaning-en");
+  const sentenceAr = document.getElementById("fc-sentence-ar");
+  const sentenceEn = document.getElementById("fc-sentence-en");
+  const mindPalace = document.getElementById("fc-mind-palace");
+
+  const counter = document.getElementById("fc-counter");
+  const btnPrev = document.getElementById("btn-fc-prev");
+  const btnNext = document.getElementById("btn-fc-next");
+  const btnFlip = document.getElementById("btn-fc-flip");
+  const btnAudioFront = document.getElementById("btn-fc-audio");
+  const btnAudioBack = document.getElementById("btn-fc-audio-back");
+
+  // Populate card front
+  if (badgeLevel) badgeLevel.textContent = currentItem.cefr_level || "A1";
+  if (badgeCognate) badgeCognate.style.display = currentItem.is_cognate ? "inline-block" : "none";
+  if (wordTr) wordTr.textContent = currentItem.word || "";
+  if (wordAr) wordAr.textContent = currentItem.arabic_word || currentItem.arabic_meaning || "";
+  if (sentenceTr) sentenceTr.textContent = currentItem.sentence_tr || `${currentItem.word} kelimesi ile pratik yapın.`;
+
+  // Populate card back
+  if (meaningEn) meaningEn.textContent = currentItem.meaning_en || currentItem.meaning_tr || "";
+  if (sentenceAr) sentenceAr.textContent = currentItem.sentence_ar || "ـ";
+  if (sentenceEn) sentenceEn.textContent = currentItem.sentence_en || "";
+  if (mindPalace) mindPalace.textContent = currentItem.mind_palace_tr || "Görsel hafıza ipucu hazırlanıyor...";
+
+  // Counter & Nav state
+  if (counter) counter.textContent = `Kart ${appState.flashcardIndex + 1} / ${items.length}`;
+  if (btnPrev) btnPrev.disabled = appState.flashcardIndex === 0;
+  if (btnNext) btnNext.disabled = appState.flashcardIndex === items.length - 1;
+
+  // Reset card rotation
+  appState.flashcardFlipped = false;
+  if (activeCard) activeCard.classList.remove("flipped");
+
+  // Card Flip Handlers
+  const toggleFlip = () => {
+    appState.flashcardFlipped = !appState.flashcardFlipped;
+    if (activeCard) activeCard.classList.toggle("flipped", appState.flashcardFlipped);
+  };
+
+  if (activeCard) activeCard.onclick = toggleFlip;
+  if (btnFlip) btnFlip.onclick = (e) => {
+    e.stopPropagation();
+    toggleFlip();
+  };
+
+  // Nav Handlers
+  if (btnPrev) {
+    btnPrev.onclick = (e) => {
+      e.stopPropagation();
+      if (appState.flashcardIndex > 0) {
+        appState.flashcardIndex--;
+        renderFlashcardSection(items);
+      }
+    };
+  }
+
+  if (btnNext) {
+    btnNext.onclick = (e) => {
+      e.stopPropagation();
+      if (appState.flashcardIndex < items.length - 1) {
+        appState.flashcardIndex++;
+        renderFlashcardSection(items);
+      }
+    };
+  }
+
+  // Audio Handlers
+  if (btnAudioFront) {
+    btnAudioFront.onclick = (e) => {
+      e.stopPropagation();
+      speakText(`${currentItem.word}. ${currentItem.sentence_tr || ''}`);
+    };
+  }
+
+  if (btnAudioBack) {
+    btnAudioBack.onclick = (e) => {
+      e.stopPropagation();
+      speakText(currentItem.sentence_tr || currentItem.word);
+    };
+  }
+}
+
+function renderSentencesSection(items) {
+  const container = document.getElementById("wb-sentences-list-body");
+  if (!container) return;
   container.innerHTML = "";
 
-  const bloomedList = Array.from(appState.bloomedWords);
-
-  if (bloomedList.length === 0) {
-    emptyMsg.style.display = "block";
+  if (!items || items.length === 0) {
+    container.innerHTML = `<div class="dict-no-results"><span>🌱</span> <span>Henüz cümle bulunmuyor.</span></div>`;
     return;
   }
 
-  emptyMsg.style.display = "none";
+  items.forEach(item => {
+    const card = document.createElement("div");
+    card.className = "wb-sentence-card";
+    card.innerHTML = `
+      <div class="wb-sc-header">
+        <span class="wb-sc-word">🌸 ${item.word} ${item.is_cognate ? '💡' : ''}</span>
+        <button class="fc-audio-btn wb-sc-audio" title="Cümleyi Dinle">🔊</button>
+      </div>
+      <div class="wb-sc-tr">${item.sentence_tr || `${item.word} kelimesini içeren örnek cümle.`}</div>
+      ${item.sentence_ar ? `<div class="wb-sc-ar">${item.sentence_ar}</div>` : ''}
+      ${item.sentence_en ? `<div class="wb-sc-en">${item.sentence_en}</div>` : ''}
+      ${item.mind_palace_tr ? `<div class="wb-sc-mp">💡 <b>Zihin Sarayı:</b> ${item.mind_palace_tr}</div>` : ''}
+    `;
+
+    const audioBtn = card.querySelector(".wb-sc-audio");
+    if (audioBtn) {
+      audioBtn.onclick = () => speakText(item.sentence_tr || item.word);
+    }
+
+    container.appendChild(card);
+  });
+}
+
+function renderTagsSection() {
+  const container = document.getElementById("wb-learned-tags-cloud");
+  const emptyMsg = document.getElementById("wb-empty-msg");
+  if (!container) return;
+  container.innerHTML = "";
+
+  const bloomedList = Array.from(appState.bloomedWords || []);
+
+  if (bloomedList.length === 0) {
+    if (emptyMsg) emptyMsg.style.display = "block";
+    return;
+  }
+
+  if (emptyMsg) emptyMsg.style.display = "none";
 
   bloomedList.forEach(wName => {
     const tag = document.createElement("div");

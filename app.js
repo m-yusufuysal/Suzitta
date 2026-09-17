@@ -577,6 +577,30 @@ function launchLessonQuiz(lesson) {
   startInteractiveQuizEngine(`Ders Testi: ${lesson.title}`, lesson.vocabulary, 8);
 }
 
+function sanitizeMindPalacePrompt(rawText, wordObj) {
+  if (!rawText) return "Zihin Sarayı görsel sahnesini canlandırarak doğru kelimeyi bulun.";
+
+  let clean = rawText;
+  clean = clean.replace(/^Zihin Sarayı:\s*/i, "").replace(/^Mind Palace:\s*/i, "").replace(/^قصر الذاكرة:\s*/i, "");
+
+  if (wordObj.word) {
+    clean = clean.replace(new RegExp(`'${escapeRegex(wordObj.word)}'`, 'gi'), "[ ✨ ??? ✨ ]");
+    clean = clean.replace(new RegExp(`"${escapeRegex(wordObj.word)}"`, 'gi'), "[ ✨ ??? ✨ ]");
+    clean = clean.replace(new RegExp(`\\b${escapeRegex(wordObj.word)}\\b`, 'gi'), "[ ✨ ??? ✨ ]");
+  }
+  if (wordObj.tr && wordObj.tr !== wordObj.word) {
+    clean = clean.replace(new RegExp(`'${escapeRegex(wordObj.tr)}'`, 'gi'), "[ ✨ ??? ✨ ]");
+    clean = clean.replace(new RegExp(`\\b${escapeRegex(wordObj.tr)}\\b`, 'gi'), "[ ✨ ??? ✨ ]");
+  }
+  if (wordObj.ar) {
+    clean = clean.replace(new RegExp(`\\(${escapeRegex(wordObj.ar)}\\)`, 'g'), "");
+    clean = clean.replace(new RegExp(escapeRegex(wordObj.ar), 'g'), "");
+  }
+
+  clean = clean.replace(/\s+/g, " ").trim();
+  return clean;
+}
+
 function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
   if (!vocabList || vocabList.length === 0) {
     vocabList = learningDatabase.vocabularyBank;
@@ -643,7 +667,7 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
       correctVal = appState.currentLang === 'ar' ? wordObj.ar : wordObj.en;
     } else if (qType === 'sentence') {
       typeBadge = "💬 Cümle Tamamlama";
-      const sentenceClean = wordObj.sentence_tr ? wordObj.sentence_tr.replace(new RegExp(wordObj.word, 'gi'), '_____') : `... ${wordObj.en}`;
+      const sentenceClean = wordObj.sentence_tr ? wordObj.sentence_tr.replace(new RegExp(escapeRegex(wordObj.word), 'gi'), '_____') : `... ${wordObj.en}`;
       prompt = `Cümlede boş bırakılan yere hangi kelime gelmelidir?\n"${sentenceClean}"`;
       correctVal = wordObj.word;
     } else if (qType === 'audio') {
@@ -656,9 +680,10 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
       prompt = `"${rootNote}" (Arapça) kelimesi ile aynı kökten gelen Türkçe kelime hangisidir?`;
       correctVal = wordObj.word;
     } else if (qType === 'mind_palace') {
-      typeBadge = "🧠 Zihin Sarayı Hafıza Testi";
-      const mpText = appState.currentLang === 'en' ? (wordObj.mind_palace_en || wordObj.mind_palace_tr) : (wordObj.mind_palace_tr || wordObj.mind_palace_en);
-      prompt = `Zihin Sarayı Görsel Sahnesi:\n"${mpText}"\nBu görsel sahne hangi kelimeye aittir?`;
+      typeBadge = "🧠 Zihin Sarayı Görsel Hafıza Testi";
+      const mpRaw = appState.currentLang === 'en' ? (wordObj.mind_palace_en || wordObj.mind_palace_tr) : (wordObj.mind_palace_tr || wordObj.mind_palace_en);
+      const mpClean = sanitizeMindPalacePrompt(mpRaw, wordObj);
+      prompt = `🧠 Zihin Sarayı Görsel Sahnesi:\n"${mpClean}"\nBu görsel hafıza sahnesi hangi kelimeye aittir?`;
       correctVal = wordObj.word;
     }
 

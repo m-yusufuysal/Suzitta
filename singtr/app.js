@@ -1376,9 +1376,9 @@ function renderFlashcardSection(items) {
   const sentenceTr = document.getElementById("fc-sentence-tr");
 
   const meaningEn = document.getElementById("fc-meaning-en");
+  const meaningAr = document.getElementById("fc-meaning-ar");
   const sentenceAr = document.getElementById("fc-sentence-ar");
   const sentenceEn = document.getElementById("fc-sentence-en");
-  const mindPalace = document.getElementById("fc-mind-palace");
 
   const counter = document.getElementById("fc-counter");
   const btnPrev = document.getElementById("btn-fc-prev");
@@ -1388,17 +1388,20 @@ function renderFlashcardSection(items) {
   const btnAudioBack = document.getElementById("btn-fc-audio-back");
 
   // Populate card front
-  if (badgeLevel) badgeLevel.textContent = currentItem.cefr_level || "A1";
+  if (badgeLevel) badgeLevel.textContent = currentItem.level ? `Level A${currentItem.level}` : (currentItem.cefr_level || "A1");
   if (badgeCognate) badgeCognate.style.display = currentItem.is_cognate ? "inline-block" : "none";
   if (wordTr) wordTr.textContent = currentItem.word || "";
-  if (wordAr) wordAr.textContent = currentItem.arabic_word || currentItem.arabic_meaning || "";
+  if (wordAr) wordAr.textContent = getArabicMeaning(currentItem);
   if (sentenceTr) sentenceTr.textContent = currentItem.sentence_tr || `${currentItem.word} kelimesi ile pratik yapın.`;
 
   // Populate card back
-  if (meaningEn) meaningEn.textContent = currentItem.meaning_en || currentItem.meaning_tr || "";
+  const enMeaningStr = getEnglishMeaning(currentItem);
+  const arMeaningStr = getArabicMeaning(currentItem);
+
+  if (meaningEn) meaningEn.textContent = enMeaningStr || "Translation";
+  if (meaningAr) meaningAr.textContent = arMeaningStr || "";
   if (sentenceAr) sentenceAr.textContent = currentItem.sentence_ar || "ـ";
   if (sentenceEn) sentenceEn.textContent = currentItem.sentence_en || "";
-  if (mindPalace) mindPalace.textContent = currentItem.mind_palace_tr || "Görsel hafıza ipucu hazırlanıyor...";
 
   // Counter & Nav state
   if (counter) counter.textContent = `Kart ${appState.flashcardIndex + 1} / ${items.length}`;

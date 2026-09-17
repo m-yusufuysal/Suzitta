@@ -837,11 +837,11 @@ function renderQuizHubView() {
     };
   }
 
-  const btnMP = document.getElementById("btn-start-mind-palace-quiz");
-  if (btnMP) {
-    btnMP.onclick = () => {
-      const mpWords = learningDatabase.vocabularyBank.filter(w => w.mind_palace_tr || w.mind_palace_en);
-      startInteractiveQuizEngine("🧠 Zihin Sarayı Görsel Hafıza Testi", mpWords, 8);
+  const btnSentence = document.getElementById("btn-start-sentence-quiz");
+  if (btnSentence) {
+    btnSentence.onclick = () => {
+      const sentenceWords = learningDatabase.vocabularyBank.filter(w => w.sentence_tr);
+      startInteractiveQuizEngine("💬 Cümle & Bağlam Sınavı", sentenceWords, 10);
     };
   }
 
@@ -857,30 +857,6 @@ function launchLessonQuiz(lesson) {
   startInteractiveQuizEngine(`Ders Testi: ${lesson.title}`, lesson.vocabulary, 8);
 }
 
-function sanitizeMindPalacePrompt(rawText, wordObj) {
-  if (!rawText) return "Zihin Sarayı görsel sahnesini canlandırarak doğru kelimeyi bulun.";
-
-  let clean = rawText;
-  clean = clean.replace(/^Zihin Sarayı:\s*/i, "").replace(/^Mind Palace:\s*/i, "").replace(/^قصر الذاكرة:\s*/i, "");
-
-  if (wordObj.word) {
-    clean = clean.replace(new RegExp(`'${escapeRegex(wordObj.word)}'`, 'gi'), "[ ✨ ??? ✨ ]");
-    clean = clean.replace(new RegExp(`"${escapeRegex(wordObj.word)}"`, 'gi'), "[ ✨ ??? ✨ ]");
-    clean = clean.replace(new RegExp(`\\b${escapeRegex(wordObj.word)}\\b`, 'gi'), "[ ✨ ??? ✨ ]");
-  }
-  if (wordObj.tr && wordObj.tr !== wordObj.word) {
-    clean = clean.replace(new RegExp(`'${escapeRegex(wordObj.tr)}'`, 'gi'), "[ ✨ ??? ✨ ]");
-    clean = clean.replace(new RegExp(`\\b${escapeRegex(wordObj.tr)}\\b`, 'gi'), "[ ✨ ??? ✨ ]");
-  }
-  if (wordObj.ar) {
-    clean = clean.replace(new RegExp(`\\(${escapeRegex(wordObj.ar)}\\)`, 'g'), "");
-    clean = clean.replace(new RegExp(escapeRegex(wordObj.ar), 'g'), "");
-  }
-
-  clean = clean.replace(/\s+/g, " ").trim();
-  return clean;
-}
-
 function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
   if (!vocabList || vocabList.length === 0) {
     vocabList = learningDatabase.vocabularyBank;
@@ -892,7 +868,6 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
   const questions = selectedWords.map(wordObj => {
     let possibleTypes = ['translate', 'reverse_translate', 'sentence', 'audio'];
     if (wordObj.is_cognate) possibleTypes.push('cognate');
-    if (wordObj.mind_palace_tr || wordObj.mind_palace_en) possibleTypes.push('mind_palace');
 
     const qType = possibleTypes[Math.floor(Math.random() * possibleTypes.length)];
 
@@ -962,12 +937,6 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
       typeBadge = "💡 Arapça Ortak Kök Testi";
       const rootNote = wordObj.cognate_info ? (wordObj.cognate_info.note_ar || getArabicMeaning(wordObj)) : getArabicMeaning(wordObj);
       prompt = `"${rootNote}" (Arapça) kelimesi ile aynı kökten gelen Türkçe kelime hangisidir?`;
-      correctVal = wordObj.word;
-    } else if (qType === 'mind_palace') {
-      typeBadge = "🧠 Zihin Sarayı Görsel Hafıza Testi";
-      const mpRaw = appState.currentLang === 'en' ? (wordObj.mind_palace_en || wordObj.mind_palace_tr) : (wordObj.mind_palace_tr || wordObj.mind_palace_en);
-      const mpClean = sanitizeMindPalacePrompt(mpRaw, wordObj);
-      prompt = `🧠 Zihin Sarayı Görsel Sahnesi:\n"${mpClean}"\nBu görsel hafıza sahnesi hangi kelimeye aittir?`;
       correctVal = wordObj.word;
     }
 

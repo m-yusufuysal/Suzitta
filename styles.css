@@ -833,25 +833,30 @@ main {
   cursor: not-allowed;
 }
 
-/* Grid Style Petal Items */
+/* Grid Style Petal Items (100% Clean Mobile & Desktop List View) */
 .daisy-petal-item.grid-style {
   position: relative !important;
   top: auto !important;
   left: auto !important;
+  transform: none !important;
   width: 100% !important;
-  height: 44px !important;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px !important;
-  border-radius: var(--radius-pill);
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid var(--color-border-subtle);
-  font-size: 12px;
-  font-weight: 600;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-  cursor: pointer;
-  transition: var(--transition-fluid);
+  max-width: 100% !important;
+  height: 46px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 10px !important;
+  padding: 8px 14px !important;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1.5px solid var(--glass-border) !important;
+  font-size: 13.5px !important;
+  font-weight: 700 !important;
+  color: var(--color-primary-dark) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important;
+  cursor: pointer !important;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease !important;
+  box-sizing: border-box !important;
 }
 
 .daisy-petal-item.grid-style .petal-label {
@@ -859,12 +864,20 @@ main {
   text-overflow: ellipsis;
   white-space: nowrap;
   flex: 1;
+  text-align: left;
 }
 
 .daisy-petal-item.grid-style:hover {
-  transform: translateY(-2px);
-  border-color: var(--color-primary);
-  box-shadow: 0 4px 12px rgba(46, 125, 50, 0.2);
+  transform: translateY(-2px) !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 6px 16px rgba(45, 90, 39, 0.15) !important;
+}
+
+.daisy-petal-item.grid-style.selected {
+  transform: scale(1.02) !important;
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 16px rgba(45, 90, 39, 0.3) !important;
+  background: #F0F7F0 !important;
 }
 
 .daisy-petal-item.compact-petal {

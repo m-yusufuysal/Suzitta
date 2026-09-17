@@ -229,11 +229,13 @@ function initNavigation() {
   const closeDrawer = () => {
     if (asideElement) asideElement.classList.remove("open");
     if (drawerBackdrop) drawerBackdrop.classList.remove("active");
+    document.body.style.overflow = "";
   };
 
   const openDrawer = () => {
     if (asideElement) asideElement.classList.add("open");
     if (drawerBackdrop) drawerBackdrop.classList.add("active");
+    document.body.style.overflow = "hidden";
   };
 
   if (drawerBtn) drawerBtn.addEventListener("click", openDrawer);

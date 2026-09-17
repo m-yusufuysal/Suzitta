@@ -797,6 +797,16 @@ function updateQuizStatsDisplay() {
   if (elPoints) elPoints.textContent = points.toString();
 }
 
+function getVocabularyBank() {
+  if (learningDatabase && Array.isArray(learningDatabase.vocabularyBank) && learningDatabase.vocabularyBank.length > 0) {
+    return learningDatabase.vocabularyBank;
+  }
+  if (learningDatabase && Array.isArray(learningDatabase.levels)) {
+    return learningDatabase.levels.flatMap(lvl => (lvl.lessons || []).flatMap(les => les.vocabulary || []));
+  }
+  return [];
+}
+
 function initQuizHubGlobalListeners() {
   const attach = (id, fn) => {
     const btn = document.getElementById(id);
@@ -834,23 +844,23 @@ function initQuizHubGlobalListeners() {
   });
 
   attach("btn-start-cognates-quiz", () => {
-    const cognates = learningDatabase.vocabularyBank.filter(w => w.is_cognate);
-    startInteractiveQuizEngine("💡 Arapça Ortak Kelimeler Testi", cognates, 10);
+    const cognates = getVocabularyBank().filter(w => w.is_cognate || w.cognate_info);
+    startInteractiveQuizEngine("💡 Arapça Ortak Kelimeler Testi", cognates.length > 0 ? cognates : getVocabularyBank().slice(0, 15), 10);
   });
 
   attach("btn-start-level-exam", () => {
     const lvl = getCurrentLevelObj();
-    const allWordsInLevel = lvl.lessons.flatMap(l => l.vocabulary);
-    startInteractiveQuizEngine(`🏆 Seviye Bitirme Sınavı (${lvl.cefrCode})`, allWordsInLevel, 10);
+    const allWordsInLevel = lvl ? lvl.lessons.flatMap(l => l.vocabulary) : getVocabularyBank().slice(0, 30);
+    startInteractiveQuizEngine(`🏆 Seviye Bitirme Sınavı (${lvl ? lvl.cefrCode : 'A1'})`, allWordsInLevel, 10);
   });
 
   attach("btn-start-sentence-quiz", () => {
-    const sentenceWords = learningDatabase.vocabularyBank.filter(w => w.sentence_tr);
-    startInteractiveQuizEngine("💬 Cümle & Bağlam Sınavı", sentenceWords, 10);
+    const sentenceWords = getVocabularyBank().filter(w => w.sentence_tr);
+    startInteractiveQuizEngine("💬 Cümle & Bağlam Sınavı", sentenceWords.length > 0 ? sentenceWords : getVocabularyBank().slice(0, 15), 10);
   });
 
   attach("btn-start-speed-quiz", () => {
-    startInteractiveQuizEngine("⚡ Karma Hızlı Pekiştirme Sınavı", learningDatabase.vocabularyBank, 10);
+    startInteractiveQuizEngine("⚡ Karma Hızlı Pekiştirme Sınavı", getVocabularyBank(), 10);
   });
 }
 
@@ -1201,19 +1211,34 @@ function renderCognatesView() {
   });
 
   // Strict Cognates Filter Engine: Authentically matching Arabic roots & English loanwords
-  const allBank = learningDatabase.vocabularyBank;
+  const allBank = getVocabularyBank();
   let cognates = [];
 
+  const isArabicCognateWord = (w) => {
+    if (!w || !w.word) return false;
+    if (w.is_cognate === true) return true;
+    if (w.cognate_info && (w.cognate_info.ar_root || w.cognate_info.note_ar || w.cognate_info.note_tr)) return true;
+    return false;
+  };
+
+  const isEnglishLoanword = (w) => {
+    if (!w || !w.word) return false;
+    const cleanWord = w.word.trim().toLowerCase();
+    return englishLoanwordList.includes(cleanWord);
+  };
+
   if (appState.cognateFilter === "ar") {
-    cognates = allBank.filter(w => w.is_cognate === true && !englishLoanwordList.includes((w.word || "").toLowerCase()));
+    cognates = allBank.filter(w => isArabicCognateWord(w) && !isEnglishLoanword(w));
   } else if (appState.cognateFilter === "en") {
-    cognates = allBank.filter(w => englishLoanwordList.includes((w.word || "").toLowerCase()));
-    if (cognates.length === 0) {
-      cognates = allBank.filter(w => w.is_cognate === true).slice(0, 20);
-    }
+    cognates = allBank.filter(w => isEnglishLoanword(w));
   } else {
     // "all": Arabic cognates + English loanwords
-    cognates = allBank.filter(w => w.is_cognate === true || englishLoanwordList.includes((w.word || "").toLowerCase()));
+    cognates = allBank.filter(w => isArabicCognateWord(w) || isEnglishLoanword(w));
+  }
+
+  // Robust Fallback if filter returns empty
+  if (cognates.length === 0) {
+    cognates = allBank.filter(w => w.is_cognate === true || w.ar || w.arabic_word);
   }
 
   if (cognates.length === 0) {

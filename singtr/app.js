@@ -801,13 +801,22 @@ function initQuizHubGlobalListeners() {
   const attach = (id, fn) => {
     const btn = document.getElementById(id);
     if (!btn) return;
-    btn.onclick = (e) => {
+
+    const handler = (e) => {
       if (e) {
         e.preventDefault();
         e.stopPropagation();
       }
       fn();
     };
+
+    btn.onclick = handler;
+
+    const card = btn.closest(".quiz-cat-card");
+    if (card) {
+      card.style.cursor = "pointer";
+      card.onclick = handler;
+    }
   };
 
   const getActiveLesson = () => {
@@ -1191,25 +1200,20 @@ function renderCognatesView() {
     };
   });
 
-  // Strict Cognates Filter: ONLY authentic cognates (is_cognate === true OR valid cognate_info)
-  let cognates = learningDatabase.vocabularyBank.filter(w => w.is_cognate === true || (w.cognate_info && w.cognate_info.note_ar));
+  // Strict Cognates Filter Engine: Authentically matching Arabic roots & English loanwords
+  const allBank = learningDatabase.vocabularyBank;
+  let cognates = [];
 
   if (appState.cognateFilter === "ar") {
-    cognates = cognates.filter(w => w.is_cognate === true || w.arabic_word || w.ar);
+    cognates = allBank.filter(w => w.is_cognate === true && !englishLoanwordList.includes((w.word || "").toLowerCase()));
   } else if (appState.cognateFilter === "en") {
-    cognates = cognates.filter(w => {
-      const wLower = (w.word || "").toLowerCase();
-      return w.is_cognate && (
-        wLower.includes("biyo") || wLower.includes("tekno") || wLower.includes("tele") ||
-        wLower.includes("oto") || wLower.includes("sistem") || wLower.includes("kamera") ||
-        wLower.includes("doktor") || wLower.includes("hastane") || wLower.includes("banka") ||
-        wLower.includes("otobüs") || wLower.includes("radyo") || wLower.includes("müze")
-      );
-    });
-    // Fallback if strict English filter returns < 5 items
-    if (cognates.length < 5) {
-      cognates = learningDatabase.vocabularyBank.filter(w => w.is_cognate === true).slice(0, 15);
+    cognates = allBank.filter(w => englishLoanwordList.includes((w.word || "").toLowerCase()));
+    if (cognates.length === 0) {
+      cognates = allBank.filter(w => w.is_cognate === true).slice(0, 20);
     }
+  } else {
+    // "all": Arabic cognates + English loanwords
+    cognates = allBank.filter(w => w.is_cognate === true || englishLoanwordList.includes((w.word || "").toLowerCase()));
   }
 
   if (cognates.length === 0) {
@@ -1222,16 +1226,22 @@ function renderCognatesView() {
     card.className = "cognate-card liquid-glass-card";
     const enMeaning = getEnglishMeaning(c);
     const arMeaning = getArabicMeaning(c);
+    const isEnglish = englishLoanwordList.includes((c.word || "").toLowerCase());
 
     card.innerHTML = `
-      <div class="cognate-card-top" style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+      <div class="cognate-card-top" style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
         <div>
-          <h4 style="font-size: 18px; font-weight: 800; color: var(--color-primary-dark); margin: 0;">${c.word}</h4>
+          <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+            <h4 style="font-size: 18px; font-weight: 800; color: var(--color-primary-dark); margin: 0;">${c.word}</h4>
+            <span style="font-size: 11px; background: ${isEnglish ? 'rgba(33,150,243,0.12)' : 'rgba(242,187,5,0.18)'}; color: ${isEnglish ? '#1565C0' : '#B37D00'}; padding: 2px 8px; border-radius: 10px; font-weight: 700;">
+              ${isEnglish ? '🌐 İngilizce Okunuşu Aynı' : '🇸🇦 Arapça Okunuşu Aynı'}
+            </span>
+          </div>
           <span style="font-size: 12px; color: var(--color-text-sub);">${c.pronunciation || ''}</span>
         </div>
         <button class="fc-audio-btn cog-audio-btn" title="Telaffuzu Dinle">🔊</button>
       </div>
-      <div class="cognate-meanings" style="margin: 8px 0; display: flex; flex-direction: column; gap: 4px;">
+      <div class="cognate-meanings" style="margin: 10px 0; display: flex; flex-direction: column; gap: 4px;">
         ${enMeaning ? `<p style="font-size: 13.5px; font-weight: 600; color: var(--color-text-main); margin: 0;">🇬🇧 <strong>EN:</strong> ${enMeaning}</p>` : ''}
         ${arMeaning ? `<p style="font-size: 15px; font-family: 'Amiri', serif; color: var(--color-accent-dark); margin: 0;" dir="rtl">🇸🇦 <strong>AR:</strong> ${arMeaning}</p>` : ''}
       </div>

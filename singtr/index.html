@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Suzim'in Türkçe Bahçesi - Learn Turkish (TR / EN / AR / ZH)</title>
-  <link rel="stylesheet" href="styles.css?v=3518_v4">
+  <link rel="stylesheet" href="styles.css?v=3518_v5">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
@@ -43,17 +43,23 @@
     </div>
   </div>
 
+  <!-- Mobile Sidebar Drawer Backdrop -->
+  <div class="sidebar-drawer-backdrop" id="drawer-backdrop"></div>
+
   <!-- App Wrapper Container -->
   <div id="app-container">
     
     <!-- Sidebar Navigation (Liquid Glass Pane) -->
     <aside class="liquid-glass-sidebar">
       <div class="logo-section">
-        <div class="logo-daisy-icon">🌼</div>
-        <div>
-          <h1 id="ui-brand-title">Suzim'in Türkçe Bahçesi</h1>
-          <span class="ar-brand-sub">بستان سوزي للغة التركية</span>
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <div class="logo-daisy-icon">🌼</div>
+          <div>
+            <h1 id="ui-brand-title">Suzim'in Türkçe Bahçesi</h1>
+            <span class="ar-brand-sub">بستان سوزي للغة التركية</span>
+          </div>
         </div>
+        <button class="sidebar-close-btn" id="btn-close-drawer" title="Menüyü Kapat">✕</button>
       </div>
 
       <!-- Navigation Buttons -->
@@ -385,7 +391,7 @@
     </button>
   </nav>
 
-  <script src="database.js?v=3518_v4"></script>
-  <script src="app.js?v=3518_v4"></script>
+  <script src="database.js?v=3518_v5"></script>
+  <script src="app.js?v=3518_v5"></script>
 </body>
 </html>

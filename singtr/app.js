@@ -221,6 +221,25 @@ function applyTrilingualText() {
 
 // Main View Navigation
 function initNavigation() {
+  const drawerBtn = document.getElementById("btn-toggle-drawer");
+  const drawerCloseBtn = document.getElementById("btn-close-drawer");
+  const drawerBackdrop = document.getElementById("drawer-backdrop");
+  const asideElement = document.querySelector("aside");
+
+  const closeDrawer = () => {
+    if (asideElement) asideElement.classList.remove("open");
+    if (drawerBackdrop) drawerBackdrop.classList.remove("active");
+  };
+
+  const openDrawer = () => {
+    if (asideElement) asideElement.classList.add("open");
+    if (drawerBackdrop) drawerBackdrop.classList.add("active");
+  };
+
+  if (drawerBtn) drawerBtn.addEventListener("click", openDrawer);
+  if (drawerCloseBtn) drawerCloseBtn.addEventListener("click", closeDrawer);
+  if (drawerBackdrop) drawerBackdrop.addEventListener("click", closeDrawer);
+
   const navMap = [
     { btnId: "nav-btn-garden", mobId: "mob-nav-garden", viewId: "garden" },
     { btnId: "nav-btn-cognates", mobId: "mob-nav-cognates", viewId: "cognates" },
@@ -240,23 +259,18 @@ function initNavigation() {
 
       appState.activeView = item.viewId;
       renderCurrentView();
-      document.querySelector("aside").classList.remove("open");
+      closeDrawer();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     if (desktopBtn) desktopBtn.addEventListener("click", switchHandler);
     if (mobBtn) mobBtn.addEventListener("click", switchHandler);
   });
 
-  const drawerBtn = document.getElementById("btn-toggle-drawer");
-  if (drawerBtn) {
-    drawerBtn.addEventListener("click", () => {
-      document.querySelector("aside").classList.toggle("open");
-    });
-  }
-
   document.getElementById("btn-back-to-garden").addEventListener("click", () => {
     document.getElementById("active-lesson-section").style.display = "none";
     document.getElementById("level-overview-section").style.display = "block";
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 }
 
@@ -578,16 +592,43 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
 
     const qType = possibleTypes[Math.floor(Math.random() * possibleTypes.length)];
 
+    // SMART TOPIC-MATCHED DISTRACTOR GENERATOR
+    // Priority 1: Other words in current lesson/vocabList
+    // Priority 2: Other words in current level
+    // Priority 3: Overall vocabulary bank
+    let candidatePool = vocabList.filter(w => w.word !== wordObj.word);
+
+    if (candidatePool.length < 3 && wordObj.level) {
+      const sameLevelWords = learningDatabase.vocabularyBank.filter(
+        w => w.level === wordObj.level && w.word !== wordObj.word && !candidatePool.some(cp => cp.word === w.word)
+      );
+      candidatePool = candidatePool.concat(sameLevelWords);
+    }
+
+    if (candidatePool.length < 3) {
+      const remainingBank = learningDatabase.vocabularyBank.filter(
+        w => w.word !== wordObj.word && !candidatePool.some(cp => cp.word === w.word)
+      );
+      candidatePool = candidatePool.concat(remainingBank);
+    }
+
+    const poolShuffled = [...candidatePool].sort(() => Math.random() - 0.5);
+
     const distractors = [];
-    const pool = learningDatabase.vocabularyBank.filter(w => w.word !== wordObj.word);
-    while (distractors.length < 3 && pool.length > 0) {
-      const randIndex = Math.floor(Math.random() * pool.length);
-      const item = pool.splice(randIndex, 1)[0];
+    for (let item of poolShuffled) {
+      if (distractors.length >= 3) break;
+
+      let val = "";
       if (qType === 'translate') {
-        const val = appState.currentLang === 'ar' ? item.ar : item.en;
-        if (val && !distractors.includes(val)) distractors.push(val);
+        val = appState.currentLang === 'ar' ? item.ar : item.en;
       } else {
-        if (item.word && !distractors.includes(item.word)) distractors.push(item.word);
+        val = item.word;
+      }
+
+      const correctOptionVal = (qType === 'translate') ? (appState.currentLang === 'ar' ? wordObj.ar : wordObj.en) : wordObj.word;
+
+      if (val && val !== correctOptionVal && !distractors.includes(val)) {
+        distractors.push(val);
       }
     }
 
@@ -644,6 +685,31 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
   const card = document.createElement("div");
   card.className = "welcome-glass-card quiz-runner-card";
 
+  // Permanent Close X Button
+  const closeBtnX = document.createElement("button");
+  closeBtnX.className = "modal-close-icon-btn";
+  closeBtnX.id = "btn-quiz-modal-x";
+  closeBtnX.setAttribute("title", "Sınavdan Çık / Kapat");
+  closeBtnX.innerHTML = "✕";
+
+  const closeQuiz = () => {
+    backdrop.remove();
+  };
+
+  closeBtnX.onclick = closeQuiz;
+  backdrop.onclick = (e) => {
+    if (e.target === backdrop) closeQuiz();
+  };
+
+  const cardBody = document.createElement("div");
+  cardBody.id = "quiz-card-body";
+  cardBody.style.width = "100%";
+
+  card.appendChild(closeBtnX);
+  card.appendChild(cardBody);
+  backdrop.appendChild(card);
+  document.body.appendChild(backdrop);
+
   const renderCurrentQuestion = () => {
     answered = false;
     if (currentIdx >= questions.length) {
@@ -659,7 +725,7 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
 
       speakText(praiseMsg);
 
-      card.innerHTML = `
+      cardBody.innerHTML = `
         <div class="welcome-flower-icon">🏆</div>
         <h2>Sınav Tamamlandı! 🎉</h2>
         <div style="font-size: 32px; font-weight: 800; color: var(--color-primary); margin: 10px 0;">%${percent} Başarı</div>
@@ -679,9 +745,7 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
         backdrop.remove();
         startInteractiveQuizEngine(quizTitle, vocabList, questionCount);
       };
-      document.getElementById("btn-quiz-close").onclick = () => {
-        backdrop.remove();
-      };
+      document.getElementById("btn-quiz-close").onclick = closeQuiz;
       return;
     }
 
@@ -692,8 +756,8 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
       setTimeout(() => speakText(q.wordObj.word), 300);
     }
 
-    card.innerHTML = `
-      <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+    cardBody.innerHTML = `
+      <div style="width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding-right: 28px;">
         <span style="font-size: 12px; font-weight: 700; color: var(--color-secondary);">${escapeHtml(quizTitle)}</span>
         <span style="font-size: 12px; font-weight: 700; color: var(--color-primary);">Soru ${currentIdx + 1} / ${questions.length}</span>
       </div>
@@ -734,7 +798,7 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
       document.getElementById("btn-quiz-tts-listen").onclick = () => speakText(q.wordObj.word);
     }
 
-    const optBtns = card.querySelectorAll(".quiz-opt-btn");
+    const optBtns = cardBody.querySelectorAll(".quiz-opt-btn");
     optBtns.forEach(btn => {
       btn.onclick = () => {
         if (answered) return;
@@ -776,6 +840,10 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
             currentIdx++;
             renderCurrentQuestion();
           };
+
+          setTimeout(() => {
+            card.scrollTo({ top: card.scrollHeight, behavior: 'smooth' });
+          }, 150);
         }
       };
     });

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Suzim'in Türkçe Bahçesi - Learn Turkish (TR / EN / AR / ZH)</title>
-  <link rel="stylesheet" href="styles.css?v=3518_v7">
+  <link rel="stylesheet" href="styles.css?v=3518_v8">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
@@ -408,37 +408,79 @@
         <div class="quiz-hub-hero-card liquid-glass-card">
           <div class="quiz-hub-header">
             <h3 id="ui-quiz-hub-title">📝 Suzim'in Türkçe Test & Quiz Merkezi</h3>
-            <p id="ui-quiz-hub-desc">Öğrendiğin tüm kelimeleri, Arapça ortak kökleri ve Zihin Sarayı tekniklerini interaktif sınavlarla pekiştir!</p>
+            <p id="ui-quiz-hub-desc">Öğrendiğin kelimeleri, Arapça ortak kökleri ve Zihin Sarayı hafıza tekniklerini interaktif sınavlarla pekiştir!</p>
           </div>
 
-          <!-- Quiz Categories Grid -->
+          <!-- Quiz Performance Stats Bar -->
+          <div class="quiz-performance-bar" id="quiz-performance-bar">
+            <div class="quiz-stat-pill">
+              <span class="qs-icon">🏆</span>
+              <div class="qs-info">
+                <span class="qs-val" id="qs-total-completed">0</span>
+                <span class="qs-lbl">Tamamlanan Test</span>
+              </div>
+            </div>
+            <div class="quiz-stat-pill">
+              <span class="qs-icon">🎯</span>
+              <div class="qs-info">
+                <span class="qs-val" id="qs-avg-accuracy">%0</span>
+                <span class="qs-lbl">Ortalama Başarı</span>
+              </div>
+            </div>
+            <div class="quiz-stat-pill">
+              <span class="qs-icon">🏅</span>
+              <div class="qs-info">
+                <span class="qs-val" id="qs-total-points">0</span>
+                <span class="qs-lbl">Sınav Puanı</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quiz Categories Grid (5 Modes) -->
           <div class="quiz-categories-grid">
+            <!-- Mode 1: Active Lesson Quiz -->
             <div class="quiz-cat-card liquid-glass-card">
+              <div class="quiz-cat-badge" id="quiz-badge-lesson">Aktif Ders</div>
               <div class="quiz-cat-icon">🌸</div>
               <h4>Aktif Ders Testi</h4>
-              <p>Mevcut dersteki kelimeler, cümleler ve telaffuz ile interaktif pratik yapın.</p>
+              <p id="quiz-desc-lesson">Seçili dersteki kelimeler, örnek cümleler ve sesli telaffuzlar ile pratik yapın.</p>
               <button class="quiz-start-hub-btn" id="btn-start-current-lesson-quiz">Ders Testini Başlat 🚀</button>
             </div>
 
+            <!-- Mode 2: Cognates Arabic Quiz -->
             <div class="quiz-cat-card liquid-glass-card">
+              <div class="quiz-cat-badge">Ortak Kökler</div>
               <div class="quiz-cat-icon">💡</div>
               <h4>Arapça Ortak Kelimeler Testi</h4>
               <p>Türkçe ile Arapça arasındaki kök eşleştirmelerini ve ortak kelimeleri sınayın.</p>
               <button class="quiz-start-hub-btn" id="btn-start-cognates-quiz">Ortak Kelimeler Testi 💡</button>
             </div>
 
+            <!-- Mode 3: CEFR Level Exam -->
             <div class="quiz-cat-card liquid-glass-card">
+              <div class="quiz-cat-badge" id="quiz-badge-level">Seviye Sınavı</div>
               <div class="quiz-cat-icon">🏆</div>
               <h4>Seviye Bitirme Sınavı</h4>
-              <p>Seçili CEFR seviyesindeki (A1..C1) konulardan oluşan 10 soruluk büyük seviye sınavı.</p>
+              <p id="quiz-desc-level">Mevcut CEFR seviyesindeki tüm konulardan oluşan 10 soruluk seviye sınavı.</p>
               <button class="quiz-start-hub-btn" id="btn-start-level-exam">Seviye Sınavını Başlat 🏆</button>
             </div>
 
+            <!-- Mode 4: Mind Palace Visual Memory Quiz -->
             <div class="quiz-cat-card liquid-glass-card">
+              <div class="quiz-cat-badge">Görsel Hafıza</div>
               <div class="quiz-cat-icon">🧠</div>
               <h4>Zihin Sarayı Görsel Hafıza Testi</h4>
-              <p>Zihin Sarayı sahneleri ve görsel ipuçları ile kelimelerin hafızadaki yerini sınayın.</p>
+              <p>Zihin Sarayı sahneleri ve maskelenmiş hafıza ipuçları ile kelimeleri canlandırın.</p>
               <button class="quiz-start-hub-btn" id="btn-start-mind-palace-quiz">Hafıza Testini Başlat ⚡</button>
+            </div>
+
+            <!-- Mode 5: Speed Challenge Mixed Quiz -->
+            <div class="quiz-cat-card liquid-glass-card">
+              <div class="quiz-cat-badge">Hızlı Karma</div>
+              <div class="quiz-cat-icon">⚡</div>
+              <h4>Karma Hızlı Sınav</h4>
+              <p>Tüm seviyelerdeki kelimelerden rastgele derlenen 10 soruluk hızlı pekiştirme sınavı.</p>
+              <button class="quiz-start-hub-btn" id="btn-start-speed-quiz">Karma Sınavı Başlat ⚡</button>
             </div>
           </div>
         </div>
@@ -482,7 +524,7 @@
     </button>
   </nav>
 
-  <script src="database.js?v=3518_v7"></script>
-  <script src="app.js?v=3518_v7"></script>
+  <script src="database.js?v=3518_v8"></script>
+  <script src="app.js?v=3518_v8"></script>
 </body>
 </html>

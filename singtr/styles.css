@@ -1566,6 +1566,64 @@ main {
   border-color: #D32F2F;
 }
 
+/* Quiz Performance Header Bar */
+.quiz-performance-bar {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 16px 0 24px 0;
+}
+
+.quiz-stat-pill {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.quiz-stat-pill .qs-icon {
+  font-size: 20px;
+}
+
+.quiz-stat-pill .qs-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-stat-pill .qs-val {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--color-primary-dark);
+  line-height: 1.1;
+}
+
+.quiz-stat-pill .qs-lbl {
+  font-size: 10.5px;
+  font-weight: 600;
+  color: var(--color-text-sub);
+}
+
+.quiz-cat-card {
+  position: relative;
+}
+
+.quiz-cat-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(45, 90, 39, 0.1);
+  color: var(--color-primary-dark);
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+}
+
 /* Quiz Runner Styles */
 .quiz-interactive-backdrop {
   z-index: 1000;

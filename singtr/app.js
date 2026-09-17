@@ -712,14 +712,56 @@ function renderWordInspector(wordObj, petalElement) {
 // Interactive Quiz & Test Suite (Multi-Type Questions, Audio TTS, Zihin Sarayı Box)
 // ═══════════════════════════════════════════════════════════════
 
+// ═══════════════════════════════════════════════════════════════
+// Interactive Quiz & Test Suite (Multi-Type Questions, Audio TTS, Zihin Sarayı Box)
+// ═══════════════════════════════════════════════════════════════
+
+function getEnglishMeaning(w) {
+  if (!w) return "";
+  return w.meaning_en || w.en || w.meaning_tr || "";
+}
+
+function getArabicMeaning(w) {
+  if (!w) return "";
+  return w.arabic_word || w.arabic_meaning || w.ar || "";
+}
+
+function updateQuizStatsDisplay() {
+  const completedCount = parseInt(localStorage.getItem("suzitta_quiz_completed_count") || "0", 10);
+  const avgAcc = parseInt(localStorage.getItem("suzitta_quiz_avg_accuracy") || "0", 10);
+  const points = appState.yusufPoints || 0;
+
+  const elCompleted = document.getElementById("qs-total-completed");
+  const elAcc = document.getElementById("qs-avg-accuracy");
+  const elPoints = document.getElementById("qs-total-points");
+
+  if (elCompleted) elCompleted.textContent = completedCount.toString();
+  if (elAcc) elAcc.textContent = `%${avgAcc}`;
+  if (elPoints) elPoints.textContent = points.toString();
+}
+
 function renderQuizHubView() {
   const currentLvlObj = learningDatabase.levels.find(l => l.id === appState.currentLevelId) || learningDatabase.levels[0];
+  const activeLesson = appState.activeLesson || currentLvlObj.lessons[0];
 
+  updateQuizStatsDisplay();
+
+  // Dynamic Badges & Descriptions
+  const badgeLesson = document.getElementById("quiz-badge-lesson");
+  const descLesson = document.getElementById("quiz-desc-lesson");
+  if (badgeLesson && activeLesson) badgeLesson.textContent = activeLesson.title || "Aktif Ders";
+  if (descLesson && activeLesson) descLesson.textContent = `"${activeLesson.title}" dersindeki ${activeLesson.vocabulary.length} kelime ve cümle ile pratik yapın.`;
+
+  const badgeLevel = document.getElementById("quiz-badge-level");
+  const descLevel = document.getElementById("quiz-desc-level");
+  if (badgeLevel && currentLvlObj) badgeLevel.textContent = `${currentLvlObj.cefrCode} Seviye Sınavı`;
+  if (descLevel && currentLvlObj) descLevel.textContent = `${currentLvlObj.cefrCode} seviyesindeki 10 derse ait tüm konulardan oluşan seviye bitirme sınavı.`;
+
+  // Button Listeners
   const btnLesson = document.getElementById("btn-start-current-lesson-quiz");
   if (btnLesson) {
     btnLesson.onclick = () => {
-      const lesson = appState.activeLesson || currentLvlObj.lessons[0];
-      startInteractiveQuizEngine(`Ders Sınavı: ${lesson.title}`, lesson.vocabulary, 8);
+      startInteractiveQuizEngine(`Ders Sınavı: ${activeLesson.title}`, activeLesson.vocabulary, 8);
     };
   }
 
@@ -744,6 +786,13 @@ function renderQuizHubView() {
     btnMP.onclick = () => {
       const mpWords = learningDatabase.vocabularyBank.filter(w => w.mind_palace_tr || w.mind_palace_en);
       startInteractiveQuizEngine("🧠 Zihin Sarayı Görsel Hafıza Testi", mpWords, 8);
+    };
+  }
+
+  const btnSpeed = document.getElementById("btn-start-speed-quiz");
+  if (btnSpeed) {
+    btnSpeed.onclick = () => {
+      startInteractiveQuizEngine("⚡ Karma Hızlı Pekiştirme Sınavı", learningDatabase.vocabularyBank, 10);
     };
   }
 }
@@ -785,16 +834,13 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
   const selectedWords = shuffled.slice(0, Math.min(questionCount, shuffled.length));
 
   const questions = selectedWords.map(wordObj => {
-    let possibleTypes = ['translate', 'sentence', 'audio'];
+    let possibleTypes = ['translate', 'reverse_translate', 'sentence', 'audio'];
     if (wordObj.is_cognate) possibleTypes.push('cognate');
     if (wordObj.mind_palace_tr || wordObj.mind_palace_en) possibleTypes.push('mind_palace');
 
     const qType = possibleTypes[Math.floor(Math.random() * possibleTypes.length)];
 
     // SMART TOPIC-MATCHED DISTRACTOR GENERATOR
-    // Priority 1: Other words in current lesson/vocabList
-    // Priority 2: Other words in current level
-    // Priority 3: Overall vocabulary bank
     let candidatePool = vocabList.filter(w => w.word !== wordObj.word);
 
     if (candidatePool.length < 3 && wordObj.level) {
@@ -819,12 +865,14 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
 
       let val = "";
       if (qType === 'translate') {
-        val = appState.currentLang === 'ar' ? item.ar : item.en;
+        val = appState.currentLang === 'ar' ? getArabicMeaning(item) : getEnglishMeaning(item);
       } else {
         val = item.word;
       }
 
-      const correctOptionVal = (qType === 'translate') ? (appState.currentLang === 'ar' ? wordObj.ar : wordObj.en) : wordObj.word;
+      const correctOptionVal = (qType === 'translate') ?
+        (appState.currentLang === 'ar' ? getArabicMeaning(wordObj) : getEnglishMeaning(wordObj)) :
+        wordObj.word;
 
       if (val && val !== correctOptionVal && !distractors.includes(val)) {
         distractors.push(val);
@@ -839,19 +887,24 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
       typeBadge = "🌐 Anlam Testi";
       const targetLangName = appState.currentLang === 'ar' ? 'Arapça' : 'İngilizce';
       prompt = `"${wordObj.word}" kelimesinin ${targetLangName} karşılığı nedir?`;
-      correctVal = appState.currentLang === 'ar' ? wordObj.ar : wordObj.en;
+      correctVal = appState.currentLang === 'ar' ? getArabicMeaning(wordObj) : getEnglishMeaning(wordObj);
+    } else if (qType === 'reverse_translate') {
+      typeBadge = "🔄 Türkçe Kelime Bulma";
+      const sourceMeaning = appState.currentLang === 'ar' ? getArabicMeaning(wordObj) : getEnglishMeaning(wordObj);
+      prompt = `"${sourceMeaning}" karşılığı olan Türkçe kelime hangisidir?`;
+      correctVal = wordObj.word;
     } else if (qType === 'sentence') {
       typeBadge = "💬 Cümle Tamamlama";
-      const sentenceClean = wordObj.sentence_tr ? wordObj.sentence_tr.replace(new RegExp(escapeRegex(wordObj.word), 'gi'), '_____') : `... ${wordObj.en}`;
+      const sentenceClean = wordObj.sentence_tr ? wordObj.sentence_tr.replace(new RegExp(escapeRegex(wordObj.word), 'gi'), '_____') : `... ${getEnglishMeaning(wordObj)}`;
       prompt = `Cümlede boş bırakılan yere hangi kelime gelmelidir?\n"${sentenceClean}"`;
       correctVal = wordObj.word;
     } else if (qType === 'audio') {
       typeBadge = "🔊 Sesli Telaffuz Testi";
-      prompt = `Dinlediğiniz Türkçe kelime hangisidir? (Ses açılmadıysa ses butonuna basın)`;
+      prompt = `Dinlediğiniz Türkçe kelime hangisidir? (Ses duyulmadıysa butona basın)`;
       correctVal = wordObj.word;
     } else if (qType === 'cognate') {
       typeBadge = "💡 Arapça Ortak Kök Testi";
-      const rootNote = wordObj.cognate_info ? (wordObj.cognate_info.note_ar || wordObj.ar) : wordObj.ar;
+      const rootNote = wordObj.cognate_info ? (wordObj.cognate_info.note_ar || getArabicMeaning(wordObj)) : getArabicMeaning(wordObj);
       prompt = `"${rootNote}" (Arapça) kelimesi ile aynı kökten gelen Türkçe kelime hangisidir?`;
       correctVal = wordObj.word;
     } else if (qType === 'mind_palace') {
@@ -862,7 +915,9 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
       correctVal = wordObj.word;
     }
 
-    const options = [correctVal, ...distractors].sort(() => Math.random() - 0.5);
+    if (!correctVal) correctVal = wordObj.word;
+
+    const options = [correctVal, ...distractors].filter(Boolean).sort(() => Math.random() - 0.5);
 
     return {
       wordObj,
@@ -917,7 +972,18 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
       const pointsEarned = score * 5 + 15;
       appState.yusufPoints += pointsEarned;
       localStorage.setItem("suzitta_yusuf_points", appState.yusufPoints.toString());
+
+      // Update quiz stats in localStorage
+      const prevCompleted = parseInt(localStorage.getItem("suzitta_quiz_completed_count") || "0", 10);
+      const prevAvg = parseInt(localStorage.getItem("suzitta_quiz_avg_accuracy") || "0", 10);
+      const newCompleted = prevCompleted + 1;
+      const newAvg = Math.round(((prevAvg * prevCompleted) + percent) / newCompleted);
+
+      localStorage.setItem("suzitta_quiz_completed_count", newCompleted.toString());
+      localStorage.setItem("suzitta_quiz_avg_accuracy", newAvg.toString());
+
       updateGlobalStats();
+      updateQuizStatsDisplay();
 
       let praiseMsg = "Harika bir çalışma Suzim!";
       if (percent === 100) praiseMsg = "Tebrikler Suzim! %100 Mükemmel Başarı! Yusuf seninle gurur duyuyor! 🌟";
@@ -928,14 +994,14 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
       cardBody.innerHTML = `
         <div class="welcome-flower-icon">🏆</div>
         <h2>Sınav Tamamlandı! 🎉</h2>
-        <div style="font-size: 32px; font-weight: 800; color: var(--color-primary); margin: 10px 0;">%${percent} Başarı</div>
+        <div style="font-size: 36px; font-weight: 800; color: var(--color-primary); margin: 10px 0;">%${percent} Başarı</div>
         <p style="font-size: 15px; color: var(--color-text-muted);">${score} / ${questions.length} Soru Doğru Cevaplandı</p>
 
         <div class="welcome-intro-box" style="background: var(--color-accent-light); border-color: var(--color-accent); margin: 16px 0;">
           <strong style="font-size: 18px; color: var(--color-primary-dark);">+${pointsEarned} Yusuf Puanı Kazandın! 🏅</strong>
         </div>
 
-        <div style="display: flex; gap: 12px; justify-content: center; width: 100%; margin-top: 10px;">
+        <div style="display: flex; gap: 12px; justify-content: center; width: 100%; margin-top: 10px; flex-wrap: wrap;">
           <button class="welcome-start-btn" id="btn-quiz-retry" style="background: var(--color-secondary);">Yeniden Çöz 🔄</button>
           <button class="welcome-start-btn" id="btn-quiz-close">Tamam & Bahçeye Dön 🌼</button>
         </div>
@@ -953,7 +1019,7 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
     const progressPercent = Math.round(((currentIdx) / questions.length) * 100);
 
     if (q.qType === 'audio') {
-      setTimeout(() => speakText(q.wordObj.word), 300);
+      setTimeout(() => speakText(q.wordObj.word), 350);
     }
 
     cardBody.innerHTML = `
@@ -975,9 +1041,11 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
       </div>
 
       ${q.qType === 'audio' ? `
-        <button class="quiz-listen-btn" id="btn-quiz-tts-listen">
-          <span>🔊</span> <span>Telaffuzu Dinle</span>
-        </button>
+        <div style="text-align: center;">
+          <button class="quiz-listen-btn" id="btn-quiz-tts-listen">
+            <span>🔊</span> <span>Telaffuzu Dinle</span>
+          </button>
+        </div>
       ` : ''}
 
       <div class="quiz-options-grid" style="display: flex; flex-direction: column; gap: 10px; width: 100%; margin: 14px 0;">
@@ -991,7 +1059,7 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
 
       <div class="quiz-memory-box" id="quiz-memory-box" style="display: none;"></div>
 
-      <button class="welcome-start-btn" id="btn-quiz-next" style="display: none; margin-top: 12px;">Devam Et ➡️</button>
+      <button class="welcome-start-btn" id="btn-quiz-next" style="display: none; margin-top: 12px; width: 100%;">Devam Et ➡️</button>
     `;
 
     if (document.getElementById("btn-quiz-tts-listen")) {
@@ -1014,7 +1082,7 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
           setTimeout(() => {
             currentIdx++;
             renderCurrentQuestion();
-          }, 1100);
+          }, 1000);
         } else {
           btn.classList.add("incorrect");
           speakText("Yanlış cevap!");
@@ -1026,12 +1094,15 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
           });
 
           const memBox = document.getElementById("quiz-memory-box");
+          const enMeaning = getEnglishMeaning(q.wordObj);
+          const arMeaning = getArabicMeaning(q.wordObj);
+
           memBox.style.display = "block";
           memBox.innerHTML = `
             <div style="font-size: 13px; font-weight: 700; color: #D32F2F; margin-bottom: 4px;">❌ Yanlış Cevap - Doğruyu Öğrenelim:</div>
-            <div style="font-size: 15px; font-weight: 700; color: var(--color-primary);">✅ Doğru Cevap: ${escapeHtml(q.wordObj.word)} (${escapeHtml(q.wordObj.en)} / ${escapeHtml(q.wordObj.ar)})</div>
-            ${q.wordObj.mind_palace_tr ? `<div style="font-size: 12px; color: var(--color-text-main); margin-top: 6px;">🧠 <strong>Zihin Sarayı İpucu:</strong> ${escapeHtml(q.wordObj.mind_palace_tr)}</div>` : ''}
-            ${q.wordObj.sentence_tr ? `<div style="font-size: 12px; color: var(--color-text-muted); margin-top: 4px;">💬 <strong>Örnek Cümle:</strong> ${escapeHtml(q.wordObj.sentence_tr)}</div>` : ''}
+            <div style="font-size: 15px; font-weight: 700; color: var(--color-primary);">✅ Doğru Cevap: ${escapeHtml(q.wordObj.word)} ${enMeaning ? `(${escapeHtml(enMeaning)})` : ''} ${arMeaning ? `(${escapeHtml(arMeaning)})` : ''}</div>
+            ${q.wordObj.mind_palace_tr ? `<div style="font-size: 12.5px; color: var(--color-text-main); margin-top: 6px;">🧠 <strong>Zihin Sarayı İpucu:</strong> ${escapeHtml(q.wordObj.mind_palace_tr)}</div>` : ''}
+            ${q.wordObj.sentence_tr ? `<div style="font-size: 12.5px; color: var(--color-text-muted); margin-top: 4px;">💬 <strong>Örnek Cümle:</strong> ${escapeHtml(q.wordObj.sentence_tr)}</div>` : ''}
           `;
 
           const nextBtn = document.getElementById("btn-quiz-next");
@@ -1049,8 +1120,6 @@ function startInteractiveQuizEngine(quizTitle, vocabList, questionCount = 8) {
     });
   };
 
-  backdrop.appendChild(card);
-  document.body.appendChild(backdrop);
   renderCurrentQuestion();
 }
 

@@ -34584,6 +34584,276 @@
       "sentence_en": "Classical texts are examined with traditional commentary methods.",
       "sentence_ar": "تُدْرَسُ النُّصُوصُ الكِلاسِيكِيَّةُ بِأَسَالِيبِ الشَّرْحِ التَّقْلِيدِيَّةِ.",
       "ar_root": null
+    },
+    {
+      "tr": "şerh",
+      "ar": "شَرْح",
+      "en": "commentary, explanation",
+      "sentence_tr": "Klasik metin şerhi, metnin anlam katmanlarını açığa çıkarmayı amaçlar.",
+      "sentence_en": "Classical text commentary aims to reveal the layers of meaning in the text.",
+      "sentence_ar": "يَهْدِفُ شَرْحُ النَّصِّ الكِلَاسِيكِيِّ إِلَى الكَشْفِ عَنْ طَبَقَاتِ المَعْنَى فِي النَّصِّ.",
+      "ar_root": "شرح"
+    },
+    {
+      "tr": "hermenötik",
+      "ar": "هِرْمِينُوطِيقَا",
+      "en": "hermeneutics",
+      "sentence_tr": "Hermenötik, yorumlama sanatı ve bilimi olarak tanımlanır.",
+      "sentence_en": "Hermeneutics is defined as the art and science of interpretation.",
+      "sentence_ar": "يُعَرَّفُ الهِرْمِينُوطِيقَا كَفَنٍّ وَعِلْمٍ لِلتَّأْوِيلِ.",
+      "ar_root": null
+    },
+    {
+      "tr": "tefsir",
+      "ar": "تَفْسِير",
+      "en": "exegesis, interpretation",
+      "sentence_tr": "Kur'an tefsiri, klasik metin şerhinin önemli bir dalıdır.",
+      "sentence_en": "Quranic exegesis is an important branch of classical text commentary.",
+      "sentence_ar": "تَفْسِيرُ القُرْآنِ فَرْعٌ مُهِمٌّ مِنْ شَرْحِ النُّصُوصِ الكِلَاسِيكِيَّةِ.",
+      "ar_root": "فسر"
+    },
+    {
+      "tr": "tevil",
+      "ar": "تَأْوِيل",
+      "en": "interpretation, allegorical explanation",
+      "sentence_tr": "Tevil, metnin zahiri anlamından batıni anlamına geçişi içerir.",
+      "sentence_en": "Ta'wil involves moving from the exoteric meaning of the text to its esoteric meaning.",
+      "sentence_ar": "يَتَضَمَّنُ التَّأْوِيلُ الاِنْتِقَالَ مِنَ المَعْنَى الظَّاهِرِيِّ لِلنَّصِّ إِلَى مَعْنَاهُ البَاطِنِيِّ.",
+      "ar_root": "أول"
+    },
+    {
+      "tr": "yorum",
+      "ar": "تَفْسِير",
+      "en": "interpretation, comment",
+      "sentence_tr": "Her yorum, yorumcunun tarihsel bağlamından izler taşır.",
+      "sentence_en": "Every interpretation bears traces of the interpreter's historical context.",
+      "sentence_ar": "كُلُّ تَفْسِيرٍ يَحْمِلُ آثَارًا مِنَ السِّيَاقِ التَّارِيخِيِّ لِلْمُفَسِّرِ.",
+      "ar_root": "فسر"
+    },
+    {
+      "tr": "metin",
+      "ar": "نَصّ",
+      "en": "text",
+      "sentence_tr": "Klasik metin, çok katmanlı anlam yapısına sahiptir.",
+      "sentence_en": "The classical text has a multi-layered structure of meaning.",
+      "sentence_ar": "النَّصُّ الكِلَاسِيكِيُّ لَهُ بِنْيَةٌ مُتَعَدِّدَةُ الطَّبَقَاتِ مِنَ المَعْنَى.",
+      "ar_root": "نصص"
+    },
+    {
+      "tr": "bağlam",
+      "ar": "سِيَاق",
+      "en": "context",
+      "sentence_tr": "Metnin anlamı, içinde bulunduğu bağlamdan bağımsız düşünülemez.",
+      "sentence_en": "The meaning of the text cannot be considered independent of its context.",
+      "sentence_ar": "لَا يُمْكِنُ تَفْكِيكُ مَعْنَى النَّصِّ عَنْ سِيَاقِهِ.",
+      "ar_root": "سوق"
+    },
+    {
+      "tr": "yorumbilim",
+      "ar": "عِلْمُ التَّأْوِيل",
+      "en": "hermeneutics",
+      "sentence_tr": "Yorumbilim, metinlerin anlaşılması ve yorumlanmasıyla ilgilenir.",
+      "sentence_en": "Hermeneutics deals with the understanding and interpretation of texts.",
+      "sentence_ar": "يَتَعَامَلُ عِلْمُ التَّأْوِيلِ مَعَ فَهْمِ النُّصُوصِ وَتَفْسِيرِهَا.",
+      "ar_root": "أول"
+    },
+    {
+      "tr": "anlam",
+      "ar": "مَعْنَى",
+      "en": "meaning",
+      "sentence_tr": "Şerh, metnin gizli anlamlarını ortaya çıkarır.",
+      "sentence_en": "Commentary reveals the hidden meanings of the text.",
+      "sentence_ar": "يَكْشِفُ الشَّرْحُ عَنِ المَعَانِي الخَفِيَّةِ لِلنَّصِّ.",
+      "ar_root": "عني"
+    },
+    {
+      "tr": "yorumlama",
+      "ar": "تَأْوِيل",
+      "en": "interpretation",
+      "sentence_tr": "Yorumlama süreci, metin ile okuyucu arasında diyalojik bir ilişki gerektirir.",
+      "sentence_en": "The process of interpretation requires a dialogical relationship between text and reader.",
+      "sentence_ar": "تَتَطَلَّبُ عَمَلِيَّةُ التَّأْوِيلِ عَلَاقَةً حِوَارِيَّةً بَيْنَ النَّصِّ وَالقَارِئِ.",
+      "ar_root": "أول"
+    },
+    {
+      "tr": "klasik",
+      "ar": "كِلَاسِيكِيّ",
+      "en": "classical",
+      "sentence_tr": "Klasik metinler, geleneksel şerh yöntemleriyle incelenir.",
+      "sentence_en": "Classical texts are examined with traditional commentary methods.",
+      "sentence_ar": "تُدْرَسُ النُّصُوصُ الكِلَاسِيكِيَّةُ بِطُرُقِ الشَّرْحِ التَّقْلِيدِيَّةِ.",
+      "ar_root": null
+    },
+    {
+      "tr": "şarih",
+      "ar": "شَارِح",
+      "en": "commentator",
+      "sentence_tr": "Şarih, metni açıklarken kendi döneminin bilgi birikimini kullanır.",
+      "sentence_en": "The commentator uses the knowledge of his own era while explaining the text.",
+      "sentence_ar": "يَسْتَخْدِمُ الشَّارِحُ مَعْرِفَةَ عَصْرِهِ عِنْدَ شَرْحِ النَّصِّ.",
+      "ar_root": "شرح"
+    },
+    {
+      "tr": "müfessir",
+      "ar": "مُفَسِّر",
+      "en": "exegete, commentator",
+      "sentence_tr": "Müfessir, ayetlerin anlamını derinlemesine açıklar.",
+      "sentence_en": "The exegete explains the meaning of the verses in depth.",
+      "sentence_ar": "يَشْرَحُ المُفَسِّرُ مَعَانِيَ الآيَاتِ بِعُمْقٍ.",
+      "ar_root": "فسر"
+    },
+    {
+      "tr": "haşiye",
+      "ar": "حَاشِيَة",
+      "en": "marginal note, gloss",
+      "sentence_tr": "Haşiye, ana metnin kenarına yazılan açıklayıcı notlardır.",
+      "sentence_en": "A marginal note is explanatory notes written on the margin of the main text.",
+      "sentence_ar": "الحَاشِيَةُ هِيَ مُلَاحَظَاتٌ تَوْضِيحِيَّةٌ تُكْتَبُ عَلَى هَامِشِ النَّصِّ الأَصْلِيِّ.",
+      "ar_root": "حشي"
+    },
+    {
+      "tr": "ta'lik",
+      "ar": "تَعْلِيق",
+      "en": "annotation, comment",
+      "sentence_tr": "Ta'lik, metnin belirli bir bölümüne yapılan açıklamadır.",
+      "sentence_en": "Annotation is an explanation made on a specific part of the text.",
+      "sentence_ar": "التَّعْلِيقُ هُوَ شَرْحٌ يُقَدَّمُ عَلَى جُزْءٍ مُعَيَّنٍ مِنَ النَّصِّ.",
+      "ar_root": "علق"
+    },
+    {
+      "tr": "izah",
+      "ar": "إِيضَاح",
+      "en": "explanation, clarification",
+      "sentence_tr": "İzah, kapalı ifadelerin açıklığa kavuşturulmasıdır.",
+      "sentence_en": "Clarification is the illumination of obscure expressions.",
+      "sentence_ar": "الإِيضَاحُ هُوَ تَوْضِيحُ العِبَارَاتِ الغَامِضَةِ.",
+      "ar_root": "وضح"
+    },
+    {
+      "tr": "te'vil",
+      "ar": "تَأْوِيل",
+      "en": "allegorical interpretation",
+      "sentence_tr": "Te'vil, metnin sembolik anlamını yorumlamayı içerir.",
+      "sentence_en": "Allegorical interpretation involves interpreting the symbolic meaning of the text.",
+      "sentence_ar": "يَتَضَمَّنُ التَّأْوِيلُ تَفْسِيرَ المَعْنَى الرَّمْزِيِّ لِلنَّصِّ.",
+      "ar_root": "أول"
+    },
+    {
+      "tr": "mecaz",
+      "ar": "مَجَاز",
+      "en": "metaphor, figurative expression",
+      "sentence_tr": "Mecaz, kelimelerin gerçek anlamları dışında kullanılmasıdır.",
+      "sentence_en": "Metaphor is the use of words outside their literal meanings.",
+      "sentence_ar": "المَجَازُ هُوَ اِسْتِخْدَامُ الكَلِمَاتِ خَارِجَ مَعَانِيهَا الحَقِيقِيَّةِ.",
+      "ar_root": "جوز"
+    },
+    {
+      "tr": "istiare",
+      "ar": "اِسْتِعَارَة",
+      "en": "metaphor",
+      "sentence_tr": "İstiare, bir kelimenin benzerlik ilişkisiyle başka bir anlamda kullanılmasıdır.",
+      "sentence_en": "Metaphor is the use of a word in another meaning through a relationship of similarity.",
+      "sentence_ar": "الاِسْتِعَارَةُ هِيَ اِسْتِعْمَالُ كَلِمَةٍ فِي مَعْنًى آخَرَ بِعَلَاقَةِ التَّشَابُهِ.",
+      "ar_root": "عور"
+    },
+    {
+      "tr": "kinaye",
+      "ar": "كِنَايَة",
+      "en": "allusion, indirect expression",
+      "sentence_tr": "Kinaye, bir şeyi doğrudan söylemeden dolaylı olarak anlatmaktır.",
+      "sentence_en": "Allusion is expressing something indirectly without saying it directly.",
+      "sentence_ar": "الكِنَايَةُ هِيَ التَّعْبِيرُ عَنْ شَيْءٍ بِشَكْلٍ غَيْرِ مُبَاشِرٍ.",
+      "ar_root": "كني"
+    },
+    {
+      "tr": "lafız",
+      "ar": "لَفْظ",
+      "en": "wording, utterance",
+      "sentence_tr": "Lafız, metnin dış yapısını, sözcüklerini ifade eder.",
+      "sentence_en": "Wording refers to the external structure of the text, its words.",
+      "sentence_ar": "اللَّفْظُ يُشِيرُ إِلَى البِنْيَةِ الخَارِجِيَّةِ لِلنَّصِّ وَكَلِمَاتِهِ.",
+      "ar_root": "لفظ"
+    },
+    {
+      "tr": "mana",
+      "ar": "مَعْنَى",
+      "en": "meaning",
+      "sentence_tr": "Mana, lafzın ardındaki içsel anlamdır.",
+      "sentence_en": "Meaning is the inner significance behind the wording.",
+      "sentence_ar": "المَعْنَى هُوَ الدَّلَالَةُ الدَّاخِلِيَّةُ وَرَاءَ اللَّفْظِ.",
+      "ar_root": "عني"
+    },
+    {
+      "tr": "delalet",
+      "ar": "دَلَالَة",
+      "en": "signification, indication",
+      "sentence_tr": "Delalet, bir kelimenin anlamına işaret etmesidir.",
+      "sentence_en": "Signification is a word's pointing to its meaning.",
+      "sentence_ar": "الدَّلَالَةُ هِيَ إِشَارَةُ الكَلِمَةِ إِلَى مَعْنَاهَا.",
+      "ar_root": "دلل"
+    },
+    {
+      "tr": "işaret",
+      "ar": "إِشَارَة",
+      "en": "sign, indication",
+      "sentence_tr": "Metindeki işaretler, yorumcunun dikkat etmesi gereken ipuçlarıdır.",
+      "sentence_en": "Signs in the text are clues that the interpreter must pay attention to.",
+      "sentence_ar": "الإِشَارَاتُ فِي النَّصِّ هِيَ قَرَائِنُ يَجِبُ عَلَى المُفَسِّرِ الاِنْتِبَاهُ إِلَيْهَا.",
+      "ar_root": "شور"
+    },
+    {
+      "tr": "tefsir etmek",
+      "ar": "فَسَّرَ",
+      "en": "to interpret, to exegete",
+      "sentence_tr": "Alimler, Kur'an'ı tefsir etmek için çeşitli yöntemler geliştirmişlerdir.",
+      "sentence_en": "Scholars have developed various methods to interpret the Quran.",
+      "sentence_ar": "طَوَّرَ العُلَمَاءُ طُرُقًا مُتَنَوِّعَةً لِتَفْسِيرِ القُرْآنِ.",
+      "ar_root": "فسر"
+    },
+    {
+      "tr": "şerh etmek",
+      "ar": "شَرَحَ",
+      "en": "to comment on, to explain",
+      "sentence_tr": "Bu eser, klasik bir metni şerh etmek amacıyla yazılmıştır.",
+      "sentence_en": "This work was written to comment on a classical text.",
+      "sentence_ar": "كُتِبَ هَذَا العَمَلُ لِشَرْحِ نَصٍّ كِلَاسِيكِيٍّ.",
+      "ar_root": "شرح"
+    },
+    {
+      "tr": "yorumlamak",
+      "ar": "أَوَّلَ",
+      "en": "to interpret",
+      "sentence_tr": "Okuyucu, metni kendi bağlamında yorumlamak zorundadır.",
+      "sentence_en": "The reader must interpret the text in its own context.",
+      "sentence_ar": "عَلَى القَارِئِ أَنْ يُؤَوِّلَ النَّصَّ فِي سِيَاقِهِ الخَاصِّ.",
+      "ar_root": "أول"
+    },
+    {
+      "tr": "anlamak",
+      "ar": "فَهِمَ",
+      "en": "to understand",
+      "sentence_tr": "Hermenötik, anlamak için ön yargılarımızı sorgulamamızı gerektirir.",
+      "sentence_en": "Hermeneutics requires us to question our prejudices in order to understand.",
+      "sentence_ar": "يَتَطَلَّبُ عِلْمُ التَّأْوِيلِ أَنْ نُشَكِّكَ فِي أَحْكَامِنَا المُسْبَقَةِ لِكَيْ نَفْهَمَ.",
+      "ar_root": "فهم"
+    },
+    {
+      "tr": "yorumcu",
+      "ar": "مُفَسِّر",
+      "en": "interpreter, commentator",
+      "sentence_tr": "Yorumcu, metne kendi tarihsel ufkuyla yaklaşır.",
+      "sentence_en": "The interpreter approaches the text with his own historical horizon.",
+      "sentence_ar": "يَقْتَرِبُ المُفَسِّرُ مِنَ النَّصِّ بِأُفُقِهِ التَّارِيخِيِّ الخَاصِّ.",
+      "ar_root": "فسر"
+    },
+    {
+      "tr": "metinlerarasılık",
+      "ar": "تَنَاصّ",
+      "en": "intertextuality",
+      "sentence_tr": "Metinlerarasılık, bir metnin diğer metinlerle ilişkisini inceler.",
+      "sentence_en": "Intertextuality examines the relationship of a text with other texts.",
+      "sentence_ar": "التَّنَاصُّ يَدْرُسُ عَلَاقَةَ النَّصِّ مَعَ النُّصُوصِ الأُخْرَى.",
+      "ar_root": "نصص"
     }
   ],
   "L5_21_Bilişsel Nörobilim ve Zihin Felsefesi": [
@@ -35209,6 +35479,276 @@
       "sentence_en": "Sustainability ensures the protection of natural resources.",
       "sentence_ar": "الِاسْتِدَامَةُ تَضْمَنُ حِمَايَةَ الْمَوَارِدِ الطَّبِيعِيَّةِ.",
       "ar_root": "د و م"
+    },
+    {
+      "tr": "evrensel değerler",
+      "ar": "الْقِيَمُ الْعَالَمِيَّةُ",
+      "en": "universal values",
+      "sentence_tr": "Evrensel değerler, tüm insanlığın ortak mirasıdır.",
+      "sentence_en": "Universal values are the common heritage of all humanity.",
+      "sentence_ar": "الْقِيَمُ الْعَالَمِيَّةُ هِيَ التُّرَاثُ الْمُشْتَرَكُ لِلْبَشَرِيَّةِ جَمْعَاءَ.",
+      "ar_root": "ق و م"
+    },
+    {
+      "tr": "insanlık mirası",
+      "ar": "تُرَاثُ الْإِنْسَانِيَّةِ",
+      "en": "heritage of humanity",
+      "sentence_tr": "Bu antik kent, insanlık mirası olarak korunmalıdır.",
+      "sentence_en": "This ancient city must be protected as the heritage of humanity.",
+      "sentence_ar": "يَجِبُ حِمَايَةُ هَذِهِ الْمَدِينَةِ الْقَدِيمَةِ كَتُرَاثٍ لِلْإِنْسَانِيَّةِ.",
+      "ar_root": "و ر ث"
+    },
+    {
+      "tr": "barış",
+      "ar": "السَّلَامُ",
+      "en": "peace",
+      "sentence_tr": "Dünya barışı için hep birlikte çalışmalıyız.",
+      "sentence_en": "We must work together for world peace.",
+      "sentence_ar": "يَجِبُ أَنْ نَعْمَلَ مَعًا مِنْ أَجْلِ السَّلَامِ الْعَالَمِيِّ.",
+      "ar_root": "س ل م"
+    },
+    {
+      "tr": "adalet",
+      "ar": "الْعَدَالَةُ",
+      "en": "justice",
+      "sentence_tr": "Adalet, toplumların temel direğidir.",
+      "sentence_en": "Justice is the cornerstone of societies.",
+      "sentence_ar": "الْعَدَالَةُ هِيَ حَجَرُ الزَّاوِيَةِ فِي الْمُجْتَمَعَاتِ.",
+      "ar_root": "ع د ل"
+    },
+    {
+      "tr": "özgürlük",
+      "ar": "الْحُرِّيَّةُ",
+      "en": "freedom",
+      "sentence_tr": "Özgürlük, her insanın doğuştan sahip olduğu bir haktır.",
+      "sentence_en": "Freedom is a right that every human possesses from birth.",
+      "sentence_ar": "الْحُرِّيَّةُ حَقٌّ يَمْلِكُهُ كُلُّ إِنْسَانٍ مُنْذُ وِلَادَتِهِ.",
+      "ar_root": "ح ر ر"
+    },
+    {
+      "tr": "eşitlik",
+      "ar": "الْمُسَاوَاةُ",
+      "en": "equality",
+      "sentence_tr": "Eşitlik ilkesi, demokrasinin vazgeçilmezidir.",
+      "sentence_en": "The principle of equality is indispensable to democracy.",
+      "sentence_ar": "مَبْدَأُ الْمُسَاوَاةِ لَا غِنَى عَنْهُ لِلدِّيمُقْرَاطِيَّةِ.",
+      "ar_root": "س و ي"
+    },
+    {
+      "tr": "kardeşlik",
+      "ar": "الْأُخُوَّةُ",
+      "en": "brotherhood",
+      "sentence_tr": "Kardeşlik duygusu, insanları birbirine bağlar.",
+      "sentence_en": "The feeling of brotherhood binds people together.",
+      "sentence_ar": "شُعُورُ الْأُخُوَّةِ يَرْبِطُ النَّاسَ بَعْضَهُمْ بِبَعْضٍ.",
+      "ar_root": "أ خ و"
+    },
+    {
+      "tr": "hoşgörü",
+      "ar": "التَّسَامُحُ",
+      "en": "tolerance",
+      "sentence_tr": "Hoşgörü, farklı kültürlerin bir arada yaşamasını sağlar.",
+      "sentence_en": "Tolerance enables different cultures to live together.",
+      "sentence_ar": "التَّسَامُحُ يُمَكِّنُ الثَّقَافَاتِ الْمُخْتَلِفَةَ مِنَ الْعَيْشِ مَعًا.",
+      "ar_root": "س م ح"
+    },
+    {
+      "tr": "saygı",
+      "ar": "الِاحْتِرَامُ",
+      "en": "respect",
+      "sentence_tr": "İnsan haklarına saygı, medeniyetin göstergesidir.",
+      "sentence_en": "Respect for human rights is an indicator of civilization.",
+      "sentence_ar": "احْتِرَامُ حُقُوقِ الْإِنْسَانِ هُوَ مُؤَشِّرٌ عَلَى الْحَضَارَةِ.",
+      "ar_root": "ح ر م"
+    },
+    {
+      "tr": "dayanışma",
+      "ar": "التَّضَامُنُ",
+      "en": "solidarity",
+      "sentence_tr": "Dayanışma, zor zamanlarda toplumları güçlendirir.",
+      "sentence_en": "Solidarity strengthens societies in difficult times.",
+      "sentence_ar": "التَّضَامُنُ يُقَوِّي الْمُجْتَمَعَاتِ فِي الْأَوْقَاتِ الصَّعْبَةِ.",
+      "ar_root": "ض م ن"
+    },
+    {
+      "tr": "yardımlaşma",
+      "ar": "التَّعَاوُنُ",
+      "en": "cooperation",
+      "sentence_tr": "Yardımlaşma, insanlığın en eski erdemlerinden biridir.",
+      "sentence_en": "Cooperation is one of humanity's oldest virtues.",
+      "sentence_ar": "التَّعَاوُنُ مِنْ أَقْدَمِ فَضَائِلِ الْإِنْسَانِيَّةِ.",
+      "ar_root": "ع و ن"
+    },
+    {
+      "tr": "merhamet",
+      "ar": "الرَّحْمَةُ",
+      "en": "compassion",
+      "sentence_tr": "Merhamet, kalplerin en yüce duygusudur.",
+      "sentence_en": "Compassion is the noblest emotion of hearts.",
+      "sentence_ar": "الرَّحْمَةُ هِيَ أَنْبَلُ عَاطِفَةٍ فِي الْقُلُوبِ.",
+      "ar_root": "ر ح م"
+    },
+    {
+      "tr": "vicdan",
+      "ar": "الضَّمِيرُ",
+      "en": "conscience",
+      "sentence_tr": "Vicdan, insanın içindeki ahlaki pusuladır.",
+      "sentence_en": "Conscience is the moral compass within a person.",
+      "sentence_ar": "الضَّمِيرُ هُوَ الْبُوصَلَةُ الْأَخْلَاقِيَّةُ دَاخِلَ الْإِنْسَانِ.",
+      "ar_root": "ض م ر"
+    },
+    {
+      "tr": "ahlak",
+      "ar": "الْأَخْلَاقُ",
+      "en": "morality",
+      "sentence_tr": "Ahlak, toplumsal düzenin temelini oluşturur.",
+      "sentence_en": "Morality forms the foundation of social order.",
+      "sentence_ar": "الْأَخْلَاقُ تُشَكِّلُ أَسَاسَ النِّظَامِ الِاجْتِمَاعِيِّ.",
+      "ar_root": "خ ل ق"
+    },
+    {
+      "tr": "erdem",
+      "ar": "الْفَضِيلَةُ",
+      "en": "virtue",
+      "sentence_tr": "Erdem, insanı yücelten en önemli niteliktir.",
+      "sentence_en": "Virtue is the most important quality that elevates a person.",
+      "sentence_ar": "الْفَضِيلَةُ هِيَ أَهَمُّ صِفَةٍ تَرْفَعُ الْإِنْسَانَ.",
+      "ar_root": "ف ض ل"
+    },
+    {
+      "tr": "onur",
+      "ar": "الشَّرَفُ",
+      "en": "honor",
+      "sentence_tr": "Onur, insanın en değerli hazinesidir.",
+      "sentence_en": "Honor is a person's most precious treasure.",
+      "sentence_ar": "الشَّرَفُ هُوَ أَثْمَنُ كَنْزٍ لِلْإِنْسَانِ.",
+      "ar_root": "ش ر ف"
+    },
+    {
+      "tr": "haysiyet",
+      "ar": "الْكَرَامَةُ",
+      "en": "dignity",
+      "sentence_tr": "Her insan, haysiyetli bir yaşam sürmeyi hak eder.",
+      "sentence_en": "Every human deserves to live a dignified life.",
+      "sentence_ar": "كُلُّ إِنْسَانٍ يَسْتَحِقُّ أَنْ يَعِيشَ حَيَاةً كَرِيمَةً.",
+      "ar_root": "ك ر م"
+    },
+    {
+      "tr": "hak",
+      "ar": "الْحَقُّ",
+      "en": "right",
+      "sentence_tr": "Eğitim hakkı, her çocuğun temel hakkıdır.",
+      "sentence_en": "The right to education is every child's fundamental right.",
+      "sentence_ar": "الْحَقُّ فِي التَّعْلِيمِ هُوَ حَقٌّ أَسَاسِيٌّ لِكُلِّ طِفْلٍ.",
+      "ar_root": "ح ق ق"
+    },
+    {
+      "tr": "sorumluluk",
+      "ar": "الْمَسْؤُولِيَّةُ",
+      "en": "responsibility",
+      "sentence_tr": "Sorumluluk, özgürlüğün ayrılmaz bir parçasıdır.",
+      "sentence_en": "Responsibility is an inseparable part of freedom.",
+      "sentence_ar": "الْمَسْؤُولِيَّةُ جُزْءٌ لَا يَتَجَزَّأُ مِنَ الْحُرِّيَّةِ.",
+      "ar_root": "س أ ل"
+    },
+    {
+      "tr": "dürüstlük",
+      "ar": "الصِّدْقُ",
+      "en": "honesty",
+      "sentence_tr": "Dürüstlük, güvenilir ilişkilerin temelidir.",
+      "sentence_en": "Honesty is the foundation of trustworthy relationships.",
+      "sentence_ar": "الصِّدْقُ هُوَ أَسَاسُ الْعَلَاقَاتِ الْمَوْثُوقَةِ.",
+      "ar_root": "ص د ق"
+    },
+    {
+      "tr": "güven",
+      "ar": "الثِّقَةُ",
+      "en": "trust",
+      "sentence_tr": "Güven, toplumsal barışın en önemli unsurudur.",
+      "sentence_en": "Trust is the most important element of social peace.",
+      "sentence_ar": "الثِّقَةُ هِيَ أَهَمُّ عُنْصُرٍ لِلسَّلَامِ الِاجْتِمَاعِيِّ.",
+      "ar_root": "و ث ق"
+    },
+    {
+      "tr": "sevgi",
+      "ar": "الْمَحَبَّةُ",
+      "en": "love",
+      "sentence_tr": "Sevgi, insanları birbirine yakınlaştıran en güçlü bağdır.",
+      "sentence_en": "Love is the strongest bond that brings people closer together.",
+      "sentence_ar": "الْمَحَبَّةُ هِيَ أَقْوَى رَابِطَةٍ تُقَرِّبُ النَّاسَ بَعْضَهُمْ مِنْ بَعْضٍ.",
+      "ar_root": "ح ب ب"
+    },
+    {
+      "tr": "kültürel miras",
+      "ar": "التُّرَاثُ الثَّقَافِيُّ",
+      "en": "cultural heritage",
+      "sentence_tr": "Kültürel miras, gelecek nesillere aktarılmalıdır.",
+      "sentence_en": "Cultural heritage must be transmitted to future generations.",
+      "sentence_ar": "يَجِبُ نَقْلُ التُّرَاثِ الثَّقَافِيِّ إِلَى الْأَجْيَالِ الْقَادِمَةِ.",
+      "ar_root": "و ر ث"
+    },
+    {
+      "tr": "medeniyet",
+      "ar": "الْحَضَارَةُ",
+      "en": "civilization",
+      "sentence_tr": "Medeniyet, insanlığın ortak birikimidir.",
+      "sentence_en": "Civilization is the common accumulation of humanity.",
+      "sentence_ar": "الْحَضَارَةُ هِيَ الرَّصِيدُ الْمُشْتَرَكُ لِلْإِنْسَانِيَّةِ.",
+      "ar_root": "ح ض ر"
+    },
+    {
+      "tr": "insan hakları",
+      "ar": "حُقُوقُ الْإِنْسَانِ",
+      "en": "human rights",
+      "sentence_tr": "İnsan hakları, evrensel düzeyde korunmalıdır.",
+      "sentence_en": "Human rights must be protected at a universal level.",
+      "sentence_ar": "يَجِبُ حِمَايَةُ حُقُوقِ الْإِنْسَانِ عَلَى الْمُسْتَوَى الْعَالَمِيِّ.",
+      "ar_root": "ح ق ق"
+    },
+    {
+      "tr": "demokrasi",
+      "ar": "الدِّيمُقْرَاطِيَّةُ",
+      "en": "democracy",
+      "sentence_tr": "Demokrasi, halkın iradesinin yönetime yansımasıdır.",
+      "sentence_en": "Democracy is the reflection of the people's will in governance.",
+      "sentence_ar": "الدِّيمُقْرَاطِيَّةُ هِيَ انْعِكَاسُ إِرَادَةِ الشَّعْبِ فِي الْحُكْمِ.",
+      "ar_root": null
+    },
+    {
+      "tr": "laiklik",
+      "ar": "الْعَلْمَانِيَّةُ",
+      "en": "secularism",
+      "sentence_tr": "Laiklik, din ve devlet işlerinin ayrılığını esas alır.",
+      "sentence_en": "Secularism is based on the separation of religion and state affairs.",
+      "sentence_ar": "الْعَلْمَانِيَّةُ تَقُومُ عَلَى فَصْلِ الدِّينِ عَنْ شُؤُونِ الدَّوْلَةِ.",
+      "ar_root": "ع ل م"
+    },
+    {
+      "tr": "çoğulculuk",
+      "ar": "التَّعَدُّدِيَّةُ",
+      "en": "pluralism",
+      "sentence_tr": "Çoğulculuk, farklı görüşlerin bir arada var olmasını sağlar.",
+      "sentence_en": "Pluralism allows different views to coexist.",
+      "sentence_ar": "التَّعَدُّدِيَّةُ تَسْمَحُ بِوُجُودِ وِجْهَاتِ نَظَرٍ مُخْتَلِفَةٍ مَعًا.",
+      "ar_root": "ع د د"
+    },
+    {
+      "tr": "sürdürülebilirlik",
+      "ar": "الِاسْتِدَامَةُ",
+      "en": "sustainability",
+      "sentence_tr": "Sürdürülebilirlik, gelecek nesillerin haklarını korur.",
+      "sentence_en": "Sustainability protects the rights of future generations.",
+      "sentence_ar": "الِاسْتِدَامَةُ تَحْمِي حُقُوقَ الْأَجْيَالِ الْقَادِمَةِ.",
+      "ar_root": "د و م"
+    },
+    {
+      "tr": "küresel sorumluluk",
+      "ar": "الْمَسْؤُولِيَّةُ الْعَالَمِيَّةُ",
+      "en": "global responsibility",
+      "sentence_tr": "Küresel sorumluluk, tüm ulusların ortak görevidir.",
+      "sentence_en": "Global responsibility is the common duty of all nations.",
+      "sentence_ar": "الْمَسْؤُولِيَّةُ الْعَالَمِيَّةُ هِيَ وَاجِبٌ مُشْتَرَكٌ لِجَمِيعِ الْأُمَمِ.",
+      "ar_root": "س أ ل"
     }
   ]
 }

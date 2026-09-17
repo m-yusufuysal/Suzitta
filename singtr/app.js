@@ -364,7 +364,7 @@ function openLessonWorkspace(lesson) {
   document.getElementById("word-card-detail").style.display = "none";
 }
 
-// Render Daisy Flower Radial Canvas using Absolute Calc Positioning
+// Render Daisy Flower Radial Canvas using Responsive Dual-Ring Calc Positioning
 function renderDaisyFlower(lesson) {
   const canvas = document.getElementById("daisy-flower-canvas");
   canvas.innerHTML = "";
@@ -384,9 +384,17 @@ function renderDaisyFlower(lesson) {
   `;
   canvas.appendChild(core);
 
-  // Absolute positioning around 440px canvas center (220px, 220px)
-  const radius = 155;
+  // Responsive radius & dual-ring layout calculation
+  const isMobile = window.innerWidth <= 600;
+  const baseOuterRadius = isMobile ? 125 : (total > 16 ? 175 : 155);
+  const baseInnerRadius = isMobile ? 75 : 110;
+
   lesson.vocabulary.forEach((wordObj, idx) => {
+    let radius = baseOuterRadius;
+    if (total > 14) {
+      radius = (idx % 2 === 0) ? baseOuterRadius : baseInnerRadius;
+    }
+
     const angle = (idx / total) * (2 * Math.PI) - (Math.PI / 2);
     const x = Math.round(Math.cos(angle) * radius);
     const y = Math.round(Math.sin(angle) * radius);
@@ -396,8 +404,11 @@ function renderDaisyFlower(lesson) {
     if (appState.bloomedWords.has(wordObj.word)) petal.classList.add("bloomed");
     if (wordObj.is_cognate) petal.classList.add("is-cognate");
 
-    petal.style.left = `calc(50% + ${x}px - 55px)`;
-    petal.style.top = `calc(50% + ${y}px - 22px)`;
+    const offsetW = isMobile ? 42 : 55;
+    const offsetH = isMobile ? 18 : 22;
+
+    petal.style.left = `calc(50% + ${x}px - ${offsetW}px)`;
+    petal.style.top = `calc(50% + ${y}px - ${offsetH}px)`;
     petal.textContent = wordObj.word;
 
     petal.addEventListener("click", (e) => {
@@ -406,6 +417,12 @@ function renderDaisyFlower(lesson) {
       petal.classList.add("selected");
       appState.selectedWord = wordObj;
       renderWordInspector(wordObj, petal);
+
+      // On mobile screens, scroll down smoothly to word inspector detail card
+      if (window.innerWidth <= 768) {
+        const detailCard = document.getElementById("word-card-detail");
+        if (detailCard) detailCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
     });
 
     canvas.appendChild(petal);
@@ -624,7 +641,8 @@ function renderDictionaryView() {
       );
     }
 
-    items.slice(0, 250).forEach(w => {
+    // Display all matching vocabulary items in the dictionary (up to 500 per rendering cycle for performance)
+    items.slice(0, 600).forEach(w => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
         <td><strong>${w.word}</strong> ${w.is_cognate ? '💡' : ''}</td>

@@ -1189,10 +1189,10 @@ main {
 .mobile-nav-item.active { color: var(--color-primary); font-weight: 700; }
 .mobile-nav-item .icon { font-size: 20px; }
 
-/* Responsive Rules */
+/* Responsive Rules for Mobile Devices (Smartphones & Tablets) */
 @media (max-width: 992px) {
-  .daisy-workspace-grid { grid-template-columns: 1fr; }
-  .daisy-flower-canvas { width: 360px; height: 360px; }
+  .daisy-workspace-grid { grid-template-columns: 1fr; gap: 20px; }
+  .daisy-flower-canvas { width: 380px; height: 380px; }
 }
 
 @media (max-width: 768px) {
@@ -1209,8 +1209,77 @@ main {
   .mobile-drawer-toggle { display: block; }
   .liquid-glass-bar { display: flex; }
 
-  main { padding: 16px; padding-bottom: 84px; }
-  .daisy-flower-canvas { width: 320px; height: 320px; }
-  .daisy-petal-item { width: 90px; height: 40px; font-size: 11px; }
+  main { padding: 14px; padding-bottom: 90px; }
+
+  .liquid-glass-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 18px;
+    gap: 12px;
+  }
+
+  .controls-panel {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .daisy-flower-card {
+    padding: 16px;
+    min-height: auto;
+  }
+
+  .daisy-word-inspector {
+    padding: 20px;
+    min-height: auto;
+  }
+
+  .daisy-flower-canvas {
+    width: 320px;
+    height: 320px;
+  }
+
+  .flower-center-core {
+    width: 80px;
+    height: 80px;
+  }
+  .flower-center-core span.icon { font-size: 22px; }
+  .flower-center-core span.lbl { font-size: 9.5px; }
+
+  .daisy-petal-item {
+    width: 84px;
+    height: 36px;
+    font-size: 10.5px;
+    padding: 2px 6px;
+  }
+
+  .detail-word-header h3 { font-size: 22px; }
+  .audio-btn-large { width: 40px; height: 40px; font-size: 18px; }
+
+  .dictionary-results-scroll { max-height: 420px; }
+  .dictionary-table-wrapper { overflow-x: auto; }
+  .dict-filter-box { flex-direction: column; }
+
   #yusufs-corner { display: none; }
+}
+
+@media (max-width: 480px) {
+  .daisy-flower-canvas {
+    width: 290px;
+    height: 290px;
+  }
+
+  .daisy-petal-item {
+    width: 76px;
+    height: 32px;
+    font-size: 9.5px;
+  }
+
+  .lessons-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .welcome-glass-card {
+    padding: 24px 18px;
+  }
 }

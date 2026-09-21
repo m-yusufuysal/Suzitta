@@ -1403,6 +1403,7 @@ function renderWordBankView() {
   if (sectionTags) sectionTags.style.display = appState.wbMode === "tags" ? "block" : "none";
 
   // 2. Gather dataset for Word Bank
+  const currentLvlObj = learningDatabase.levels.find(l => l.id === appState.currentLevelId) || learningDatabase.levels[0];
   let learnedItems = [];
   if (appState.bloomedWords && appState.bloomedWords.size > 0) {
     const bloomedSet = appState.bloomedWords;
@@ -1411,14 +1412,22 @@ function renderWordBankView() {
     }
   }
 
-  // Fallback: If no words bloomed yet, show active lesson items or top 10 vocab items so user can experience flashcards!
+  // Fallback: If no words bloomed yet, show current level's active lesson or first lesson
   if (learnedItems.length === 0) {
     if (appState.activeLesson && appState.activeLesson.vocabulary) {
       learnedItems = appState.activeLesson.vocabulary;
+    } else if (currentLvlObj && currentLvlObj.lessons && currentLvlObj.lessons.length > 0) {
+      learnedItems = currentLvlObj.lessons[0].vocabulary;
     } else if (learningDatabase && learningDatabase.vocabularyBank) {
       learnedItems = learningDatabase.vocabularyBank.slice(0, 10);
     }
   }
+
+  // Sort items by level first, then alphabetically for consistent ordering
+  learnedItems = [...learnedItems].sort((a, b) => {
+    if (a.level !== b.level) return (a.level || 1) - (b.level || 1);
+    return (a.word || '').localeCompare(b.word || '', 'tr');
+  });
 
   // Filter out mastered/learned words from flashcard rotation
   if (appState.wbMode === "cards" && appState.masteredWords && appState.masteredWords.size > 0) {
@@ -1501,7 +1510,8 @@ function renderFlashcardSection(items) {
   const btnAudioBack = document.getElementById("btn-fc-audio-back");
 
   // Populate card front
-  if (badgeLevel) badgeLevel.textContent = currentItem.level ? `Level A${currentItem.level}` : (currentItem.cefr_level || "A1");
+  const levelToCefr = { 1: 'A1', 2: 'A2', 3: 'B1', 4: 'B2', 5: 'C1' };
+  if (badgeLevel) badgeLevel.textContent = currentItem.level ? (levelToCefr[currentItem.level] || `L${currentItem.level}`) : (currentItem.cefr_level || 'A1');
   if (badgeCognate) badgeCognate.style.display = currentItem.is_cognate ? "inline-block" : "none";
   if (wordTr) wordTr.textContent = currentItem.word || "";
   if (wordAr) wordAr.textContent = getArabicMeaning(currentItem);

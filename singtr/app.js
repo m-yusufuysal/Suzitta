@@ -1658,21 +1658,79 @@ function renderTagsSection() {
   container.innerHTML = "";
 
   const bloomedList = Array.from(appState.bloomedWords || []);
+  const masteredSet = appState.masteredWords || new Set();
 
-  if (bloomedList.length === 0) {
+  // Split into two categories
+  const masteredList = bloomedList.filter(w => masteredSet.has(w));
+  const learningList = bloomedList.filter(w => !masteredSet.has(w));
+
+  // Also include active lesson words as "currently learning" if no bloomed yet
+  let activeLessonWords = [];
+  if (learningList.length === 0 && masteredList.length === 0) {
+    if (appState.activeLesson && appState.activeLesson.vocabulary) {
+      activeLessonWords = appState.activeLesson.vocabulary.map(v => v.word);
+    } else if (learningDatabase && learningDatabase.vocabularyBank) {
+      activeLessonWords = learningDatabase.vocabularyBank.slice(0, 10).map(v => v.word);
+    }
+  }
+
+  const hasContent = masteredList.length > 0 || learningList.length > 0 || activeLessonWords.length > 0;
+
+  if (!hasContent) {
     if (emptyMsg) emptyMsg.style.display = "block";
     return;
   }
 
   if (emptyMsg) emptyMsg.style.display = "none";
 
-  bloomedList.forEach(wName => {
-    const tag = document.createElement("div");
-    tag.className = "wb-tag-item";
-    tag.innerHTML = `<span>🌼</span> <span>${wName}</span>`;
-    tag.addEventListener("click", () => speakText(wName));
-    container.appendChild(tag);
-  });
+  // Section 1: Mastered Words (Öğrendiklerim)
+  if (masteredList.length > 0) {
+    const sectionMastered = document.createElement("div");
+    sectionMastered.className = "wb-tags-category";
+    sectionMastered.innerHTML = `
+      <div class="wb-tags-category-header mastered">
+        <span class="wb-tags-cat-icon">✅</span>
+        <span class="wb-tags-cat-title">Öğrendiklerim</span>
+        <span class="wb-tags-cat-count">${masteredList.length} kelime</span>
+      </div>
+    `;
+    const masteredCloud = document.createElement("div");
+    masteredCloud.className = "wb-tags-cloud-inner";
+    masteredList.forEach(wName => {
+      const tag = document.createElement("div");
+      tag.className = "wb-tag-item mastered";
+      tag.innerHTML = `<span>✅</span> <span>${wName}</span>`;
+      tag.addEventListener("click", () => speakText(wName));
+      masteredCloud.appendChild(tag);
+    });
+    sectionMastered.appendChild(masteredCloud);
+    container.appendChild(sectionMastered);
+  }
+
+  // Section 2: Currently Learning (Şu An Öğrendiklerim)
+  const currentlyLearning = learningList.length > 0 ? learningList : activeLessonWords;
+  if (currentlyLearning.length > 0) {
+    const sectionLearning = document.createElement("div");
+    sectionLearning.className = "wb-tags-category";
+    sectionLearning.innerHTML = `
+      <div class="wb-tags-category-header learning">
+        <span class="wb-tags-cat-icon">🌱</span>
+        <span class="wb-tags-cat-title">Şu An Öğrendiklerim</span>
+        <span class="wb-tags-cat-count">${currentlyLearning.length} kelime</span>
+      </div>
+    `;
+    const learningCloud = document.createElement("div");
+    learningCloud.className = "wb-tags-cloud-inner";
+    currentlyLearning.forEach(wName => {
+      const tag = document.createElement("div");
+      tag.className = "wb-tag-item learning";
+      tag.innerHTML = `<span>🌱</span> <span>${wName}</span>`;
+      tag.addEventListener("click", () => speakText(wName));
+      learningCloud.appendChild(tag);
+    });
+    sectionLearning.appendChild(learningCloud);
+    container.appendChild(sectionLearning);
+  }
 }
 
 function updateGlobalStats() {

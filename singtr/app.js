@@ -11,6 +11,7 @@ const appState = {
   activeLesson: null,
   selectedWord: null,
   bloomedWords: new Set(JSON.parse(localStorage.getItem("suzitta_bloomed_words") || "[]")),
+  masteredWords: new Set(JSON.parse(localStorage.getItem("suzitta_mastered_words") || "[]")),
   isMuted: false,
   voiceSpeed: 0.85,
   yusufPoints: parseInt(localStorage.getItem("suzitta_yusuf_points") || "0")
@@ -1193,7 +1194,18 @@ function escapeHtml(str) {
     .replace(/'/g, "&#039;");
 }
 
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Build englishLoanwordList from AUTHENTIC_COGNATES_DATABASE
+const englishLoanwordList = (typeof AUTHENTIC_COGNATES_DATABASE !== 'undefined' ? AUTHENTIC_COGNATES_DATABASE : [])
+  .filter(w => w.is_english_loanword === true)
+  .map(w => (w.word || '').toLowerCase());
+
 appState.cognateFilter = appState.cognateFilter || "all";
+appState.cognateDisplayCount = appState.cognateDisplayCount || 50;
+appState.cognateSearchQuery = appState.cognateSearchQuery || "";
 
 function renderCognatesView() {
   const container = document.getElementById("cognates-grid-container");
@@ -1210,48 +1222,61 @@ function renderCognatesView() {
     };
   });
 
-  // Strict Cognates Filter Engine: Authentically matching Arabic roots & English loanwords
-  const allBank = getVocabularyBank();
+  // Search input handler
+  const searchInput = document.getElementById("cognate-search-input");
+  if (searchInput && !searchInput._cognatesBound) {
+    searchInput._cognatesBound = true;
+    searchInput.oninput = () => {
+      appState.cognateSearchQuery = searchInput.value.trim();
+      appState.cognateDisplayCount = 50;
+      renderCognatesView();
+    };
+  }
+
+  // Use AUTHENTIC_COGNATES_DATABASE as primary source for cognates
+  const allCognates = typeof AUTHENTIC_COGNATES_DATABASE !== 'undefined' ? AUTHENTIC_COGNATES_DATABASE : [];
   let cognates = [];
 
-  const isArabicCognateWord = (w) => {
-    if (!w || !w.word) return false;
-    if (w.is_cognate === true) return true;
-    if (w.cognate_info && (w.cognate_info.ar_root || w.cognate_info.note_ar || w.cognate_info.note_tr)) return true;
-    return false;
-  };
-
-  const isEnglishLoanword = (w) => {
-    if (!w || !w.word) return false;
-    const cleanWord = w.word.trim().toLowerCase();
-    return englishLoanwordList.includes(cleanWord);
-  };
-
   if (appState.cognateFilter === "ar") {
-    cognates = allBank.filter(w => isArabicCognateWord(w) && !isEnglishLoanword(w));
+    cognates = allCognates.filter(w => !w.is_english_loanword);
   } else if (appState.cognateFilter === "en") {
-    cognates = allBank.filter(w => isEnglishLoanword(w));
+    cognates = allCognates.filter(w => w.is_english_loanword === true);
   } else {
-    // "all": Arabic cognates + English loanwords
-    cognates = allBank.filter(w => isArabicCognateWord(w) || isEnglishLoanword(w));
+    cognates = [...allCognates];
   }
 
-  // Robust Fallback if filter returns empty
-  if (cognates.length === 0) {
-    cognates = allBank.filter(w => w.is_cognate === true || w.ar || w.arabic_word);
+  // Apply search filter
+  const searchQuery = appState.cognateSearchQuery || '';
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    cognates = cognates.filter(c =>
+      (c.word || '').toLowerCase().includes(q) ||
+      (c.en_meaning || c.en || '').toLowerCase().includes(q) ||
+      (c.ar || c.arabic_word || '').includes(q) ||
+      (c.cognate_info && c.cognate_info.note_tr && c.cognate_info.note_tr.toLowerCase().includes(q))
+    );
   }
+
+  // Update count badge
+  const countBadge = document.getElementById("cognate-count-badge");
+  if (countBadge) countBadge.textContent = `${cognates.length} Ortak Kelime`;
 
   if (cognates.length === 0) {
     container.innerHTML = `<div class="dict-no-results"><span>💡</span> <span>Seçilen filtrede ortak kelime bulunamadı.</span></div>`;
+    const loadMoreBtn = document.getElementById("btn-cognate-load-more");
+    if (loadMoreBtn) loadMoreBtn.style.display = "none";
     return;
   }
 
-  cognates.forEach(c => {
+  // Pagination: show first N items
+  const displaySlice = cognates.slice(0, appState.cognateDisplayCount);
+
+  displaySlice.forEach(c => {
     const card = document.createElement("div");
     card.className = "cognate-card liquid-glass-card";
-    const enMeaning = getEnglishMeaning(c);
-    const arMeaning = getArabicMeaning(c);
-    const isEnglish = englishLoanwordList.includes((c.word || "").toLowerCase());
+    const enMeaning = c.en_meaning || c.en || '';
+    const arMeaning = c.ar || c.arabic_word || '';
+    const isEnglish = c.is_english_loanword === true;
 
     card.innerHTML = `
       <div class="cognate-card-top" style="display: flex; justify-content: space-between; align-items: flex-start; width: 100%;">
@@ -1270,9 +1295,9 @@ function renderCognatesView() {
         ${enMeaning ? `<p style="font-size: 13.5px; font-weight: 600; color: var(--color-text-main); margin: 0;">🇬🇧 <strong>EN:</strong> ${enMeaning}</p>` : ''}
         ${arMeaning ? `<p style="font-size: 15px; font-family: 'Amiri', serif; color: var(--color-accent-dark); margin: 0;" dir="rtl">🇸🇦 <strong>AR:</strong> ${arMeaning}</p>` : ''}
       </div>
-      ${c.sentence_tr ? `
+      ${(c.cognate_info && c.cognate_info.note_tr) || c.sentence_tr ? `
         <div style="font-size: 12.5px; color: var(--color-primary-dark); background: rgba(45,90,39,0.06); padding: 8px 10px; border-radius: 8px; border-left: 3px solid var(--color-primary); line-height: 1.35;">
-          💬 "${c.sentence_tr}"
+          💬 ${c.cognate_info && c.cognate_info.note_tr ? c.cognate_info.note_tr : `"${c.sentence_tr}"`}
         </div>
       ` : ''}
     `;
@@ -1288,6 +1313,21 @@ function renderCognatesView() {
     card.addEventListener("click", () => speakText(c.word));
     container.appendChild(card);
   });
+
+  // Load More button
+  const loadMoreBtn = document.getElementById("btn-cognate-load-more");
+  if (loadMoreBtn) {
+    if (appState.cognateDisplayCount < cognates.length) {
+      loadMoreBtn.style.display = "inline-block";
+      loadMoreBtn.textContent = `⬇️ Daha Fazla Yükle (${cognates.length - appState.cognateDisplayCount} kaldı)`;
+      loadMoreBtn.onclick = () => {
+        appState.cognateDisplayCount += 50;
+        renderCognatesView();
+      };
+    } else {
+      loadMoreBtn.style.display = "none";
+    }
+  }
 }
 
 function renderDictionaryView() {
@@ -1380,6 +1420,11 @@ function renderWordBankView() {
     }
   }
 
+  // Filter out mastered/learned words from flashcard rotation
+  if (appState.wbMode === "cards" && appState.masteredWords && appState.masteredWords.size > 0) {
+    learnedItems = learnedItems.filter(w => !appState.masteredWords.has(w.word));
+  }
+
   if (emptyMsg) {
     emptyMsg.style.display = (appState.bloomedWords.size === 0 && learnedItems.length === 0) ? "block" : "none";
   }
@@ -1394,7 +1439,40 @@ function renderWordBankView() {
 }
 
 function renderFlashcardSection(items) {
-  if (!items || items.length === 0) return;
+  const activeCardEl = document.getElementById("active-flashcard");
+  const controlsBarEl = document.querySelector(".flashcard-controls-bar");
+  const learnBarEl = document.getElementById("fc-learn-actions-bar");
+  const masteredInfoEl = document.getElementById("fc-mastered-info");
+
+  if (!items || items.length === 0) {
+    // All cards mastered or empty - show completion
+    if (activeCardEl) activeCardEl.style.display = "none";
+    if (controlsBarEl) controlsBarEl.style.display = "none";
+    if (learnBarEl) learnBarEl.innerHTML = `
+      <div style="text-align: center; padding: 30px 20px;">
+        <div style="font-size: 48px; margin-bottom: 12px;">🎉</div>
+        <h3 style="color: var(--color-primary-dark); margin: 8px 0;">Tebrikler Suzim!</h3>
+        <p style="color: var(--color-text-muted); margin-bottom: 16px;">Tüm flaş kartları öğrendin! Harika bir başarı! 🌟</p>
+        <button class="fc-learn-btn" id="btn-fc-reset-all" style="background: linear-gradient(135deg, #43A047, #2E7D32); color: #FFF; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer;">♻️ Kartları Sıfırla ve Tekrar Başla</button>
+      </div>
+    `;
+    if (masteredInfoEl) masteredInfoEl.textContent = `✅ ${appState.masteredWords.size} kelime öğrenildi`;
+    const resetBtn = document.getElementById("btn-fc-reset-all");
+    if (resetBtn) {
+      resetBtn.onclick = () => {
+        appState.masteredWords.clear();
+        localStorage.removeItem("suzitta_mastered_words");
+        appState.flashcardIndex = 0;
+        renderWordBankView();
+      };
+    }
+    return;
+  }
+
+  // Show card elements
+  if (activeCardEl) activeCardEl.style.display = "";
+  if (controlsBarEl) controlsBarEl.style.display = "";
+  if (learnBarEl) learnBarEl.style.display = "";
 
   if (appState.flashcardIndex >= items.length) {
     appState.flashcardIndex = 0;
@@ -1492,6 +1570,50 @@ function renderFlashcardSection(items) {
     btnAudioBack.onclick = (e) => {
       e.stopPropagation();
       speakText(currentItem.sentence_tr || currentItem.word);
+    };
+  }
+
+  // Öğrendim / Tekrar Et Handlers
+  const btnMastered = document.getElementById("btn-fc-mastered");
+  const btnRepeat = document.getElementById("btn-fc-repeat");
+  const btnResetMastered = document.getElementById("btn-fc-reset-mastered");
+
+  if (masteredInfoEl) {
+    const totalMastered = appState.masteredWords ? appState.masteredWords.size : 0;
+    masteredInfoEl.textContent = totalMastered > 0 ? `✅ ${totalMastered} kelime öğrenildi olarak işaretlendi` : '';
+  }
+
+  if (btnMastered) {
+    btnMastered.onclick = (e) => {
+      e.stopPropagation();
+      if (!appState.masteredWords) appState.masteredWords = new Set();
+      appState.masteredWords.add(currentItem.word);
+      localStorage.setItem("suzitta_mastered_words", JSON.stringify(Array.from(appState.masteredWords)));
+      speakText("Harika! Bu kelimeyi öğrendin!");
+      appState.flashcardIndex = Math.min(appState.flashcardIndex, Math.max(0, items.length - 2));
+      renderWordBankView();
+    };
+  }
+
+  if (btnRepeat) {
+    btnRepeat.onclick = (e) => {
+      e.stopPropagation();
+      if (appState.flashcardIndex < items.length - 1) {
+        appState.flashcardIndex++;
+      } else {
+        appState.flashcardIndex = 0;
+      }
+      renderFlashcardSection(items);
+    };
+  }
+
+  if (btnResetMastered) {
+    btnResetMastered.onclick = (e) => {
+      e.stopPropagation();
+      appState.masteredWords.clear();
+      localStorage.removeItem("suzitta_mastered_words");
+      appState.flashcardIndex = 0;
+      renderWordBankView();
     };
   }
 }

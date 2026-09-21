@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Suzim'in Türkçe Bahçesi - Learn Turkish (TR / EN / AR / ZH)</title>
-  <link rel="stylesheet" href="styles.css?v=3518_v15">
+  <link rel="stylesheet" href="styles.css?v=3518_v17">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;600;700&family=Outfit:wght@300;400;500;600;700&family=SF+Pro+Display:wght@400;600;700&display=swap" rel="stylesheet">
@@ -246,20 +246,36 @@
       </div>
       <div class="main-view-panel" id="view-cognates" style="display: none;">
         <div class="cognates-hero-card liquid-glass-card">
-          <div class="cognate-hero-header">
-            <h3 id="ui-cognate-title">💡 Ortak Kelimeler Rehberi (Shared Cognates)</h3>
-            <p id="ui-cognate-desc">Arapça ve Uluslararası (İngilizce) ortak kelimelerle Türkçe öğrenmeyi 10 kat hızlandırın!</p>
+          <div class="cognate-hero-header" style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <h3 id="ui-cognate-title">💡 Ortak Kelimeler Rehberi (Shared Cognates)</h3>
+              <p id="ui-cognate-desc">TÖMER Kılavuzundaki 600+ Arapça ortak kök kelime ve 150+ Uluslararası İngilizce kelime ile öğrenmeyi 10 kat hızlandırın!</p>
+            </div>
+            <span class="cognate-count-badge" id="cognate-count-badge" style="background: var(--color-primary); color: #FFF; padding: 6px 14px; border-radius: var(--radius-pill); font-weight: 800; font-size: 13px;">775 Ortak Kelime</span>
           </div>
           
-          <!-- Cognates Filter Tabs -->
-          <div class="wb-view-toggle-bar" style="margin-bottom: 20px;">
-            <button class="cognate-filter-btn active" data-filter="all">🌟 Tüm Ortak Kelimeler</button>
-            <button class="cognate-filter-btn" data-filter="ar">🇸🇦 Arapça Ortak Kökler</button>
-            <button class="cognate-filter-btn" data-filter="en">🌐 Uluslararası / İngilizce</button>
+          <!-- Search & Filter Controls Bar -->
+          <div class="cognate-controls-bar" style="margin: 16px 0 20px 0; display: flex; flex-direction: column; gap: 12px;">
+            <div class="search-input-wrapper" style="width: 100%;">
+              <input type="text" id="cognate-search-input" placeholder="Ortak kelime ara... (Örn: merhaba, kitap, doktor, telefon, saat, حَيَاة)">
+              <span class="search-icon">🔍</span>
+            </div>
+            <div class="wb-view-toggle-bar" style="margin: 0; width: 100%;">
+              <button class="cognate-filter-btn active" data-filter="all">🌟 Tüm Ortak Kelimeler (775+)</button>
+              <button class="cognate-filter-btn" data-filter="ar">🇸🇦 Arapça Ortak Kökler (626)</button>
+              <button class="cognate-filter-btn" data-filter="en">🌐 Uluslararası / İngilizce (149)</button>
+            </div>
           </div>
 
           <div class="cognates-grid" id="cognates-grid-container">
             <!-- Dynamically rendered cognate cards -->
+          </div>
+
+          <!-- Load More Pagination Button -->
+          <div class="cognate-load-more-box" style="text-align: center; margin-top: 24px;">
+            <button id="btn-cognate-load-more" class="action-pill-btn primary" style="padding: 12px 28px; font-size: 14px; display: none;">
+              ⬇️ Daha Fazla Ortak Kelime Yükle
+            </button>
           </div>
         </div>
       </div>
@@ -383,6 +399,14 @@
               <button class="fc-flip-action-btn" id="btn-fc-flip">🔄 Kartı Çevir</button>
               <button class="fc-nav-btn" id="btn-fc-next">Sonraki ▶</button>
             </div>
+
+            <!-- Flashcard Learning Actions -->
+            <div class="flashcard-learn-actions-bar" id="fc-learn-actions-bar" style="display: flex; justify-content: center; gap: 10px; margin-top: 12px; flex-wrap: wrap;">
+              <button class="fc-learn-btn" id="btn-fc-mastered" style="background: linear-gradient(135deg, #43A047, #2E7D32); color: #FFF; border: none; padding: 10px 20px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(67,160,71,0.3);">✅ Öğrendim</button>
+              <button class="fc-learn-btn" id="btn-fc-repeat" style="background: linear-gradient(135deg, #1E88E5, #1565C0); color: #FFF; border: none; padding: 10px 20px; border-radius: 12px; font-weight: 700; font-size: 13px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(30,136,229,0.3);">🔄 Tekrar Et</button>
+              <button class="fc-learn-btn" id="btn-fc-reset-mastered" style="background: rgba(0,0,0,0.06); color: var(--color-text-muted); border: 1px solid rgba(0,0,0,0.1); padding: 8px 14px; border-radius: 10px; font-weight: 600; font-size: 11px; cursor: pointer;">♻️ Sıfırla</button>
+            </div>
+            <div id="fc-mastered-info" style="text-align: center; font-size: 12px; color: var(--color-text-muted); margin-top: 6px;"></div>
           </div>
 
           <!-- SECTION 2: Sentences List View -->
@@ -526,7 +550,8 @@
     </button>
   </nav>
 
-  <script src="database.js?v=3518_v15"></script>
-  <script src="app.js?v=3518_v15"></script>
+  <script src="cognates_db.js?v=3518_v17"></script>
+  <script src="database.js?v=3518_v17"></script>
+  <script src="app.js?v=3518_v17"></script>
 </body>
 </html>

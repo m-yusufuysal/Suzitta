@@ -2179,6 +2179,202 @@ main {
   40%, 80% { transform: translateX(6px); }
 }
 
+/* Cognate Filter Buttons */
+.cognate-filter-btn {
+  padding: 8px 16px;
+  border: none;
+  background: transparent;
+  border-radius: var(--radius-pill);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.cognate-filter-btn.active {
+  background: var(--color-primary);
+  color: #FFFFFF;
+  box-shadow: 0 4px 12px rgba(45, 90, 39, 0.3);
+}
+
+.cognate-filter-btn:hover:not(.active) {
+  background: rgba(45, 90, 39, 0.08);
+  color: var(--color-primary);
+}
+
+/* Dictionary No Results */
+.dict-no-results {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 32px 20px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.dict-no-results span:first-child {
+  font-size: 28px;
+}
+
+/* Action Pill Button (Load More, etc.) */
+.action-pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  cursor: pointer;
+  transition: var(--transition-fluid);
+}
+
+.action-pill-btn.primary {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+  color: #FFFFFF;
+  box-shadow: 0 6px 18px rgba(45, 90, 39, 0.25);
+}
+
+.action-pill-btn.primary:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 24px rgba(45, 90, 39, 0.35);
+}
+
+/* Mobile Flashcard Improvements */
+@media (max-width: 768px) {
+  .flashcards-perspective-wrapper {
+    max-width: 100%;
+    min-height: 300px;
+  }
+
+  .flashcard-3d-card {
+    height: 300px;
+  }
+
+  .flashcard-face {
+    padding: 18px;
+    border-radius: 20px;
+  }
+
+  .fc-word-title {
+    font-size: 26px;
+  }
+
+  .fc-arabic-script {
+    font-size: 22px;
+  }
+
+  .fc-sentence-text {
+    font-size: 13px;
+  }
+
+  .flashcard-controls-bar {
+    gap: 8px;
+  }
+
+  .fc-nav-btn {
+    padding: 7px 14px;
+    font-size: 12px;
+  }
+
+  .fc-flip-action-btn {
+    padding: 9px 18px;
+    font-size: 13px;
+  }
+
+  .cognates-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .cognate-card {
+    padding: 14px;
+  }
+
+  .quiz-categories-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .quiz-cat-card {
+    padding: 18px 16px;
+  }
+
+  .wordbank-summary-card {
+    padding: 16px;
+  }
+
+  .wb-view-toggle-bar {
+    justify-content: center;
+  }
+
+  .wb-mode-btn {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  .quiz-hub-hero-card {
+    padding: 16px;
+  }
+
+  .quiz-hub-header h3 {
+    font-size: 18px;
+  }
+
+  .cognates-hero-card {
+    padding: 16px;
+  }
+
+  .search-dictionary-card {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .flashcard-3d-card {
+    height: 280px;
+  }
+
+  .fc-word-title {
+    font-size: 22px;
+  }
+
+  .fc-arabic-script {
+    font-size: 20px;
+  }
+
+  .fc-sentence-box {
+    padding: 8px 10px;
+  }
+
+  .fc-sentence-label {
+    font-size: 10px;
+  }
+
+  .fc-sentence-text {
+    font-size: 12px;
+  }
+
+  .fc-flip-hint {
+    font-size: 10px;
+  }
+
+  .quiz-stat-pill {
+    padding: 6px 12px;
+  }
+
+  .quiz-stat-pill .qs-val {
+    font-size: 13px;
+  }
+
+  .quiz-stat-pill .qs-lbl {
+    font-size: 9px;
+  }
+}
+
 /* Mobile Bottom Navigation Bar (STRICT: Hidden on Desktop > 768px, Visible ONLY on Mobile <= 768px) */
 .mobile-bottom-bar {
   display: none !important;

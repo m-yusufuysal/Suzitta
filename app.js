@@ -1505,7 +1505,6 @@ function renderFlashcardSection(items) {
   const badgeLevel = document.getElementById("fc-badge-level");
   const badgeCognate = document.getElementById("fc-badge-cognate");
   const wordTr = document.getElementById("fc-word-tr");
-  const wordAr = document.getElementById("fc-word-ar");
   const sentenceTr = document.getElementById("fc-sentence-tr");
 
   const meaningEn = document.getElementById("fc-meaning-en");
@@ -1520,12 +1519,10 @@ function renderFlashcardSection(items) {
   const btnAudioFront = document.getElementById("btn-fc-audio");
   const btnAudioBack = document.getElementById("btn-fc-audio-back");
 
-  // Populate card front (only Turkish shown on front face)
+  // Populate card front — sadece Türkçe kelime gösteriliyor
   if (badgeLevel) badgeLevel.textContent = currentItem.level ? `Level A${currentItem.level}` : (currentItem.cefr_level || "A1");
   if (badgeCognate) badgeCognate.style.display = currentItem.is_cognate ? "inline-block" : "none";
   if (wordTr) wordTr.textContent = currentItem.word || "";
-  // Arabic word hidden on front face — only shown on back
-  if (wordAr) { wordAr.textContent = ""; wordAr.style.display = "none"; }
   if (sentenceTr) sentenceTr.textContent = currentItem.sentence_tr || `${currentItem.word} kelimesi ile pratik yapın.`;
 
   // Populate card back

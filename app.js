@@ -289,6 +289,7 @@ function initLanguageSelector() {
       appState.currentLang = btn.dataset.lang;
       localStorage.setItem("suzitta_lang", appState.currentLang);
       applyTrilingualText();
+      renderCurrentView();
       if (appState.selectedWord) renderWordInspector(appState.selectedWord, null);
     });
   });

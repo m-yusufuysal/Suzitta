@@ -51,7 +51,24 @@ const i18n = {
     quizBtnLabel: "📝 Ders Testi & Quiz",
     quizSuccessTitle: "Tebrikler Suzim! 🎉",
     quizSuccessDesc: "Yusuf seninle gurur duyuyor! 🌟 Ders sınavını harika bir başarıyla geçtin!",
-    quizPointsEarned: "+25 Yusuf Puanı Kazandın! 🏅"
+    quizPointsEarned: "+25 Yusuf Puanı Kazandın! 🏅",
+    quizLessonBadge: "Aktif Ders",
+    quizLessonTitle: "Aktif Ders Testi",
+    quizLessonDesc: (lessonTitle, count) => `"${lessonTitle}" dersindeki ${count} kelime ve cümle ile pratik yapın.`,
+    quizLessonBtn: "Ders Testini Başlat 🚀",
+    quizCognatesTitle: "Arapça Ortak Kelimeler Testi",
+    quizCognatesDesc: "Türkçe ile Arapça arasındaki kök eşleştirmelerini ve ortak kelimeleri sınayın.",
+    quizCognatesBtn: "Ortak Kelimeler Testi 💡",
+    quizLevelBadge: (cefr) => `${cefr} Seviye Sınavı`,
+    quizLevelTitle: "Seviye Bitirme Sınavı",
+    quizLevelDesc: (cefr) => `${cefr} seviyesindeki tüm konulardan oluşan 10 soruluk seviye bitirme sınavı.`,
+    quizLevelBtn: "Seviye Sınavını Başlat 🏆",
+    quizSentenceTitle: "Cümle & Bağlam Sınavı",
+    quizSentenceDesc: "Örnek cümlelerdeki kalıplar ve kelime kullanımı ile pratik yapın.",
+    quizSentenceBtn: "Cümle Testini Başlat 💬",
+    quizSpeedTitle: "Karma Hızlı Sınav",
+    quizSpeedDesc: "Tüm seviyelerdeki kelimelerden rastgele derlenen 10 soruluk hızlı pekiştirme sınavı.",
+    quizSpeedBtn: "Karma Sınavı Başlat ⚡"
   },
   en: {
     brandTitle: "Suzim's Turkish Garden",
@@ -86,7 +103,24 @@ const i18n = {
     quizBtnLabel: "📝 Lesson Quiz & Test",
     quizSuccessTitle: "Congratulations Suzim! 🎉",
     quizSuccessDesc: "Yusuf is so proud of you! 🌟 You passed the lesson quiz with flying colors!",
-    quizPointsEarned: "+25 Yusuf Points Earned! 🏅"
+    quizPointsEarned: "+25 Yusuf Points Earned! 🏅",
+    quizLessonBadge: "Active Lesson",
+    quizLessonTitle: "Active Lesson Quiz",
+    quizLessonDesc: (lessonTitle, count) => `Practice with ${count} words and sentences from "${lessonTitle}".",
+    quizLessonBtn: "Start Lesson Quiz 🚀",
+    quizCognatesTitle: "Arabic Shared Cognates Quiz",
+    quizCognatesDesc: "Test Arabic-Turkish shared root mappings and cognate words.",
+    quizCognatesBtn: "Cognates Quiz 💡",
+    quizLevelBadge: (cefr) => `${cefr} Level Exam",
+    quizLevelTitle: "Level Completion Exam",
+    quizLevelDesc: (cefr) => `10-question level exam covering all topics in the ${cefr} level.",
+    quizLevelBtn: "Start Level Exam 🏆",
+    quizSentenceTitle: "Sentence & Context Quiz",
+    quizSentenceDesc: "Practice sentence patterns and word usage with sample sentences.",
+    quizSentenceBtn: "Start Sentence Quiz 💬",
+    quizSpeedTitle: "Mixed Speed Challenge",
+    quizSpeedDesc: "A fast 10-question revision quiz with random words from all levels.",
+    quizSpeedBtn: "Start Speed Quiz ⚡"
   },
   ar: {
     brandTitle: "بستان سوزي للغة التركية",
@@ -121,7 +155,24 @@ const i18n = {
     quizBtnLabel: "📝 اختبار الدرس والتقييم",
     quizSuccessTitle: "ألف مبروك يا سوزي! 🎉",
     quizSuccessDesc: "يوسف فخور بكِ جداً! 🌟 لقد اجتزتِ اختبار الدرس بنجاح باهر!",
-    quizPointsEarned: "اكسبتِ +25 من نقاط يوسف! 🏅"
+    quizPointsEarned: "اكسبتِ +25 من نقاط يوسف! 🏅",
+    quizLessonBadge: "الدرس النشط",
+    quizLessonTitle: "اختبار الدرس النشط",
+    quizLessonDesc: (lessonTitle, count) => `تدربي على ${count} كلمة وجملة من درس "${lessonTitle}".",
+    quizLessonBtn: "ابدأي اختبار الدرس 🚀",
+    quizCognatesTitle: "اختبار الكلمات المشتركة العربية",
+    quizCognatesDesc: "اختبري تطابقات الجذور المشتركة بين التركية والعربية.",
+    quizCognatesBtn: "اختبار الكلمات المشتركة 💡",
+    quizLevelBadge: (cefr) => `اختبار مستوى ${cefr}",
+    quizLevelTitle: "اختبار إتمام المستوى",
+    quizLevelDesc: (cefr) => `اختبار 10 أسئلة يغطي جميع مواضيع مستوى ${cefr}.",
+    quizLevelBtn: "ابدأي اختبار المستوى 🏆",
+    quizSentenceTitle: "اختبار الجمل والسياق",
+    quizSentenceDesc: "تدربي على أنماط الجمل واستخدام الكلمات بالجمل التوضيحية.",
+    quizSentenceBtn: "ابدأي اختبار الجمل 💬",
+    quizSpeedTitle: "التحدي السريع المختلط",
+    quizSpeedDesc: "اختبار سريع من 10 أسئلة بكلمات عشوائية من جميع المستويات.",
+    quizSpeedBtn: "ابدأي التحدي السريع ⚡"
   },
   zh: {
     brandTitle: "Suzim的土耳其语花园",
@@ -156,7 +207,24 @@ const i18n = {
     quizBtnLabel: "📝 课程测试与测验",
     quizSuccessTitle: "恭喜Suzim！🎉",
     quizSuccessDesc: "Yusuf为你感到非常自豪！🌟 你以优异成绩通过了课程测试！",
-    quizPointsEarned: "获得 +25 Yusuf积分！🏅"
+    quizPointsEarned: "获得 +25 Yusuf积分！🏅",
+    quizLessonBadge: "当前课程",
+    quizLessonTitle: "当前课程测验",
+    quizLessonDesc: (lessonTitle, count) => `练习"${lessonTitle}"中的 ${count} 个单词与例句。",
+    quizLessonBtn: "开始课程测验 🚀",
+    quizCognatesTitle: "阿拉伯语同源词测验",
+    quizCognatesDesc: "测试土耳其语和阿拉伯语之间的词根匹配与同源词。",
+    quizCognatesBtn: "同源词测验 💡",
+    quizLevelBadge: (cefr) => `${cefr} 级别考试",
+    quizLevelTitle: "级别完成考试",
+    quizLevelDesc: (cefr) => `涵盖 ${cefr} 级别所有主题的10道题考试。",
+    quizLevelBtn: "开始级别考试 🏆",
+    quizSentenceTitle: "句子与情境测验",
+    quizSentenceDesc: "通过示例句子练习句子模式和词汇用法。",
+    quizSentenceBtn: "开始句子测验 💬",
+    quizSpeedTitle: "混合速度挑战",
+    quizSpeedDesc: "来自所有级别随机抽取10道题的快速复习测验。",
+    quizSpeedBtn: "开始速度挑战 ⚡"
   }
 };
 
@@ -282,6 +350,11 @@ function applyTrilingualText() {
   setTex("ui-quiz-hub-desc", t.quizHubDesc);
 
   setTex("yusuf-text", t.yusufWelcome);
+
+  // Re-render quiz hub cards if that view is currently active
+  if (appState.activeView === "quiz") {
+    renderQuizHubView();
+  }
 }
 
 // Main View Navigation
@@ -865,21 +938,45 @@ function initQuizHubGlobalListeners() {
 }
 
 function renderQuizHubView() {
+  const t = i18n[appState.currentLang] || i18n.tr;
   const currentLvlObj = learningDatabase.levels.find(l => l.id === appState.currentLevelId) || learningDatabase.levels[0];
   const activeLesson = appState.activeLesson || currentLvlObj.lessons[0];
 
   updateQuizStatsDisplay();
 
-  // Dynamic Badges & Descriptions
-  const badgeLesson = document.getElementById("quiz-badge-lesson");
-  const descLesson = document.getElementById("quiz-desc-lesson");
-  if (badgeLesson && activeLesson) badgeLesson.textContent = activeLesson.title || "Aktif Ders";
-  if (descLesson && activeLesson) descLesson.textContent = `"${activeLesson.title}" dersindeki ${activeLesson.vocabulary.length} kelime ve cümle ile pratik yapın.`;
+  // Helper: set text if element exists
+  const setTex = (id, txt) => { const el = document.getElementById(id); if (el && txt !== undefined) el.textContent = txt; };
 
-  const badgeLevel = document.getElementById("quiz-badge-level");
-  const descLevel = document.getElementById("quiz-desc-level");
-  if (badgeLevel && currentLvlObj) badgeLevel.textContent = `${currentLvlObj.cefrCode} Seviye Sınavı`;
-  if (descLevel && currentLvlObj) descLevel.textContent = `${currentLvlObj.cefrCode} seviyesindeki 10 derse ait tüm konulardan oluşan seviye bitirme sınavı.`;
+  // ── Quiz Hub header (already covered by applyTrilingualText, but refresh here too)
+  setTex("ui-quiz-hub-title", t.quizHubTitle);
+  setTex("ui-quiz-hub-desc", t.quizHubDesc);
+
+  // ── Card 1: Active Lesson Quiz
+  setTex("quiz-badge-lesson", activeLesson ? activeLesson.title : (t.quizLessonBadge || "Aktif Ders"));
+  setTex("quiz-title-lesson", t.quizLessonTitle);
+  if (activeLesson) setTex("quiz-desc-lesson", t.quizLessonDesc ? t.quizLessonDesc(activeLesson.title, activeLesson.vocabulary.length) : `"${activeLesson.title}" dersindeki ${activeLesson.vocabulary.length} kelime ve cümle ile pratik yapın.`);
+  setTex("btn-start-current-lesson-quiz", t.quizLessonBtn);
+
+  // ── Card 2: Cognates Quiz
+  setTex("quiz-title-cognates", t.quizCognatesTitle);
+  setTex("quiz-desc-cognates", t.quizCognatesDesc);
+  setTex("btn-start-cognates-quiz", t.quizCognatesBtn);
+
+  // ── Card 3: Level Exam
+  setTex("quiz-badge-level", currentLvlObj ? (t.quizLevelBadge ? t.quizLevelBadge(currentLvlObj.cefrCode) : `${currentLvlObj.cefrCode} Seviye Sınavı`) : "");
+  setTex("quiz-title-level", t.quizLevelTitle);
+  if (currentLvlObj) setTex("quiz-desc-level", t.quizLevelDesc ? t.quizLevelDesc(currentLvlObj.cefrCode) : `${currentLvlObj.cefrCode} seviyesindeki tüm konulardan oluşan seviye bitirme sınavı.`);
+  setTex("btn-start-level-exam", t.quizLevelBtn);
+
+  // ── Card 4: Sentence Quiz
+  setTex("quiz-title-sentence", t.quizSentenceTitle);
+  setTex("quiz-desc-sentence", t.quizSentenceDesc);
+  setTex("btn-start-sentence-quiz", t.quizSentenceBtn);
+
+  // ── Card 5: Speed Quiz
+  setTex("quiz-title-speed", t.quizSpeedTitle);
+  setTex("quiz-desc-speed", t.quizSpeedDesc);
+  setTex("btn-start-speed-quiz", t.quizSpeedBtn);
 
   initQuizHubGlobalListeners();
 }
@@ -1339,7 +1436,7 @@ function renderDictionaryView() {
 // ==========================================================================
 
 appState.wbMode = appState.wbMode || "cards";
-appState.flashcardIndex = appState.flashcardIndex || 0;
+appState.flashcardIndex = parseInt(localStorage.getItem("suzitta_flashcard_index") || "0", 10);
 appState.flashcardFlipped = false;
 
 function renderWordBankView() {
@@ -1422,11 +1519,12 @@ function renderFlashcardSection(items) {
   const btnAudioFront = document.getElementById("btn-fc-audio");
   const btnAudioBack = document.getElementById("btn-fc-audio-back");
 
-  // Populate card front
+  // Populate card front (only Turkish shown on front face)
   if (badgeLevel) badgeLevel.textContent = currentItem.level ? `Level A${currentItem.level}` : (currentItem.cefr_level || "A1");
   if (badgeCognate) badgeCognate.style.display = currentItem.is_cognate ? "inline-block" : "none";
   if (wordTr) wordTr.textContent = currentItem.word || "";
-  if (wordAr) wordAr.textContent = getArabicMeaning(currentItem);
+  // Arabic word hidden on front face — only shown on back
+  if (wordAr) { wordAr.textContent = ""; wordAr.style.display = "none"; }
   if (sentenceTr) sentenceTr.textContent = currentItem.sentence_tr || `${currentItem.word} kelimesi ile pratik yapın.`;
 
   // Populate card back
@@ -1459,12 +1557,13 @@ function renderFlashcardSection(items) {
     toggleFlip();
   };
 
-  // Nav Handlers
+  // Nav Handlers — save index to localStorage so progress is never lost
   if (btnPrev) {
     btnPrev.onclick = (e) => {
       e.stopPropagation();
       if (appState.flashcardIndex > 0) {
         appState.flashcardIndex--;
+        localStorage.setItem("suzitta_flashcard_index", appState.flashcardIndex.toString());
         renderFlashcardSection(items);
       }
     };
@@ -1475,6 +1574,7 @@ function renderFlashcardSection(items) {
       e.stopPropagation();
       if (appState.flashcardIndex < items.length - 1) {
         appState.flashcardIndex++;
+        localStorage.setItem("suzitta_flashcard_index", appState.flashcardIndex.toString());
         renderFlashcardSection(items);
       }
     };
